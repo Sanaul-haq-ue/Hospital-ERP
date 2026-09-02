@@ -1,0 +1,3 @@
+PetBuddy is a pet care and e-commerce platform designed to make it easier for pet owners to discover and book pet care services from different service providers, such as grooming, pet sitting, and hourly pet care. Alongside the service marketplace, PetBuddy also offers a complete e-commerce experience where customers can browse and purchase pet products such as food, toys, accessories, and other essentials.
+
+The platform provides a dedicated user dashboard where customers can manage their profiles, appointments, and orders, while the admin dashboard gives administrators complete control over the platform, including users, service providers, services, products, appointments, orders, and overall site management.
