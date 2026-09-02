@@ -1,0 +1,897 @@
+/* =========================================================
+   CONSULTATION & PRESCRIPTION — PAGE-SPECIFIC STYLES
+   Built entirely on the tokens defined in root.css.
+   Top nav / side nav shell intentionally omitted (out of scope).
+
+   Semantic color mapping from the source mockup's local palette
+   onto the shared root.css tokens:
+     success-green / vital-good  -> var(--tertiary)
+     error-red / danger          -> var(--error)
+     healing-teal                -> var(--secondary)
+     outline-muted                -> var(--outline)
+   ========================================================= */
+
+.consult-page {
+    background: var(--background);
+    min-height: 100vh;
+    color: var(--on-surface);
+    display: flex;
+    flex-direction: column;
+}
+
+/* ---------- Page header (title bar, not the removed top-nav shell) ---------- */
+.consult-topbar {
+    padding: var(--sp-lg) var(--sp-margin-mobile);
+    background: var(--surface-container-lowest);
+    border-bottom: 1px solid var(--outline-variant);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-md);
+    justify-content: space-between;
+    align-items: center;
+}
+
+@media (min-width: 768px) {
+    .consult-topbar {
+        padding: var(--sp-lg) var(--sp-margin-desktop);
+    }
+}
+
+.consult-topbar-left {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-md);
+    min-width: 0;
+}
+
+.back-btn {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--outline-variant);
+    background: transparent;
+    color: var(--on-surface-variant);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color .2s ease;
+}
+
+.back-btn:hover {
+    background: var(--surface-container-low);
+}
+
+.consult-title {
+    font-size: var(--fs-headline-sm);
+    line-height: var(--lh-headline-sm);
+    font-weight: var(--fw-headline-sm);
+    color: var(--on-surface);
+    display: flex;
+    align-items: center;
+    gap: var(--sp-sm);
+    margin: 0;
+}
+
+@media (min-width: 992px) {
+    .consult-title {
+        font-size: var(--fs-headline-lg);
+        line-height: var(--lh-headline-lg);
+        font-weight: var(--fw-headline-lg);
+        letter-spacing: var(--ls-headline-lg);
+    }
+}
+
+.consult-id-badge {
+    font-family: 'Geist', monospace;
+    font-size: var(--fs-data-mono);
+    line-height: var(--lh-data-mono);
+    background: var(--primary-container);
+    color: var(--on-primary-container);
+    padding: var(--sp-xs) var(--sp-sm);
+    border-radius: var(--radius);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+}
+
+.consult-topbar-right {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-md);
+    flex-wrap: wrap;
+}
+
+.status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-xs);
+    padding: var(--sp-xs) var(--sp-sm);
+    border-radius: var(--radius-full);
+    font-size: var(--fs-label-md);
+    font-weight: var(--fw-label-md);
+    background: color-mix(in srgb, var(--tertiary) 12%, transparent);
+    color: var(--tertiary);
+    white-space: nowrap;
+}
+
+.status-pill .material-symbols-outlined {
+    font-size: 16px;
+}
+
+.theme-toggle-btn {
+    border: 1px solid var(--outline-variant);
+    background: var(--surface-container-lowest);
+    color: var(--on-surface-variant);
+    border-radius: var(--radius-full);
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color .2s ease, color .2s ease;
+    flex-shrink: 0;
+}
+
+.theme-toggle-btn:hover {
+    background: var(--surface-container-low);
+    color: var(--on-surface);
+}
+
+.btn-clinical-primary {
+    background-color: var(--primary);
+    border: 1px solid var(--primary);
+    color: var(--on-primary);
+    font-size: var(--fs-label-md);
+    font-weight: 700;
+    padding: var(--sp-sm) var(--sp-lg);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 1px 2px rgba(11, 28, 48, 0.08);
+    transition: background-color .2s ease, border-color .2s ease;
+    white-space: nowrap;
+}
+
+.btn-clinical-primary:hover,
+.btn-clinical-primary:focus {
+    background-color: var(--on-primary-fixed-variant);
+    border-color: var(--on-primary-fixed-variant);
+    color: var(--on-primary);
+}
+
+.btn-clinical-outline {
+    background: transparent;
+    border: 1px solid var(--outline-variant);
+    color: var(--on-surface-variant);
+    font-size: var(--fs-label-md);
+    font-weight: 500;
+    padding: var(--sp-sm) var(--sp-md);
+    border-radius: var(--radius-lg);
+    transition: background-color .2s ease;
+}
+
+.btn-clinical-outline:hover {
+    background: var(--surface-container-low);
+    color: var(--on-surface);
+}
+
+.btn-clinical-ghost-primary {
+    background: transparent;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    font-size: var(--fs-label-md);
+    font-weight: 700;
+    padding: var(--sp-sm) var(--sp-md);
+    border-radius: var(--radius-lg);
+    transition: background-color .2s ease, color .2s ease;
+}
+
+.btn-clinical-ghost-primary:hover {
+    background: var(--primary-container);
+    color: var(--on-primary-container);
+}
+
+.btn-clinical-text {
+    background: none;
+    border: none;
+    color: var(--primary);
+    font-size: var(--fs-label-md);
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-xs);
+    padding: var(--sp-xs) 0;
+    transition: color .2s ease;
+}
+
+.btn-clinical-text:hover {
+    color: var(--on-primary-fixed-variant);
+}
+
+/* ---------- Scrollable workspace ---------- */
+.consult-workspace {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--sp-margin-mobile);
+}
+
+@media (min-width: 768px) {
+    .consult-workspace {
+        padding: var(--sp-margin-desktop);
+    }
+}
+
+/* ---------- Patient context bento ---------- */
+.patient-card {
+    background: var(--surface-container-lowest);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-xl);
+    padding: var(--sp-md);
+    display: flex;
+    gap: var(--sp-md);
+    align-items: center;
+    box-shadow: 0 1px 2px rgba(11, 28, 48, 0.06);
+    height: 100%;
+}
+
+.patient-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-full);
+    background: var(--surface-variant);
+    border: 1px solid var(--outline-variant);
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--outline);
+}
+
+.patient-avatar .material-symbols-outlined {
+    font-size: 40px;
+}
+
+.patient-name {
+    font-size: var(--fs-headline-sm);
+    line-height: var(--lh-headline-sm);
+    font-weight: var(--fw-headline-sm);
+    color: var(--on-surface);
+    display: flex;
+    align-items: center;
+    gap: var(--sp-xs);
+    flex-wrap: wrap;
+    margin-bottom: var(--sp-xs);
+}
+
+.patient-mrn {
+    font-family: 'Geist', monospace;
+    font-size: 12px;
+    color: var(--on-surface-variant);
+    letter-spacing: 0.05em;
+}
+
+.patient-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-sm) var(--sp-lg);
+    color: var(--on-surface-variant);
+    font-size: var(--fs-body-md);
+}
+
+.patient-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-xs);
+}
+
+.patient-meta .material-symbols-outlined {
+    font-size: 16px;
+}
+
+.appt-card {
+    background: var(--surface-container-low);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-xl);
+    padding: var(--sp-md);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    box-shadow: 0 1px 2px rgba(11, 28, 48, 0.06);
+}
+
+.appt-eyebrow {
+    font-size: var(--fs-label-md);
+    color: var(--on-surface-variant);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: var(--sp-xs);
+}
+
+.appt-id {
+    font-family: 'Geist', monospace;
+    color: var(--on-surface);
+    font-weight: 500;
+    margin-bottom: var(--sp-xs);
+}
+
+.appt-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-sm);
+    font-size: var(--fs-body-sm);
+    color: var(--on-surface-variant);
+}
+
+.appt-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-xs);
+}
+
+.appt-meta .material-symbols-outlined {
+    font-size: 14px;
+}
+
+/* ---------- Tabs ---------- */
+.consult-tabs {
+    border-bottom: 1px solid var(--outline-variant);
+}
+
+.consult-tabs .nav-link {
+    font-size: var(--fs-label-md);
+    font-weight: 500;
+    color: var(--on-surface-variant);
+    border: none;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
+    padding: var(--sp-sm) var(--sp-lg);
+    background: transparent;
+}
+
+.consult-tabs .nav-link:hover {
+    color: var(--on-surface);
+}
+
+.consult-tabs .nav-link.active {
+    color: var(--primary);
+    font-weight: 700;
+    border-bottom-color: var(--primary);
+    background: transparent;
+}
+
+/* ---------- Section cards (shared) ---------- */
+.clinical-section {
+    background: var(--surface-container-lowest);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-xl);
+    padding: var(--sp-lg);
+    box-shadow: 0 1px 2px rgba(11, 28, 48, 0.06);
+}
+
+.clinical-section-title {
+    font-size: var(--fs-headline-sm);
+    line-height: var(--lh-headline-sm);
+    font-weight: var(--fw-headline-sm);
+    color: var(--on-surface);
+    display: flex;
+    align-items: center;
+    gap: var(--sp-sm);
+    margin-bottom: var(--sp-md);
+}
+
+.clinical-section-title .material-symbols-outlined {
+    color: var(--primary);
+}
+
+.field-label {
+    display: block;
+    font-size: var(--fs-label-md);
+    font-weight: 500;
+    color: var(--on-surface-variant);
+    margin-bottom: var(--sp-xs);
+}
+
+.field-control {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-lg);
+    color: var(--on-surface);
+    font-size: var(--fs-body-md);
+    padding: var(--sp-sm);
+}
+
+.field-control::placeholder {
+    color: var(--on-surface-variant);
+    opacity: .75;
+}
+
+.field-control:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
+textarea.field-control {
+    resize: vertical;
+    min-height: 100px;
+}
+
+textarea.field-control.field-textarea-sm {
+    min-height: 60px;
+}
+
+textarea.field-control.field-textarea-md {
+    min-height: 80px;
+}
+
+textarea.field-control.field-textarea-lg {
+    min-height: 120px;
+}
+
+.field-readonly {
+    background: var(--surface-container-low);
+    border-radius: var(--radius-lg);
+    color: var(--on-surface-variant);
+    padding: var(--sp-sm);
+    font-size: var(--fs-body-md);
+}
+
+/* ---------- Vitals grid ---------- */
+.vitals-grid-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--sp-md);
+}
+
+.vital-card {
+    background: var(--surface-container-low);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-sm);
+    text-align: center;
+    height: 100%;
+}
+
+.vital-card.vital-highlight {
+    background: color-mix(in srgb, var(--secondary-container) 20%, var(--surface-container-low));
+}
+
+.vital-label {
+    font-size: var(--fs-label-md);
+    color: var(--on-surface-variant);
+    margin-bottom: var(--sp-xs);
+}
+
+.vital-value {
+    font-family: 'Geist', monospace;
+    color: var(--on-surface);
+    font-weight: 500;
+}
+
+.vital-value.vital-value-good {
+    color: var(--tertiary);
+    font-weight: 700;
+}
+
+.vital-unit {
+    font-size: 10px;
+    color: var(--outline);
+}
+
+/* ---------- Diagnosis tags ---------- */
+.diagnosis-search-wrap {
+    position: relative;
+    margin-bottom: var(--sp-sm);
+}
+
+.diagnosis-search-icon {
+    position: absolute;
+    left: var(--sp-sm);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--outline);
+    pointer-events: none;
+}
+
+.diagnosis-search-wrap .field-control {
+    padding-left: var(--sp-xl);
+}
+
+.diagnosis-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-xs);
+    margin-bottom: var(--sp-md);
+}
+
+.diagnosis-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-xs);
+    padding: var(--sp-xs) var(--sp-sm);
+    background: var(--surface-container-high);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-full);
+    font-size: var(--fs-label-md);
+    color: var(--on-surface);
+}
+
+.diagnosis-tag button {
+    border: none;
+    background: none;
+    color: var(--on-surface-variant);
+    display: inline-flex;
+    transition: color .2s ease;
+}
+
+.diagnosis-tag button:hover {
+    color: var(--error);
+}
+
+.diagnosis-tag button .material-symbols-outlined {
+    font-size: 14px;
+}
+
+/* ---------- Prescription: header card ---------- */
+.rx-header-card {
+    background: var(--surface-container-lowest);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-xl);
+    padding: var(--sp-lg);
+    box-shadow: 0 1px 2px rgba(11, 28, 48, 0.06);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--sp-md);
+}
+
+.rx-header-title {
+    font-size: var(--fs-headline-sm);
+    line-height: var(--lh-headline-sm);
+    font-weight: var(--fw-headline-sm);
+    color: var(--on-surface);
+    margin-bottom: var(--sp-xs);
+}
+
+.rx-header-subtitle {
+    font-size: var(--fs-body-sm);
+    color: var(--on-surface-variant);
+    margin-bottom: 0;
+}
+
+.rx-header-meta {
+    text-align: right;
+    font-family: 'Geist', monospace;
+    font-size: var(--fs-body-sm);
+    color: var(--on-surface-variant);
+}
+
+.rx-header-meta .rx-number {
+    font-weight: 700;
+    color: var(--on-surface);
+}
+
+/* ---------- Prescription: patient/appointment strip ---------- */
+.rx-patient-strip {
+    background: color-mix(in srgb, var(--primary-container) 10%, var(--surface));
+    border: 1px solid color-mix(in srgb, var(--primary) 20%, transparent);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-md);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-md);
+}
+
+.rx-patient-strip-left {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-md);
+    flex-wrap: wrap;
+}
+
+.rx-patient-strip-name {
+    font-weight: 700;
+    color: var(--on-surface);
+}
+
+.rx-patient-strip-name span {
+    font-weight: 400;
+    color: var(--on-surface-variant);
+}
+
+.rx-strip-divider {
+    width: 1px;
+    height: 16px;
+    background: var(--outline-variant);
+}
+
+.rx-patient-strip-right {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-md);
+    color: var(--on-surface-variant);
+    font-size: var(--fs-body-sm);
+    flex-wrap: wrap;
+}
+
+.rx-patient-strip-right strong {
+    color: var(--on-surface);
+    font-weight: 500;
+}
+
+/* ---------- Prescription: previous rx bar ---------- */
+.rx-previous-bar {
+    background: var(--surface-container-low);
+    border: 1px solid color-mix(in srgb, var(--outline-variant) 50%, transparent);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-sm);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--sp-sm);
+    flex-wrap: wrap;
+}
+
+.rx-previous-bar-label {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-sm);
+    color: var(--on-surface-variant);
+}
+
+/* ---------- Prescription: medicines ---------- */
+.rx-medicines-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--sp-md);
+    flex-wrap: wrap;
+}
+
+.rx-medicines-title {
+    font-size: var(--fs-headline-sm);
+    line-height: var(--lh-headline-sm);
+    font-weight: var(--fw-headline-sm);
+    color: var(--on-surface);
+    margin: 0;
+}
+
+.rx-medicine-card {
+    background: var(--surface-container-lowest);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-xl);
+    padding: var(--sp-lg);
+    box-shadow: 0 1px 2px rgba(11, 28, 48, 0.06);
+    position: relative;
+}
+
+.rx-medicine-remove {
+    position: absolute;
+    top: var(--sp-md);
+    right: var(--sp-md);
+    border: none;
+    background: none;
+    color: var(--on-surface-variant);
+    transition: color .2s ease;
+}
+
+.rx-medicine-remove:hover {
+    color: var(--error);
+}
+
+.duration-group {
+    display: flex;
+    gap: var(--sp-xs);
+}
+
+.duration-group input {
+    width: 64px;
+    flex-shrink: 0;
+}
+
+/* ---------- Prescription: summary box ---------- */
+.rx-summary-box {
+    background: var(--surface-container-high);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-xl);
+    padding: var(--sp-lg);
+}
+
+.rx-summary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--sp-md);
+}
+
+.rx-summary-title {
+    font-size: var(--fs-label-md);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--on-surface);
+}
+
+.rx-notes-label {
+    font-size: var(--fs-headline-sm);
+    line-height: var(--lh-headline-sm);
+    font-weight: var(--fw-headline-sm);
+    color: var(--on-surface);
+}
+
+.rx-draft-badge {
+    padding: var(--sp-xs) var(--sp-sm);
+    background: var(--surface-variant);
+    color: var(--on-surface-variant);
+    border-radius: var(--radius-full);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.rx-summary-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-sm);
+    font-size: var(--fs-body-md);
+    color: var(--on-surface);
+}
+
+.rx-summary-list li::before {
+    content: "•";
+    color: var(--primary);
+    margin-right: var(--sp-xs);
+}
+
+/* ---------- Right sidebar: clinical summary ---------- */
+.clinical-summary-panel {
+    background: var(--surface-container-lowest);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 1px 2px rgba(11, 28, 48, 0.06);
+    overflow: hidden;
+}
+
+.clinical-summary-panel-header {
+    padding: var(--sp-sm);
+    background: var(--surface-container-low);
+    border-bottom: 1px solid var(--outline-variant);
+    font-size: var(--fs-label-md);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--on-surface);
+    display: flex;
+    align-items: center;
+    gap: var(--sp-xs);
+}
+
+.clinical-summary-panel-body {
+    padding: var(--sp-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-md);
+}
+
+.summary-item-label {
+    font-size: var(--fs-label-md);
+    color: var(--on-surface-variant);
+    display: flex;
+    align-items: center;
+    gap: var(--sp-xs);
+    margin-bottom: var(--sp-xs);
+}
+
+.summary-item-label .material-symbols-outlined {
+    font-size: 16px;
+}
+
+.icon-tone-error {
+    color: var(--error);
+}
+
+.icon-tone-secondary {
+    color: var(--secondary);
+}
+
+.icon-tone-primary {
+    color: var(--primary);
+}
+
+.summary-item-value {
+    font-size: var(--fs-body-sm);
+    color: var(--on-surface);
+    background: var(--surface);
+    border: 1px solid color-mix(in srgb, var(--outline-variant) 50%, transparent);
+    border-radius: var(--radius);
+    padding: var(--sp-xs);
+}
+
+.summary-item-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-xs);
+}
+
+.summary-item-tag {
+    padding: 2px var(--sp-xs);
+    background: var(--surface-container);
+    border: 1px solid color-mix(in srgb, var(--outline-variant) 50%, transparent);
+    border-radius: 2px;
+    font-size: var(--fs-body-sm);
+    color: var(--on-surface);
+}
+
+.clinical-summary-panel-footer {
+    padding: var(--sp-sm);
+    border-top: 1px solid var(--outline-variant);
+    background: var(--surface-bright);
+}
+
+.clinical-summary-panel-footer button {
+    width: 100%;
+    border: none;
+    background: none;
+    color: var(--primary);
+    font-size: var(--fs-label-md);
+    font-weight: 700;
+    padding: var(--sp-xs) 0;
+    transition: color .2s ease;
+}
+
+.clinical-summary-panel-footer button:hover {
+    color: var(--on-primary-fixed-variant);
+}
+
+/* sidebar sticks alongside the scrolling workspace on desktop */
+@media (min-width: 1200px) {
+    .clinical-summary-col {
+        position: sticky;
+        top: var(--sp-margin-desktop);
+        align-self: flex-start;
+    }
+}
+
+/* ---------- Bottom action bar ---------- */
+.consult-action-bar {
+    border-top: 1px solid var(--outline-variant);
+    background: var(--surface-container-lowest);
+    padding: var(--sp-md);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--sp-sm);
+    box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.consult-action-bar-right {
+    display: flex;
+    gap: var(--sp-md);
+    flex-wrap: wrap;
+}
+
+/* ---------- Small helpers ---------- */
+.icon-14 {
+    font-size: 14px;
+}
+
+.icon-16 {
+    font-size: 16px;
+}
+
+.icon-18 {
+    font-size: 18px;
+}
+
+.icon-20 {
+    font-size: 20px;
+}

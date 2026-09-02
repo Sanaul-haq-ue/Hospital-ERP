@@ -1,0 +1,430 @@
+/* =========================================================
+   DESIGN TOKENS (converted 1:1 from the Tailwind config)
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+}
+
+
+:root {
+  --on-surface: #0b1c30;
+  --on-primary-fixed-variant: #003ea8;
+  --on-surface-variant: #434655;
+  --error-container: #ffdad6;
+  --surface-container-high: #dce9ff;
+  --surface-container: #e5eeff;
+  --surface-container-lowest: #ffffff;
+  --on-primary: #ffffff;
+  --on-background: #0b1c30;
+  --tertiary-fixed: #6ffbbe;
+  --surface-tint: #0053db;
+  --on-primary-container: #eeefff;
+  --on-secondary-container: #006f66;
+  --tertiary: #006242;
+  --secondary-fixed: #89f5e7;
+  --on-secondary-fixed-variant: #005049;
+  --background: #f8f9ff;
+  --inverse-surface: #213145;
+  --on-secondary: #ffffff;
+  --primary-container: #2563eb;
+  --on-primary-fixed: #00174b;
+  --error: #ba1a1a;
+  --primary: #004ac6;
+  --surface: #f8f9ff;
+  --primary-fixed: #dbe1ff;
+  --inverse-on-surface: #eaf1ff;
+  --outline-variant: #c3c6d7;
+  --secondary-container: #86f2e4;
+  --on-error-container: #93000a;
+  --surface-bright: #f8f9ff;
+  --on-tertiary-fixed-variant: #005236;
+  --surface-variant: #d3e4fe;
+  --on-tertiary-container: #bdffdb;
+  --surface-container-highest: #d3e4fe;
+  --tertiary-fixed-dim: #4edea3;
+  --secondary: #006a61;
+  --outline: #737686;
+  --on-tertiary: #ffffff;
+  --on-tertiary-fixed: #002113;
+  --surface-container-low: #eff4ff;
+  --primary-fixed-dim: #b4c5ff;
+  --on-error: #ffffff;
+  --inverse-primary: #b4c5ff;
+  --surface-dim: #cbdbf5;
+  --on-secondary-fixed: #00201d;
+  --tertiary-container: #007d55;
+  --secondary-fixed-dim: #6bd8cb;
+
+  /* spacing */
+  --sp-base: 4px;
+  --sp-xs: 4px;
+  --sp-sm: 8px;
+  --sp-md: 16px;
+  --sp-lg: 24px;
+  --sp-xl: 40px;
+  --sp-margin-mobile: 16px;
+  --sp-margin-desktop: 32px;
+  --sp-gutter: 16px;
+
+  /* radius */
+  --radius: 0.25rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+
+  /* typography */
+  --fs-body-lg: 16px;
+  --lh-body-lg: 24px;
+  --fw-body-lg: 400;
+  --fs-headline-lg-mobile: 26px;
+  --lh-headline-lg-mobile: 32px;
+  --fw-headline-lg-mobile: 700;
+  --fs-data-mono: 14px;
+  --lh-data-mono: 20px;
+  --fw-data-mono: 400;
+  --fs-body-md: 14px;
+  --lh-body-md: 20px;
+  --fw-body-md: 400;
+  --fs-headline-sm: 20px;
+  --lh-headline-sm: 28px;
+  --fw-headline-sm: 600;
+  --fs-label-md: 12px;
+  --lh-label-md: 16px;
+  --fw-label-md: 500;
+  --ls-label-md: 0.02em;
+  --fs-headline-lg: 32px;
+  --lh-headline-lg: 40px;
+  --fw-headline-lg: 700;
+  --ls-headline-lg: -0.02em;
+  --fs-body-sm: 13px;
+  --lh-body-sm: 18px;
+  --fw-body-sm: 400;
+  --fs-headline-md: 24px;
+  --lh-headline-md: 32px;
+  --fw-headline-md: 600;
+  --ls-headline-md: -0.01em;
+}
+
+[data-theme="dark"] {
+  --background: #0b1326;
+  --surface: #0b1326;
+  --surface-container-lowest: #131b2e;
+  --surface-container-low: #131b2e;
+  --surface-container: #131b2e;
+  --surface-container-high: #1b243e;
+  --surface-container-highest: #1b243e;
+  --on-background: #f8f9ff;
+  --on-surface: #f8f9ff;
+  --on-surface-variant: #a9adc1;
+  --outline-variant: rgba(195, 198, 215, 0.3);
+  --outline: #a9adc1;
+  --primary: #b4c5ff;
+  --on-primary-fixed-variant: #dbe1ff;
+  --on-primary-container: #eeefff;
+  --primary-container: #2563eb;
+  --tertiary: #4edea3;
+  --secondary: #6bd8cb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--on-background);
+  font-family: 'Inter', sans-serif;
+  font-size: var(--fs-body-md);
+  line-height: var(--lh-body-md);
+  min-height: 100vh;
+  display: flex;
+  transition: background-color .3s, color .3s;
+}
+
+#root {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.font-mono {
+  font-family: 'Geist', monospace;
+}
+
+.text-label-md {
+  font-size: var(--fs-label-md);
+  line-height: var(--lh-label-md);
+  font-weight: var(--fw-label-md);
+  letter-spacing: var(--ls-label-md);
+}
+
+.text-body-sm {
+  font-size: var(--fs-body-sm);
+  line-height: var(--lh-body-sm);
+  font-weight: var(--fw-body-sm);
+}
+
+.text-body-md {
+  font-size: var(--fs-body-md);
+  line-height: var(--lh-body-md);
+  font-weight: var(--fw-body-md);
+}
+
+.text-headline-sm {
+  font-size: var(--fs-headline-sm);
+  line-height: var(--lh-headline-sm);
+  font-weight: var(--fw-headline-sm);
+}
+
+.text-headline-md {
+  font-size: var(--fs-headline-md);
+  line-height: var(--lh-headline-md);
+  font-weight: var(--fw-headline-md);
+  letter-spacing: var(--ls-headline-md);
+}
+
+.text-headline-lg {
+  font-size: var(--fs-headline-lg);
+  line-height: var(--lh-headline-lg);
+  font-weight: var(--fw-headline-lg);
+  letter-spacing: var(--ls-headline-lg);
+}
+
+/* ---------- utility helpers (spacing / color) ---------- */
+.p-xs {
+  padding: var(--sp-xs);
+}
+
+.p-sm {
+  padding: var(--sp-sm);
+}
+
+.p-md {
+  padding: var(--sp-md);
+}
+
+.p-lg {
+  padding: var(--sp-lg);
+}
+
+.px-sm {
+  padding-left: var(--sp-sm);
+  padding-right: var(--sp-sm);
+}
+
+.px-md {
+  padding-left: var(--sp-md);
+  padding-right: var(--sp-md);
+}
+
+.py-sm {
+  padding-top: var(--sp-sm);
+  padding-bottom: var(--sp-sm);
+}
+
+.py-md {
+  padding-top: var(--sp-md);
+  padding-bottom: var(--sp-md);
+}
+
+.gap-xs {
+  gap: var(--sp-xs);
+}
+
+.gap-sm {
+  gap: var(--sp-sm);
+}
+
+.gap-md {
+  gap: var(--sp-md);
+}
+
+.gap-lg {
+  gap: var(--sp-lg);
+}
+
+.mb-md {
+  margin-bottom: var(--sp-md);
+}
+
+.mb-lg {
+  margin-bottom: var(--sp-lg);
+}
+
+.mt-xs {
+  margin-top: var(--sp-xs);
+}
+
+.rounded-md-tok {
+  border-radius: var(--radius);
+}
+
+.rounded-lg-tok {
+  border-radius: var(--radius-lg);
+}
+
+.rounded-full-tok {
+  border-radius: var(--radius-full);
+}
+
+.text-primary-tok {
+  color: var(--primary);
+}
+
+.text-error-tok {
+  color: var(--error);
+}
+
+.text-tertiary-tok {
+  color: var(--tertiary);
+}
+
+.text-secondary-tok {
+  color: var(--secondary);
+}
+
+.text-outline-tok {
+  color: var(--outline);
+}
+
+.text-on-surface-variant-tok {
+  color: var(--on-surface-variant);
+}
+
+.text-on-background-tok {
+  color: var(--on-background);
+}
+
+.bg-primary-tok {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+/* material icons */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  font-size: 24px;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+[data-weight="fill"] {
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* generic hover/interactive helpers */
+a,
+button {
+  text-decoration: none;
+}
+
+.icon-btn {
+  border: none;
+  background: transparent;
+  color: var(--on-surface-variant);
+  padding: var(--sp-sm);
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color .3s, color .3s;
+}
+
+.icon-btn:hover {
+  background: var(--surface-container-high);
+}
+
+.icon-btn:active {
+  opacity: .8;
+}
+
+
+
+.nav-link-toggle {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border: none;
+  background: none;
+  text-align: left;
+  padding: 8px 16px;
+  border-radius: var(--radius-lg);
+  color: var(--on-surface-variant);
+  font-size: var(--fs-label-md);
+  font-weight: 500;
+  transition: background-color .2s ease, color .2s ease;
+}
+
+.nav-link-toggle:hover {
+  background: var(--surface-container-high);
+}
+
+.nav-link-toggle.active {
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+}
+
+.chevron {
+  font-size: 20px;
+  transition: transform .3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.chevron.rotated {
+  transform: rotate(180deg);
+}
+
+/* This wrapper is what actually animates open/close smoothly */
+.nav-submenu-wrap {
+  overflow: hidden;
+  transition: max-height .3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-submenu {
+  display: flex;
+  flex-direction: column;
+  padding-left: 40px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  gap: 2px;
+}
+
+.nav-sublink {
+  padding: 6px 12px;
+  border-radius: var(--radius-lg);
+  color: var(--on-surface-variant);
+  font-size: var(--fs-body-sm);
+  transition: background-color .2s ease, color .2s ease;
+}
+
+.nav-sublink:hover {
+  background: var(--surface-container-high);
+}
+
+.nav-sublink.active {
+  color: var(--primary);
+  font-weight: 600;
+}

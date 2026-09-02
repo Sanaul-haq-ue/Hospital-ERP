@@ -1,0 +1,421 @@
+/* =========================================================
+   ClinicHub — Specializations (content-only) custom styles
+   Built on top of root.css design tokens + Bootstrap 5.
+   No inline styles, no Tailwind. Uses [data-bs-theme="dark"]
+   for dark mode, mirroring the [data-theme="dark"] tokens
+   defined in root.css.
+   ========================================================= */
+
+/* html,
+body {
+    overflow-x: hidden;
+} */
+
+.sp-page {
+    background: var(--background);
+    min-height: 100vh;
+    padding: var(--sp-margin-mobile);
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+@media (min-width: 768px) {
+    .sp-page {
+        padding: var(--sp-margin-desktop);
+    }
+}
+
+.sp-container {
+    max-width: 1440px;
+}
+
+/* ---------- page header ---------- */
+.sp-title {
+    font-size: var(--fs-headline-lg-mobile);
+    line-height: var(--lh-headline-lg-mobile);
+    font-weight: var(--fw-headline-lg-mobile);
+    color: var(--on-background);
+    margin-bottom: 0;
+    word-break: break-word;
+}
+
+@media (min-width: 768px) {
+    .sp-title {
+        font-size: var(--fs-headline-lg);
+        line-height: var(--lh-headline-lg);
+        font-weight: var(--fw-headline-lg);
+        letter-spacing: var(--ls-headline-lg);
+    }
+}
+
+.sp-subtitle {
+    font-size: var(--fs-body-md);
+    line-height: var(--lh-body-md);
+    color: var(--on-surface-variant);
+    margin: var(--sp-xs) 0 0;
+}
+
+.sp-btn-primary {
+    background: var(--primary);
+    color: var(--on-primary);
+    border: none;
+    border-radius: var(--radius-lg);
+    padding: var(--sp-sm) var(--sp-lg);
+    font-size: var(--fs-label-md);
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-sm);
+    white-space: nowrap;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1);
+    transition: background-color .2s ease;
+}
+
+.sp-btn-primary:hover {
+    background: var(--primary-container);
+    color: var(--on-primary);
+}
+
+.sp-btn-primary .material-symbols-outlined {
+    font-size: 18px;
+}
+
+/* ---------- filters card ---------- */
+.sp-filters {
+    background: var(--surface);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-xl);
+    padding: var(--sp-md);
+    margin-bottom: var(--sp-lg);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1);
+}
+
+.sp-filter-label {
+    display: block;
+    font-size: var(--fs-label-md);
+    color: var(--on-surface-variant);
+    margin-bottom: var(--sp-sm);
+}
+
+.sp-filter-select {
+    width: 100%;
+    background: var(--background);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-sm) var(--sp-md);
+    font-size: var(--fs-body-md);
+    color: var(--on-surface);
+}
+
+.sp-filter-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 1px var(--primary);
+    background: var(--background);
+    color: var(--on-surface);
+}
+
+.sp-btn-outline {
+    padding: var(--sp-sm) var(--sp-md);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-lg);
+    font-size: var(--fs-label-md);
+    color: var(--on-surface);
+    background: transparent;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-sm);
+    white-space: nowrap;
+    transition: background-color .2s ease;
+}
+
+.sp-btn-outline:hover {
+    background: var(--surface-container);
+    color: var(--on-surface);
+}
+
+.sp-btn-outline .material-symbols-outlined {
+    font-size: 18px;
+}
+
+/* ---------- table card ---------- */
+.sp-table-card {
+    background: var(--surface);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1);
+    overflow: hidden;
+}
+
+.sp-table {
+    margin-bottom: 0;
+}
+
+.sp-table thead tr {
+    background: var(--surface-container-low);
+    border-bottom: 1px solid var(--outline-variant);
+}
+
+.sp-table thead th {
+    color: var(--on-surface-variant);
+    font-size: var(--fs-label-md);
+    line-height: var(--lh-label-md);
+    font-weight: var(--fw-label-md);
+    letter-spacing: var(--ls-label-md);
+    padding: var(--sp-sm) var(--sp-md);
+    border: none;
+    white-space: nowrap;
+}
+
+.sp-col-index {
+    width: 3.5rem;
+}
+
+.sp-table tbody td {
+    padding: var(--sp-sm) var(--sp-md);
+    vertical-align: middle;
+    color: var(--on-surface);
+    font-size: var(--fs-body-sm);
+    border-bottom: 1px solid var(--outline-variant);
+    height: 48px;
+}
+
+.sp-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.sp-table tbody tr:hover {
+    background: var(--surface-container-lowest);
+}
+
+.sp-mono {
+    font-family: 'Geist', monospace;
+    color: var(--on-surface-variant);
+}
+
+.sp-desc-cell {
+    color: var(--on-surface-variant);
+    max-width: 260px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* status pill (tertiary-container/10 + tertiary-container text from source) */
+.sp-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px;
+    border-radius: var(--radius-xl);
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.sp-pill-active {
+    background: rgba(0, 125, 85, .1);
+    color: var(--tertiary-container);
+}
+
+[data-bs-theme="dark"] .sp-pill-active {
+    background: rgba(78, 222, 163, .16);
+    color: var(--tertiary-fixed-dim);
+}
+
+/* row actions */
+.sp-row-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 2px;
+}
+
+.sp-action-btn {
+    background: none;
+    border: none;
+    padding: 4px;
+    border-radius: var(--radius);
+    color: var(--on-surface-variant);
+    display: inline-flex;
+}
+
+.sp-action-btn .material-symbols-outlined {
+    font-size: 18px;
+}
+
+.sp-action-btn:hover {
+    background: var(--surface-container);
+    color: var(--primary);
+}
+
+.sp-action-btn-danger:hover {
+    background: var(--error-container);
+    color: var(--error);
+}
+
+/* ---------- pagination footer ---------- */
+.sp-table-footer {
+    background: var(--surface-container-low);
+    border-top: 1px solid var(--outline-variant);
+    padding: var(--sp-sm) var(--sp-md);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--sp-sm);
+}
+
+.sp-table-footer-note {
+    font-size: var(--fs-body-sm);
+    color: var(--on-surface-variant);
+}
+
+.sp-table-footer-note strong {
+    color: var(--on-surface);
+    font-weight: 500;
+}
+
+.sp-page-btn {
+    min-width: 30px;
+    height: 30px;
+    padding: 0 var(--sp-sm);
+    border-radius: var(--radius);
+    border: 1px solid var(--outline-variant);
+    background: transparent;
+    color: var(--on-surface);
+    font-size: var(--fs-label-md);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color .2s ease;
+}
+
+.sp-page-btn:hover {
+    background: var(--surface);
+}
+
+.sp-page-btn.active {
+    background: var(--primary);
+    color: var(--on-primary);
+    border-color: transparent;
+}
+
+.sp-page-btn:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.sp-page-btn .material-symbols-outlined {
+    font-size: 18px;
+}
+
+/* ---------- modals ---------- */
+.sp-modal-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-full);
+    background: var(--error-container);
+    color: var(--error);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto var(--sp-md);
+}
+
+.sp-form-label {
+    font-size: var(--fs-label-md);
+    color: var(--on-surface);
+    margin-bottom: var(--sp-sm);
+    display: block;
+}
+
+.sp-form-control {
+    background: var(--background);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-lg);
+    color: var(--on-surface);
+}
+
+.sp-form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 1px var(--primary);
+    background: var(--background);
+    color: var(--on-surface);
+}
+
+.modal-content.sp-modal-content {
+    background: var(--surface);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-xl);
+}
+
+.sp-modal-content .modal-header,
+.sp-modal-content .modal-footer {
+    background: var(--surface-container-low);
+    border-color: var(--outline-variant);
+}
+
+.sp-modal-content .modal-title {
+    color: var(--on-surface);
+    font-size: var(--fs-headline-sm);
+    font-weight: var(--fw-headline-sm);
+}
+
+/* status switch */
+.sp-switch-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sp-switch-label {
+    font-size: var(--fs-label-md);
+    color: var(--on-surface);
+}
+
+.sp-switch.form-check-input {
+    width: 2.75rem;
+    height: 1.5rem;
+    background-color: var(--surface-variant);
+    border-color: var(--outline-variant);
+}
+
+.sp-switch.form-check-input:checked {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.sp-switch.form-check-input:focus {
+    box-shadow: 0 0 0 2px var(--primary);
+}
+
+/* ---------- toast ---------- */
+.sp-toast-container {
+    --bs-toast-zindex: 1090;
+}
+
+.sp-toast {
+    background: var(--inverse-surface);
+    color: var(--inverse-on-surface);
+    border: 1px solid var(--outline);
+}
+
+.sp-toast-title {
+    color: var(--inverse-on-surface);
+    font-size: var(--fs-label-md);
+    font-weight: 500;
+    margin: 0;
+}
+
+.sp-toast-message {
+    color: var(--inverse-on-surface);
+    opacity: .85;
+    font-size: var(--fs-body-sm);
+    margin: 4px 0 0;
+}
+
+.sp-toast-icon-success {
+    color: var(--tertiary-fixed-dim);
+}
+
+.sp-toast-icon-error {
+    color: #ffb4ab;
+}

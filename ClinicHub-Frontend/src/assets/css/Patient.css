@@ -1,0 +1,643 @@
+/* =========================================================
+   PATIENTS PAGE — custom styles
+   Built on top of root.css design tokens + Bootstrap 5.
+   No Tailwind. No inline styles. No sidebar/header rules here.
+   ========================================================= */
+
+/* ---------- Bootstrap variable overrides (token bridge) ---------- */
+.patients-page {
+    --bs-body-bg: var(--background);
+    --bs-body-color: var(--on-background);
+    --bs-primary: var(--primary);
+    --bs-primary-rgb: 0, 74, 198;
+    --bs-border-color: var(--outline-variant);
+    --bs-border-radius: var(--radius-lg);
+    --bs-border-radius-lg: var(--radius-xl);
+    --bs-border-radius-sm: var(--radius);
+    --bs-link-color: var(--primary);
+    --bs-link-hover-color: var(--on-primary-fixed-variant);
+    background: var(--background);
+    color: var(--on-background);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* Prevent any child from forcing horizontal scroll */
+.patients-page,
+.patients-page * {
+    min-width: 0;
+}
+
+.patients-page .container-fluid {
+    max-width: 1440px;
+}
+
+/* ---------- Page header ---------- */
+.page-title {
+    font-size: var(--fs-headline-lg-mobile);
+    line-height: var(--lh-headline-lg-mobile);
+    font-weight: var(--fw-headline-lg-mobile);
+    color: var(--on-background);
+    margin-bottom: 0;
+}
+
+@media (min-width: 768px) {
+    .page-title {
+        font-size: var(--fs-headline-lg);
+        line-height: var(--lh-headline-lg);
+        font-weight: var(--fw-headline-lg);
+        letter-spacing: var(--ls-headline-lg);
+    }
+}
+
+.page-subtitle {
+    font-size: var(--fs-body-md);
+    line-height: var(--lh-body-md);
+    color: var(--on-surface-variant);
+    margin-top: var(--sp-xs);
+    margin-bottom: 0;
+}
+
+/* ---------- Buttons ---------- */
+.btn-clinic-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: var(--on-primary);
+    font-size: var(--fs-label-md);
+    font-weight: 600;
+    letter-spacing: var(--ls-label-md);
+    padding: 8px 16px;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.btn-clinic-primary:hover,
+.btn-clinic-primary:focus {
+    background-color: var(--on-primary-fixed-variant);
+    border-color: var(--on-primary-fixed-variant);
+    color: var(--on-primary);
+}
+
+.btn-clinic-outline {
+    background-color: var(--surface-container-lowest);
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    font-size: var(--fs-label-md);
+    font-weight: 600;
+    letter-spacing: var(--ls-label-md);
+    padding: 8px 16px;
+    border-radius: var(--radius-lg);
+}
+
+.btn-clinic-outline:hover,
+.btn-clinic-outline:focus {
+    background-color: var(--surface-container);
+    color: var(--primary);
+}
+
+.btn-clinic-ghost {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--on-surface-variant);
+    border-radius: var(--radius-lg);
+    padding: 8px 16px;
+    font-size: var(--fs-label-md);
+    font-weight: 600;
+}
+
+.btn-clinic-ghost:hover {
+    background-color: var(--surface-container-high);
+    color: var(--on-surface-variant);
+}
+
+.btn-clinic-danger {
+    background-color: var(--error);
+    border-color: var(--error);
+    color: var(--on-error);
+    border-radius: var(--radius-lg);
+    font-size: var(--fs-label-md);
+    font-weight: 600;
+    padding: 8px 16px;
+}
+
+.btn-clinic-danger:hover {
+    opacity: .9;
+    color: var(--on-error);
+}
+
+.icon-btn-table {
+    border: none;
+    background: transparent;
+    color: var(--outline);
+    border-radius: var(--radius);
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color .2s ease, color .2s ease;
+}
+
+.icon-btn-table:hover {
+    background-color: var(--surface-container);
+    color: var(--primary);
+}
+
+.icon-btn-table.danger:hover {
+    background-color: var(--error-container);
+    color: var(--error);
+}
+
+/* ---------- Filter card ---------- */
+.filter-card {
+    background: var(--surface-container-lowest);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-xl);
+    padding: var(--sp-md);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+@media (min-width: 768px) {
+    .filter-card {
+        padding: var(--sp-lg);
+    }
+}
+
+.form-label-clinic {
+    font-size: var(--fs-label-md);
+    line-height: var(--lh-label-md);
+    color: var(--on-surface-variant);
+    margin-bottom: var(--sp-xs);
+    display: block;
+}
+
+.patients-page .form-control,
+.patients-page .form-select {
+    background-color: var(--surface);
+    border: 1px solid var(--outline-variant);
+    color: var(--on-surface);
+    border-radius: var(--radius-lg);
+    font-size: var(--fs-body-md);
+    height: 40px;
+}
+
+.patients-page .form-control:focus,
+.patients-page .form-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 1px var(--primary);
+    background-color: var(--surface);
+    color: var(--on-surface);
+}
+
+.patients-page textarea.form-control {
+    height: auto;
+}
+
+.search-input-wrap {
+    position: relative;
+}
+
+.search-input-wrap .material-symbols-outlined {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--on-surface-variant);
+    font-size: 20px;
+    pointer-events: none;
+}
+
+.search-input-wrap .form-control {
+    padding-left: 40px;
+}
+
+/* ---------- Table card ---------- */
+.table-card {
+    background: var(--surface-container-lowest);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.patients-page .table {
+    min-width: 900px;
+    margin-bottom: 0;
+    color: var(--on-surface);
+}
+
+.patients-page .table thead th {
+    background-color: var(--surface-bright);
+    border-bottom: 1px solid var(--outline-variant);
+    color: var(--on-surface-variant);
+    font-size: var(--fs-label-md);
+    font-weight: 500;
+    text-transform: none;
+    white-space: nowrap;
+    padding: var(--sp-sm) var(--sp-md);
+    vertical-align: middle;
+}
+
+.patients-page .table tbody td {
+    padding: var(--sp-sm) var(--sp-md);
+    vertical-align: middle;
+    border-bottom: 1px solid var(--outline-variant);
+    font-size: var(--fs-body-md);
+}
+
+.patients-page .table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.patients-page .table tbody tr:hover {
+    background-color: var(--surface-container-low);
+}
+
+.row-actions {
+    opacity: 0;
+    transition: opacity .15s ease;
+    white-space: nowrap;
+}
+
+.patients-page .table tbody tr:hover .row-actions,
+.row-actions:focus-within {
+    opacity: 1;
+}
+
+@media (max-width: 767.98px) {
+    .row-actions {
+        opacity: 1;
+    }
+}
+
+.patient-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 1px solid var(--outline-variant);
+    background: var(--surface-container);
+    flex-shrink: 0;
+}
+
+.patient-name-cell {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-sm);
+}
+
+.patient-name {
+    font-weight: 500;
+    color: var(--on-surface);
+    display: block;
+    line-height: 1.3;
+}
+
+.patient-email {
+    font-size: var(--fs-body-sm);
+    color: var(--on-surface-variant);
+    display: block;
+    max-width: 170px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.patient-id {
+    font-family: 'Geist', monospace;
+    color: var(--primary);
+    font-weight: 500;
+}
+
+.data-mono {
+    font-family: 'Geist', monospace;
+}
+
+.badge-blood {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: var(--radius);
+    font-size: 11px;
+    font-weight: 700;
+    background-color: var(--surface-container-high);
+    color: var(--on-surface);
+    border: 1px solid var(--outline-variant);
+}
+
+.badge-status-active {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    font-size: 11px;
+    font-weight: 600;
+    background-color: var(--tertiary-container);
+    color: var(--on-tertiary-container);
+    border: 1px solid var(--tertiary-fixed-dim);
+}
+
+.badge-status-inactive {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    font-size: 11px;
+    font-weight: 600;
+    background-color: var(--surface-container-highest);
+    color: var(--on-surface-variant);
+    border: 1px solid var(--outline-variant);
+}
+
+/* ---------- Pagination footer ---------- */
+.table-footer {
+    border-top: 1px solid var(--outline-variant);
+    padding: var(--sp-sm) var(--sp-md);
+    background-color: var(--surface-container-lowest);
+}
+
+.table-footer-text {
+    font-size: var(--fs-body-sm);
+    color: var(--on-surface-variant);
+}
+
+.table-footer-text strong {
+    color: var(--on-surface);
+    font-weight: 500;
+}
+
+.patients-page .pagination .page-link {
+    color: var(--on-surface-variant);
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+    margin: 0 2px;
+    background: transparent;
+}
+
+.patients-page .pagination .page-link:hover {
+    background-color: var(--surface-container);
+    border-color: var(--outline-variant);
+}
+
+.patients-page .pagination .page-item.active .page-link {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: var(--on-primary);
+}
+
+.patients-page .pagination .page-item.disabled .page-link {
+    color: var(--outline);
+    background: transparent;
+    opacity: .5;
+}
+
+/* ---------- Modals ---------- */
+.patients-page .modal-content {
+    background-color: var(--surface-container-lowest);
+    color: var(--on-surface);
+    border-radius: var(--radius-xl);
+    border: none;
+}
+
+.patients-page .modal-header,
+.patients-page .modal-footer {
+    border-color: var(--outline-variant);
+}
+
+.patients-page .modal-title {
+    font-size: var(--fs-headline-md);
+    font-weight: var(--fw-headline-md);
+    color: var(--on-surface);
+}
+
+.patients-page .modal-body {
+    background-color: var(--surface-container-low);
+}
+
+.form-section-label {
+    font-size: var(--fs-label-md);
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-label-md);
+    margin-bottom: var(--sp-md);
+    font-weight: 600;
+}
+
+.photo-upload-drop {
+    border: 2px dashed var(--outline-variant);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-xs);
+    color: var(--outline);
+    cursor: pointer;
+    background-color: var(--surface-container-lowest);
+    transition: border-color .2s ease;
+    height: 100%;
+    min-height: 120px;
+}
+
+.photo-upload-drop:hover {
+    border-color: var(--primary);
+}
+
+.photo-upload-drop span:last-child {
+    font-size: var(--fs-body-sm);
+    color: var(--on-surface-variant);
+}
+
+.readonly-field {
+    background-color: var(--surface-container) !important;
+    color: var(--on-surface-variant) !important;
+    font-family: 'Geist', monospace;
+}
+
+/* View patient modal */
+.view-patient-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 2px solid var(--primary);
+    flex-shrink: 0;
+}
+
+.stat-card {
+    background-color: var(--surface-container-lowest);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-md);
+}
+
+.stat-label {
+    font-size: var(--fs-label-md);
+    color: var(--on-surface-variant);
+    margin-bottom: 2px;
+}
+
+.stat-value {
+    font-weight: 500;
+    color: var(--on-surface);
+    margin-bottom: 0;
+}
+
+.info-card {
+    background-color: var(--surface-container-lowest);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-xl);
+    padding: var(--sp-lg);
+}
+
+.info-card-title {
+    font-size: var(--fs-label-md);
+    color: var(--primary);
+    text-transform: uppercase;
+    margin-bottom: var(--sp-md);
+    font-weight: 600;
+}
+
+.info-field-label {
+    font-size: var(--fs-label-md);
+    color: var(--on-surface-variant);
+    margin-bottom: 2px;
+}
+
+.info-field-value {
+    color: var(--on-surface);
+    margin-bottom: 0;
+}
+
+.activity-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.activity-row+.activity-row {
+    margin-top: var(--sp-sm);
+}
+
+/* Deactivate confirm modal */
+.warning-icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-full);
+    background-color: var(--error-container);
+    color: var(--error);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.modal-footer-muted {
+    background-color: var(--surface-container);
+}
+
+/* ---------- Dark mode ---------- */
+[data-bs-theme="dark"] .patients-page,
+[data-theme="dark"] .patients-page {
+    --bs-body-bg: var(--background);
+    --bs-body-color: var(--on-background);
+}
+
+[data-bs-theme="dark"] .patients-page .table thead th {
+    background-color: var(--surface-container);
+}
+
+[data-bs-theme="dark"] .patients-page .btn-clinic-primary,
+[data-bs-theme="dark"] .patients-page .badge-status-active {
+    color: var(--on-background);
+}
+
+[data-bs-theme="dark"] .patients-page .btn-clinic-primary {
+    color: #0b1326;
+}
+
+/* Theme toggle button used in place of the removed header */
+.theme-toggle-fab {
+    border: 1px solid var(--outline-variant);
+    background-color: var(--surface-container-lowest);
+    color: var(--on-surface-variant);
+    border-radius: var(--radius-full);
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-toggle-fab:hover {
+    background-color: var(--surface-container-high);
+}
+
+/* ---------- Icon size utilities (replace inline font-size styles) ---------- */
+.icon-18 {
+    font-size: 18px;
+}
+
+.icon-32 {
+    font-size: 32px;
+}
+
+/* ---------- Layout width utilities (replace inline width styles) ---------- */
+.max-w-page {
+    max-width: 1440px;
+}
+
+.col-w-48 {
+    width: 48px;
+}
+
+.col-w-70 {
+    width: 70px;
+}
+
+.col-w-100 {
+    width: 100px;
+}
+
+.col-w-110 {
+    width: 110px;
+}
+
+.col-w-130 {
+    width: 130px;
+}
+
+.col-minw-120 {
+    min-width: 120px;
+}
+
+.col-minw-130 {
+    min-width: 130px;
+}
+
+.col-minw-150 {
+    min-width: 150px;
+}
+
+.col-minw-220 {
+    min-width: 220px;
+}
+
+/* ---------- Responsiveness / overflow guards ---------- */
+.patients-page img {
+    max-width: 100%;
+}
+
+@media (max-width: 575.98px) {
+    .patient-email {
+        max-width: 130px;
+    }
+}

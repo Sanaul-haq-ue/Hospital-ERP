@@ -1,0 +1,454 @@
+/* =========================================================
+   CUSTOM STYLES — Create Appointment page
+   Built on top of the tokens defined in style-root.css.
+   Bootstrap 5 components are re-skinned with the design
+   tokens instead of Bootstrap's default palette.
+   ========================================================= */
+
+/* ---------- page shell ---------- */
+.appointment-page {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: var(--sp-margin-mobile);
+}
+
+@media (min-width: 768px) {
+    .appointment-page {
+        padding: var(--sp-margin-desktop);
+    }
+}
+
+.appointment-card {
+    background: var(--surface-container-lowest);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 1px 2px rgba(11, 28, 48, 0.06);
+    overflow: hidden;
+}
+
+/* ---------- header ---------- */
+.appointment-header {
+    padding: var(--sp-lg);
+    border-bottom: 1px solid var(--outline-variant);
+    background: var(--surface-container-lowest);
+}
+
+.appointment-title {
+    font-size: var(--fs-headline-sm);
+    line-height: var(--lh-headline-sm);
+    font-weight: var(--fw-headline-sm);
+    color: var(--on-surface);
+    margin: 0;
+}
+
+.appointment-subtitle {
+    font-size: var(--fs-body-sm);
+    line-height: var(--lh-body-sm);
+    color: var(--on-surface-variant);
+    margin-top: var(--sp-xs);
+    margin-bottom: 0;
+}
+
+/* ---------- body ---------- */
+.appointment-body {
+    padding: var(--sp-lg);
+    background: var(--surface-container-low);
+}
+
+.section-label {
+    font-size: var(--fs-label-md);
+    font-weight: var(--fw-label-md);
+    letter-spacing: var(--ls-label-md);
+    text-transform: uppercase;
+    color: var(--on-surface-variant);
+    margin-bottom: var(--sp-md);
+}
+
+.section-divider {
+    height: 1px;
+    background: var(--outline-variant);
+    border: none;
+    margin: var(--sp-lg) 0;
+}
+
+.field-label {
+    display: block;
+    font-size: var(--fs-label-md);
+    font-weight: var(--fw-label-md);
+    color: var(--on-surface-variant);
+    margin-bottom: var(--sp-xs);
+}
+
+.field-label .field-hint-icon {
+    font-size: 14px;
+    vertical-align: middle;
+    margin-left: 2px;
+    color: var(--on-surface-variant);
+}
+
+/* ---------- inputs (shared) ---------- */
+.form-control,
+.form-select {
+    background: var(--surface-container-lowest);
+    border: 1px solid var(--outline-variant);
+    color: var(--on-surface);
+    font-size: var(--fs-body-md);
+    border-radius: var(--radius-lg);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 1px var(--primary);
+    background: var(--surface-container-lowest);
+    color: var(--on-surface);
+}
+
+.form-control::placeholder,
+.form-control[readonly] {
+    color: var(--outline);
+}
+
+.form-control[readonly] {
+    background: var(--surface-container-lowest);
+    cursor: default;
+}
+
+.form-select:disabled,
+.form-control:disabled {
+    background: var(--surface-variant);
+    border-color: var(--outline-variant);
+    color: var(--outline-variant);
+    cursor: not-allowed;
+    opacity: .8;
+}
+
+/* icon-affixed inputs */
+.input-icon-wrap {
+    position: relative;
+}
+
+.input-icon-wrap .material-symbols-outlined {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--outline);
+    font-size: 20px;
+    pointer-events: none;
+}
+
+.input-icon-wrap .icon-start {
+    left: var(--sp-sm);
+}
+
+.input-icon-wrap .icon-end {
+    right: var(--sp-sm);
+}
+
+.input-icon-wrap .form-control.has-icon-start,
+.input-icon-wrap .form-select.has-icon-start {
+    padding-left: 40px;
+}
+
+.input-icon-wrap .form-control.has-icon-end,
+.input-icon-wrap .form-select.has-icon-end {
+    padding-right: 40px;
+}
+
+.form-select {
+    appearance: none;
+}
+
+.availability-note {
+    font-size: var(--fs-body-sm);
+    color: var(--tertiary);
+    margin-top: var(--sp-sm);
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--sp-xs);
+}
+
+.availability-note .material-symbols-outlined {
+    font-size: 16px;
+}
+
+/* ---------- patient / doctor cards ---------- */
+.person-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-md);
+    padding: var(--sp-md);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-lg);
+    background: var(--surface-container-lowest);
+    box-shadow: 0 1px 2px rgba(11, 28, 48, 0.04);
+}
+
+.person-card.doctor-card {
+    align-items: flex-start;
+}
+
+.person-avatar {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 2px solid var(--surface-container-lowest);
+    box-shadow: 0 1px 2px rgba(11, 28, 48, 0.08);
+}
+
+.person-avatar.lg {
+    width: 56px;
+    height: 56px;
+    min-width: 56px;
+}
+
+.person-name {
+    font-size: var(--fs-label-md);
+    font-weight: var(--fw-label-md);
+    color: var(--on-surface);
+    margin: 0;
+}
+
+.person-name .person-id {
+    font-family: 'Geist', monospace;
+    font-size: var(--fs-data-mono);
+    color: var(--on-surface-variant);
+    margin-left: var(--sp-xs);
+}
+
+.person-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-sm);
+    margin-top: var(--sp-xs);
+    font-size: var(--fs-body-sm);
+    color: var(--on-surface-variant);
+}
+
+.person-meta .material-symbols-outlined {
+    font-size: 16px;
+}
+
+.person-meta-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: var(--radius-full);
+    background: var(--outline-variant);
+}
+
+.doctor-qualification {
+    font-size: var(--fs-body-sm);
+    color: var(--on-surface-variant);
+    margin-top: var(--sp-xs);
+    margin-bottom: 0;
+}
+
+.doctor-fee-tag {
+    display: inline-flex;
+    align-items: center;
+    margin-top: var(--sp-sm);
+    padding: var(--sp-xs) var(--sp-sm);
+    border-radius: var(--radius-lg);
+    background: var(--surface-container-high);
+    font-family: 'Geist', monospace;
+    font-size: var(--fs-data-mono);
+    color: var(--primary);
+    font-weight: 500;
+}
+
+.btn-change {
+    padding: 6px var(--sp-sm);
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    background: transparent;
+    border-radius: var(--radius-lg);
+    font-size: var(--fs-label-md);
+    font-weight: var(--fw-label-md);
+}
+
+.btn-change:hover {
+    background: var(--surface-container-high);
+    color: var(--primary);
+}
+
+/* ---------- time slot legend / grid ---------- */
+.slot-legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-md);
+    font-size: var(--fs-body-sm);
+    color: var(--on-surface-variant);
+}
+
+.slot-legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-xs);
+}
+
+.legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+    display: inline-block;
+}
+
+.legend-dot.available {
+    background: var(--surface-container-high);
+    border: 1px solid var(--outline-variant);
+}
+
+.legend-dot.selected {
+    background: var(--primary);
+}
+
+.legend-dot.booked {
+    background: var(--surface-variant);
+    border: 1px solid var(--outline-variant);
+}
+
+.time-slot-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-sm);
+}
+
+@media (min-width: 576px) {
+    .time-slot-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 768px) {
+    .time-slot-grid {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+.time-slot-btn {
+    padding: var(--sp-sm) var(--sp-xs);
+    text-align: center;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--outline-variant);
+    background: var(--surface-container-lowest);
+    font-family: 'Geist', monospace;
+    font-size: var(--fs-data-mono);
+    color: var(--on-surface);
+    transition: border-color .15s ease, color .15s ease, background-color .15s ease;
+}
+
+.time-slot-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.time-slot-btn.is-selected {
+    border-color: var(--primary);
+    background: var(--primary);
+    color: var(--on-primary);
+    box-shadow: 0 1px 2px rgba(11, 28, 48, 0.1);
+}
+
+.time-slot-btn.is-booked {
+    border-color: var(--outline-variant);
+    background: var(--surface-variant);
+    color: var(--outline-variant);
+    cursor: not-allowed;
+    opacity: .7;
+}
+
+/* ---------- payment summary ---------- */
+.payment-summary-card {
+    background: var(--surface-container-lowest);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-xl);
+    padding: var(--sp-md);
+    box-shadow: 0 1px 2px rgba(11, 28, 48, 0.04);
+    height: 100%;
+}
+
+.fee-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--sp-md);
+    background: var(--surface-container-low);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--sp-md);
+}
+
+.fee-row-label {
+    font-size: var(--fs-body-md);
+    color: var(--on-surface-variant);
+}
+
+.fee-row-value {
+    font-size: var(--fs-headline-md);
+    line-height: var(--lh-headline-md);
+    font-weight: 700;
+    color: var(--primary);
+}
+
+/* ---------- footer action bar ---------- */
+.appointment-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--sp-md) var(--sp-lg);
+    border-top: 1px solid var(--outline-variant);
+    background: var(--surface-container-lowest);
+}
+
+.btn-cancel-link {
+    border: none;
+    background: transparent;
+    color: var(--on-surface-variant);
+    font-size: var(--fs-label-md);
+    font-weight: var(--fw-label-md);
+    padding: var(--sp-sm) var(--sp-lg);
+}
+
+.btn-cancel-link:hover {
+    color: var(--on-surface);
+}
+
+.btn-brand {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: var(--on-primary);
+    font-size: var(--fs-label-md);
+    font-weight: var(--fw-label-md);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-sm) var(--sp-lg);
+}
+
+.btn-brand:hover,
+.btn-brand:focus {
+    background: var(--primary-container);
+    border-color: var(--primary-container);
+    color: var(--on-primary);
+}
+
+/* ---------- icon size utilities (avoid inline styles) ---------- */
+.icon-16 {
+    font-size: 16px;
+}
+
+.icon-18 {
+    font-size: 18px;
+}
+
+.icon-20 {
+    font-size: 20px;
+}
+
+.icon-24 {
+    font-size: 24px;
+}

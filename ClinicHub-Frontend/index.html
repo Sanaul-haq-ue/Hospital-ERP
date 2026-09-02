@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/ClinicHub Favicon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>clinic Hub</title>
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Geist:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet">
+
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+
+  <!-- Bootstrap JS (not required for this page's logic, kept for form/component consistency) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // function toggleDarkMode() {
+    //   const html = document.documentElement;
+    //   const isDark = html.getAttribute('data-theme') === 'dark';
+    //   const icons = document.querySelectorAll('.theme-toggle-icon');
+    //   if (isDark) {
+    //     html.setAttribute('data-theme', 'light');
+    //     icons.forEach(i => i.textContent = 'dark_mode');
+    //   } else {
+    //     html.setAttribute('data-theme', 'dark');
+    //     icons.forEach(i => i.textContent = 'light_mode');
+    //   }
+    // }
+
+    function toggleNotifications() {
+      document.getElementById('notification-dropdown').classList.toggle('show');
+    }
+
+    document.addEventListener('click', function (event) {
+      const notifButton = document.getElementById('notif-button');
+      const notifDropdown = document.getElementById('notification-dropdown');
+      if (notifButton && notifDropdown && !notifButton.contains(event.target) && !notifDropdown.contains(event.target)) {
+        notifDropdown.classList.remove('show');
+      }
+    });
+
+    // function toggleSidebar(btn) {
+    //   const sidebar = document.getElementById('sidebar');
+    //   const mainContent = document.getElementById('main-content');
+    //   const icon = btn.querySelector('span');
+    //   if (sidebar.classList.contains('collapsed')) {
+    //     sidebar.classList.remove('collapsed');
+    //     mainContent.classList.remove('sidebar-collapsed');
+    //     icon.textContent = 'menu';
+    //   } else {
+    //     sidebar.classList.add('collapsed');
+    //     mainContent.classList.add('sidebar-collapsed');
+    //     icon.textContent = 'chevron_right';
+    //   }
+    // }
+  </script>
+</body>
+
+</html>

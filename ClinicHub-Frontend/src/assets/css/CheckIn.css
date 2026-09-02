@@ -1,0 +1,599 @@
+/* =========================================================
+   PATIENT CHECK-IN PAGE — custom styles
+   Built on top of root.css design tokens + Bootstrap 5.
+   No Tailwind. No inline styles. No sidebar/header rules here.
+   ========================================================= */
+
+.checkin-page {
+    --bs-body-bg: var(--background);
+    --bs-body-color: var(--on-background);
+    --bs-primary: var(--primary);
+    --bs-primary-rgb: 0, 74, 198;
+    --bs-border-color: var(--outline-variant);
+    --bs-border-radius: var(--radius-lg);
+    --bs-border-radius-lg: var(--radius-xl);
+    --bs-border-radius-sm: var(--radius);
+    --bs-link-color: var(--primary);
+    --bs-link-hover-color: var(--on-primary-fixed-variant);
+    background: var(--background);
+    color: var(--on-background);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.checkin-page,
+.checkin-page * {
+    min-width: 0;
+}
+
+.checkin-page .container-fluid {
+    max-width: 1440px;
+}
+
+/* ---------- Page header ---------- */
+.checkin-title {
+    font-size: var(--fs-headline-md);
+    line-height: var(--lh-headline-md);
+    font-weight: var(--fw-headline-md);
+    letter-spacing: var(--ls-headline-md);
+    color: var(--on-surface);
+    margin-bottom: 0;
+}
+
+.checkin-subtitle {
+    font-size: var(--fs-body-md);
+    color: var(--on-surface-variant);
+    margin-bottom: 0;
+}
+
+.theme-toggle-fab {
+    border: 1px solid var(--outline-variant);
+    background-color: var(--surface-container-lowest);
+    color: var(--on-surface-variant);
+    border-radius: var(--radius-full);
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.theme-toggle-fab:hover {
+    background-color: var(--surface-container-high);
+}
+
+/* ---------- Summary cards ---------- */
+.summary-tile {
+    background: var(--surface);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-md);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+    height: 100%;
+}
+
+.summary-tile-label {
+    font-size: var(--fs-label-md);
+    color: var(--on-surface-variant);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-label-md);
+}
+
+.summary-tile-value {
+    font-size: var(--fs-headline-lg);
+    line-height: var(--lh-headline-lg);
+    font-weight: var(--fw-headline-lg);
+    letter-spacing: var(--ls-headline-lg);
+}
+
+.summary-tile-value.tone-primary {
+    color: var(--primary);
+}
+
+.summary-tile-value.tone-tertiary {
+    color: var(--tertiary);
+}
+
+.summary-tile-value.tone-primary-dim {
+    color: var(--primary-fixed-dim);
+}
+
+.summary-tile-value.tone-muted {
+    color: var(--on-surface-variant);
+}
+
+/* ---------- Search & filters ---------- */
+.filters-bar {
+    background: var(--surface);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-sm);
+}
+
+.search-field-wrap {
+    position: relative;
+    background-color: var(--background);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius);
+    height: 40px;
+    display: flex;
+    align-items: center;
+    transition: border-color .2s ease;
+}
+
+.search-field-wrap:focus-within {
+    border-color: var(--primary);
+}
+
+.search-field-wrap .material-symbols-outlined {
+    color: var(--on-surface-variant);
+    padding-left: 8px;
+    padding-right: 4px;
+    flex-shrink: 0;
+}
+
+.search-field-wrap .form-control {
+    border: none;
+    background: transparent;
+    height: 100%;
+    box-shadow: none;
+    font-size: var(--fs-body-sm);
+    padding-left: 4px;
+    color: var(--on-surface);
+}
+
+.search-field-wrap .form-control:focus {
+    box-shadow: none;
+}
+
+.filter-select {
+    height: 40px;
+    border-radius: var(--radius);
+    border: 1px solid var(--outline-variant);
+    background-color: var(--background);
+    color: var(--on-surface);
+    font-size: var(--fs-body-sm);
+}
+
+.filter-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 1px var(--primary);
+}
+
+/* ---------- Table ---------- */
+.checkin-table-card {
+    background: var(--surface);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+}
+
+.table-scroll-checkin {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.checkin-page .table {
+    min-width: 1000px;
+    margin-bottom: 0;
+    color: var(--on-surface);
+}
+
+.checkin-page .table thead th {
+    background-color: var(--surface-container-low);
+    border-bottom: 1px solid var(--outline-variant);
+    color: var(--on-surface-variant);
+    font-size: var(--fs-label-md);
+    font-weight: 500;
+    white-space: nowrap;
+    padding: 8px 16px;
+}
+
+.checkin-page .table tbody td {
+    padding: 8px 16px;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--outline-variant);
+    font-size: var(--fs-body-sm);
+    height: 64px;
+}
+
+.checkin-page .table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.checkin-page .table tbody tr:hover {
+    background-color: var(--surface-container-lowest);
+}
+
+.row-checked-in {
+    background-color: rgba(229, 238, 255, 0.5);
+}
+
+.row-checked-in:hover {
+    background-color: var(--surface-container-low) !important;
+}
+
+.appt-id {
+    font-family: 'Geist', monospace;
+    color: var(--on-surface);
+    white-space: nowrap;
+}
+
+.patient-row-cell {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-sm);
+}
+
+.patient-avatar-sm {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 1px solid var(--outline-variant);
+    flex-shrink: 0;
+}
+
+.avatar-initials-checkin {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-full);
+    background-color: var(--surface-variant);
+    color: var(--on-surface-variant);
+    border: 1px solid var(--outline-variant);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--fs-label-md);
+    flex-shrink: 0;
+}
+
+.checkin-patient-name {
+    font-weight: 500;
+    color: var(--on-surface);
+    margin-bottom: 0;
+    line-height: 1.3;
+}
+
+.checkin-patient-id {
+    font-family: 'Geist', monospace;
+    font-size: 11px;
+    color: var(--on-surface-variant);
+    margin-bottom: 0;
+}
+
+.doctor-name-cell {
+    color: var(--on-surface);
+    margin-bottom: 0;
+    line-height: 1.3;
+}
+
+.doctor-specialty-cell {
+    font-size: var(--fs-label-md);
+    color: var(--on-surface-variant);
+    margin-bottom: 0;
+}
+
+.type-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px;
+    border-radius: var(--radius-full);
+    font-size: var(--fs-label-md);
+}
+
+.type-pill-followup {
+    background-color: var(--secondary-container);
+    color: var(--on-secondary-container);
+}
+
+.type-pill-new {
+    background-color: var(--surface-container-highest);
+    color: var(--on-surface);
+    border: 1px solid var(--outline-variant);
+}
+
+.status-pill-confirmed {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px;
+    border-radius: var(--radius-full);
+    font-size: var(--fs-label-md);
+    background-color: var(--surface-container-highest);
+    color: var(--on-surface);
+}
+
+.checkin-status-pending {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--outline-variant);
+    color: var(--on-surface-variant);
+    font-size: var(--fs-label-md);
+}
+
+.checkin-status-pending .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-full);
+    background-color: var(--outline);
+}
+
+.checkin-status-done {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border-radius: var(--radius-full);
+    background-color: var(--tertiary-container);
+    color: var(--on-tertiary-container);
+    font-size: var(--fs-label-md);
+    width: max-content;
+}
+
+.checkin-status-done .material-symbols-outlined {
+    font-size: 14px;
+}
+
+.checkin-queue-tag {
+    font-family: 'Geist', monospace;
+    font-size: 11px;
+    color: var(--on-surface-variant);
+    padding-left: 4px;
+}
+
+.icon-btn-checkin {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius);
+    border: 1px solid var(--outline-variant);
+    background: transparent;
+    color: var(--on-surface-variant);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-btn-checkin:hover {
+    background-color: var(--surface-container-high);
+    color: var(--on-surface-variant);
+}
+
+.btn-checkin-action {
+    height: 32px;
+    padding: 0 12px;
+    border-radius: var(--radius);
+    background-color: var(--primary);
+    color: var(--on-primary);
+    border: none;
+    font-size: var(--fs-label-md);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+    white-space: nowrap;
+}
+
+.btn-checkin-action:hover {
+    background-color: var(--on-primary-fixed-variant);
+    color: var(--on-primary);
+}
+
+.btn-checkin-action:disabled,
+.btn-checkin-action.is-disabled {
+    height: 32px;
+    padding: 0 12px;
+    border-radius: var(--radius);
+    background-color: transparent;
+    border: 1px solid var(--outline-variant);
+    color: var(--on-surface-variant);
+    font-size: var(--fs-label-md);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    opacity: .6;
+    white-space: nowrap;
+}
+
+.icon-18 {
+    font-size: 18px;
+}
+
+.icon-14 {
+    font-size: 14px;
+}
+
+/* ---------- Modals ---------- */
+.checkin-page .modal-content {
+    background-color: var(--surface);
+    color: var(--on-surface);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--outline-variant);
+}
+
+.checkin-page .modal-header,
+.checkin-page .modal-footer {
+    border-color: var(--outline-variant);
+    background-color: var(--surface-bright);
+}
+
+.checkin-page .modal-title {
+    font-size: var(--fs-headline-sm);
+    font-weight: 600;
+    color: var(--on-surface);
+    margin-bottom: 0;
+}
+
+.modal-eyebrow {
+    font-family: 'Geist', monospace;
+    font-size: 12px;
+    color: var(--on-surface-variant);
+}
+
+.modal-field-label {
+    font-size: var(--fs-label-md);
+    color: var(--on-surface-variant);
+    margin-bottom: 2px;
+    display: block;
+}
+
+.modal-field-value {
+    font-size: var(--fs-body-md);
+    color: var(--on-surface);
+    margin-bottom: 0;
+}
+
+.modal-field-value.strong {
+    font-weight: 500;
+}
+
+.modal-patient-summary {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-sm);
+}
+
+.modal-patient-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 1px solid var(--outline-variant);
+    flex-shrink: 0;
+}
+
+.modal-patient-meta {
+    font-family: 'Geist', monospace;
+    font-size: 12px;
+    color: var(--on-surface-variant);
+    margin-bottom: 0;
+}
+
+.modal-dashed-divider {
+    border-top: 1px dashed var(--outline-variant);
+    border-bottom: 1px dashed var(--outline-variant);
+    padding-top: var(--sp-sm);
+    padding-bottom: var(--sp-sm);
+}
+
+.modal-info-box {
+    background-color: var(--surface-container-low);
+    border: 1px solid var(--primary-fixed-dim);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-sm);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp-sm);
+}
+
+.modal-info-box .material-symbols-outlined {
+    color: var(--primary);
+    font-size: 20px;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.modal-info-box p {
+    font-size: var(--fs-body-sm);
+    color: var(--on-surface);
+    margin-bottom: 0;
+}
+
+.info-section-label {
+    font-size: var(--fs-label-md);
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: var(--ls-label-md);
+    margin-bottom: 8px;
+}
+
+.info-section-box {
+    background-color: var(--surface-container-low);
+    border: 1px solid rgba(195, 198, 215, 0.5);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-md);
+}
+
+.reason-box {
+    background-color: var(--surface-container-lowest);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-md);
+}
+
+.reason-box p {
+    margin-bottom: 0;
+    font-size: var(--fs-body-md);
+    color: var(--on-surface);
+}
+
+.btn-clinic-ghost {
+    background: transparent;
+    border: 1px solid var(--outline-variant);
+    color: var(--on-surface);
+    border-radius: var(--radius);
+    padding: 8px 16px;
+    font-size: var(--fs-label-md);
+    font-weight: 500;
+}
+
+.btn-clinic-ghost:hover {
+    background-color: var(--surface-container-highest);
+    color: var(--on-surface);
+}
+
+.btn-clinic-primary {
+    background-color: var(--primary);
+    border: none;
+    color: var(--on-primary);
+    border-radius: var(--radius);
+    padding: 8px 16px;
+    font-size: var(--fs-label-md);
+    font-weight: 500;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.btn-clinic-primary:hover {
+    background-color: var(--on-primary-fixed-variant);
+    color: var(--on-primary);
+}
+
+/* ---------- Dark mode ---------- */
+[data-bs-theme="dark"] .checkin-page,
+[data-theme="dark"] .checkin-page {
+    --bs-body-bg: var(--background);
+    --bs-body-color: var(--on-background);
+}
+
+[data-bs-theme="dark"] .checkin-page .table thead th,
+[data-bs-theme="dark"] .checkin-page .filters-bar,
+[data-bs-theme="dark"] .checkin-page .summary-tile,
+[data-bs-theme="dark"] .checkin-page .checkin-table-card {
+    background-color: var(--surface-container-lowest);
+}
+
+[data-bs-theme="dark"] .checkin-page .btn-checkin-action {
+    color: #0b1326;
+}
+
+[data-bs-theme="dark"] .checkin-page .row-checked-in {
+    background-color: rgba(27, 36, 62, 0.6);
+}
+
+/* ---------- Responsiveness / overflow guards ---------- */
+.checkin-page img {
+    max-width: 100%;
+}
+
+.max-w-page {
+    max-width: 1440px;
+}
