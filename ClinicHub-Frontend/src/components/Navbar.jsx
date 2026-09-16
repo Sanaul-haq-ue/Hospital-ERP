@@ -1,8 +1,10 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
+import api from '../api/axios';
 
 export default function Navbar({ collapsed }) {
     const location = useLocation();
+    const navigate = useNavigate();
 
     const isChildActive = location.pathname.startsWith("/doctor");
     const isAdminActive = location.pathname.startsWith("/administration");
@@ -41,6 +43,20 @@ export default function Navbar({ collapsed }) {
         isAppointmentActive
     ]);
 
+
+    const handleLogout = async (e) => {
+        e.preventDefault();
+        try {
+            await api.post('/logout');
+        } catch (error) {
+            console.error('Logout failed:', error);
+        } finally {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            navigate('/login', {state:{ loggedOut: true}});
+        }
+    }
+
     return (
         <nav className={`sidebar ${collapsed ? 'collapsed' : ''}`} id="sidebar" aria-label="Main Navigation">
             <div className="sidebar-brand">
@@ -48,7 +64,7 @@ export default function Navbar({ collapsed }) {
                     <span className="material-symbols-outlined" data-weight="fill">medical_services</span>
                 </div>
                 <div>
-                    <h1>ClinicHub</h1>
+                    <h1>Clinic</h1>
                     <p>Medical ERP</p>
                 </div>
             </div>
@@ -280,7 +296,7 @@ export default function Navbar({ collapsed }) {
                     <span className="material-symbols-outlined">help</span>
                     <span className="text-label-md">Support</span>
                 </a> */}
-                <a href="#" className="nav-link-item logout">
+                <a href="#" className="nav-link-item logout" onClick={handleLogout}>
                     <span className="material-symbols-outlined">logout</span>
                     <span className="text-label-md">Logout</span>
                 </a>

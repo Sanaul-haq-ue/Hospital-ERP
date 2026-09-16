@@ -1,4 +1,36 @@
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import api from '../api/axios';
+
 export default function Header({ isDark, toggleDarkMode, sidebarCollapsed, toggleSidebar }) {
+    const navigate = useNavigate();
+    const [user, setUser] = useState(null)
+
+    useEffect(() => {
+        try {
+            const stored = localStorage.getItem('user')
+            if (stored) {
+                setUser(JSON.parse(stored))
+            }
+        } catch (e) {
+            setUser(null)
+        }
+    }, [])
+
+    const handleLogout = async (e) => {
+        e.preventDefault();
+        try {
+            await api.post('/logout');
+        } catch (error) {
+            console.error('Logout failed:', error);
+        } finally {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            navigate('/login', { state: { loggedOut: true } });
+        }
+    }
+
+
     return (
         <>
             {/* <!-- ===== Mobile header ===== --> */}
@@ -84,10 +116,11 @@ export default function Header({ isDark, toggleDarkMode, sidebarCollapsed, toggl
                             <span className="material-symbols-outlined text-outline-tok">expand_more</span>
                         </button>
                         <div className="dropdown-menu-custom profile-menu">
+                            <a style={{ alignItems: 'center', fontSize: '16px', fontWeight: '600', color: 'red' }}><span>{user?.name || 'Undefine'}</span></a>
                             <a href="#"><span className="material-symbols-outlined" style={{ fontSize: '20px' }}>person</span><span>Profile</span></a>
                             <a href="#"><span className="material-symbols-outlined" style={{ fontSize: '20px' }}>settings</span><span>Settings</span></a>
                             <div className="menu-div"></div>
-                            <a href="#" className="logout"><span className="material-symbols-outlined" style={{ fontSize: '20px' }}>logout</span><span>Logout</span></a>
+                            <a href="#" className="logout" onClick={handleLogout}><span className="material-symbols-outlined" style={{ fontSize: '20px' }}>logout</span><span>Logout</span></a>
                         </div>
                     </div>
                 </div>

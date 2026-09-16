@@ -1,12 +1,15 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect, useRef } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import styles from '../../assets/css/Login.module.css'
 import api from '../../api/axios'
+import { toast } from 'react-toastify'
 
 
 
 export default function Login() {
     const navigate = useNavigate()
+    const location = useLocation()
+    const hasShownToast = useRef(false);
 
     const [showPassword, setShowPassword] = useState(false)
     const [email, setEmail] = useState('')
@@ -31,10 +34,10 @@ export default function Login() {
 
                 switch (user.role) {
                     case 'doctor':
-                        navigate('/dashboard-doctor')
+                        navigate('/dashboard-doctor', { state: { loggedIn: true } });
                         break
                     default:
-                        navigate('/')
+                        navigate('/', { state: { loggedIn: true } })
                         break
                 }
             }
@@ -49,6 +52,15 @@ export default function Login() {
             setLoading(false)
         }
     }
+
+    useEffect(() => {
+        if (location.state?.loggedOut) {
+            hasShownToast.current = true;
+            toast.success('You have been logged out successfully.');
+            navigate(location.pathname, { replace: true, state: {} });
+
+        }
+    }, [location, navigate])
 
 
 
