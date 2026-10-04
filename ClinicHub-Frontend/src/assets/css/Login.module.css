@@ -214,3 +214,21 @@
 .link-primary-tok:hover {
     color: var(--on-primary-fixed-variant);
 }
+
+.alert-error {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+  color: #be123c;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.alert-error .material-symbols-outlined {
+  font-size: 20px;
+  flex-shrink: 0;
+}

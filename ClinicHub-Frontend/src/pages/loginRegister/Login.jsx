@@ -32,14 +32,11 @@ export default function Login() {
                 localStorage.setItem('token', token)
                 localStorage.setItem('user', JSON.stringify(user))
 
-                switch (user.role) {
-                    case 'doctor':
-                        navigate('/dashboard-doctor', { state: { loggedIn: true } });
-                        break
-                    default:
-                        navigate('/', { state: { loggedIn: true } })
-                        break
-                }
+                const dashboardRoute = user.role?.dashboard_route || '/';
+
+                navigate(dashboardRoute, {
+                    state: { loggedIn: true }
+                });
             }
 
         } catch (err) {
@@ -86,7 +83,10 @@ export default function Login() {
                     <form noValidate onSubmit={handelSubmit}>
 
                         {errorMsg && (
-                            <div className="alert-error mb-3">{errorMsg}</div>
+                            <div className={`${styles["alert-error"]} mb-3`}>
+                                <span className="material-symbols-outlined">error</span>
+                                <span>{errorMsg}</span>
+                            </div>
                         )}
 
                         {/* <!-- Email Field --> */}

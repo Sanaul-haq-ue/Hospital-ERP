@@ -1,6 +1,76 @@
+import { useState, useEffect } from "react";
+
 import "../../assets/css/Department.css"
+import api from '../../api/axios';
+import { toast, ToastContainer } from 'react-toastify';
+import { hasPermission } from "../../utils/permissions";
 
 export default function Department() {
+    const [department, setDepartment] = useState([]);
+    const [name, setName] = useState("");
+    const [short_description, setShort_description] = useState("");
+    const [isActive, setIsActive] = useState(true);
+    const [errors, setErrors] = useState({});
+    const [saving, setSaving] = useState(false);
+
+
+    const resetFrom = () => {
+        setName("")
+        setShort_description("")
+        setIsActive(true)
+    }
+
+    // create Department function
+    const handelSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!name.trim()) {
+            setErrors({
+                name: ["Department name is required."]
+            });
+            return;
+        }
+
+        setSaving(true);
+        setErrors({});
+
+        try {
+            const payload = { name: name.trim(), short_description, is_active: isActive };
+            console.log(payload)
+            const response = await api.post('/store/dept', payload);
+
+            setDepartment((prevDept) => [
+                response.data,
+                ...prevDept,
+            ]);
+
+            document.activeElement?.blur();
+            window.bootstrap.Modal.getInstance(
+                document.getElementById("addModal")
+            )?.hide();
+
+            toast.success(`"${response.data.name}" Department created successfully. `);
+
+            resetFrom();
+
+        } catch (err) {
+            console.error('STATUS:', err.response?.status);
+            console.error('DATA:', err.response?.data);
+            if (err.response?.status === 422) {
+                setErrors(err.response.data.errors);
+                toast.error(err.response.data.message || 'Fix the error');
+            } else {
+                toast.error(err.response?.data?.message ||
+                    "Something went wrong. Please try again.");
+                console.error(err);
+            }
+        } finally {
+            setSaving(false);
+        }
+    }
+
+
+
     return (
         <>
             <div className="container-fluid dp-container">
@@ -12,14 +82,16 @@ export default function Department() {
                         <p className="dp-subtitle">Manage medical departments in the clinic.</p>
                     </div>
                     <div className="d-flex align-items-center gap-md w-100 w-md-auto">
-                        <label className="dp-search flex-grow-1 flex-md-grow-0" for="deptSearch">
+                        <label className="dp-search flex-grow-1 flex-md-grow-0" htmlFor="deptSearch">
                             <span className="material-symbols-outlined">search</span>
-                            <input className="dp-search-input" id="deptSearch" placeholder="Search departments..." type="text"/>
+                            <input className="dp-search-input" id="deptSearch" placeholder="Search departments..." type="text" />
                         </label>
-                        <button type="button" className="dp-btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
-                            <span className="material-symbols-outlined">add</span>
-                            Add Department
-                        </button>
+                        {hasPermission("dept.create") && (
+                            <button type="button" className="dp-btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
+                                <span className="material-symbols-outlined">add</span>
+                                Add Department
+                            </button>
+                        )}
                     </div>
                 </div>
 
@@ -147,34 +219,45 @@ export default function Department() {
             </div>
 
             {/* <!-- Add Department Modal --> */}
-            <div className="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+            <div className="modal fade" id="addModal" tabIndex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content">
                         <div className="modal-header">
                             <h3 className="modal-title fs-5" id="addModalLabel">Add Department</h3>
-                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" onClick={resetFrom} className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <form className="dp-toast-form" data-toast-message="Department added successfully!">
                             <div className="modal-body d-flex flex-column gap-md">
                                 <div>
-                                    <label className="dp-form-label" for="addName">Department Name <span className="dp-required">*</span></label>
-                                    <input className="form-control dp-form-control" id="addName" placeholder="e.g. Cardiology" required type="text"/>
+                                    <label className="dp-form-label" htmlFor="addName">Department Name <span className="dp-required">*</span></label>
+                                    <input className="form-control dp-form-control" value={name} onChange={(e) => setName(e.target.value)} id="addName" placeholder="e.g. Cardiology" required type="text" />
+                                    {errors.name && (
+                                        <div className="text-danger mt-1"> {errors.name[0]} </div>
+                                    )}
                                 </div>
                                 <div>
-                                    <label className="dp-form-label" for="addDescription">Description</label>
-                                    <textarea className="form-control dp-form-control" id="addDescription" placeholder="Brief description of the unit..." rows="3"></textarea>
+                                    <label className="dp-form-label" htmlFor="addDescription">Description</label>
+                                    <textarea className="form-control dp-form-control" value={short_description} onChange={(e) => setShort_description(e.target.value)} id="addDescription" placeholder="Brief description of the unit..." rows="3"></textarea>
+                                    {errors.short_description && (
+                                        <div className="text-danger mt-1"> {errors.short_description[0]} </div>
+                                    )}
                                 </div>
                                 <div>
-                                    <label className="dp-form-label" for="addStatus">Status</label>
-                                    <select className="form-select dp-form-control" id="addStatus">
-                                        <option value="active">Active</option>
-                                        <option value="inactive">Inactive</option>
+                                    <label className="dp-form-label" htmlFor="addStatus">Status</label>
+                                    <select className="form-select dp-form-control" id="addStatus"
+                                        value={isActive ? "1" : "0"}
+                                        onChange={(e) => setIsActive(e.target.value === "1")}>
+
+                                        <option value="1">Active</option>
+                                        <option value="0">Inactive</option>
                                     </select>
                                 </div>
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button type="submit" className="btn dp-btn-primary">Save Department</button>
+                                <button type="submit" onClick={handelSubmit} className="btn dp-btn-primary">
+                                    {saving ? 'Saving...' : 'Save'}
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -182,7 +265,7 @@ export default function Department() {
             </div>
 
             {/* <!-- Edit Department Modal --> */}
-            <div className="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div className="modal fade" id="editModal" tabIndex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -192,15 +275,15 @@ export default function Department() {
                         <form className="dp-toast-form" data-toast-message="Department updated successfully!">
                             <div className="modal-body d-flex flex-column gap-md">
                                 <div>
-                                    <label className="dp-form-label" for="editName">Department Name <span className="dp-required">*</span></label>
-                                    <input className="form-control dp-form-control" id="editName" required type="text" value="Medicine"/>
+                                    <label className="dp-form-label" htmlFor="editName">Department Name <span className="dp-required">*</span></label>
+                                    <input className="form-control dp-form-control" id="editName" required type="text" value="Medicine" />
                                 </div>
                                 <div>
-                                    <label className="dp-form-label" for="editDescription">Description</label>
+                                    <label className="dp-form-label" htmlFor="editDescription">Description</label>
                                     <textarea className="form-control dp-form-control" id="editDescription" rows="3">General internal medicine and primary care unit.</textarea>
                                 </div>
                                 <div>
-                                    <label className="dp-form-label" for="editStatus">Status</label>
+                                    <label className="dp-form-label" htmlFor="editStatus">Status</label>
                                     <select className="form-select dp-form-control" id="editStatus">
                                         <option selected value="active">Active</option>
                                         <option value="inactive">Inactive</option>
@@ -217,7 +300,7 @@ export default function Department() {
             </div>
 
             {/* <!-- Delete Confirmation Modal --> */}
-            <div className="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+            <div className="modal fade" id="deleteModal" tabIndex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered modal-sm">
                     <div className="modal-content">
                         <div className="modal-body text-center py-lg">

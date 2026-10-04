@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('short_description', 500)->nullable();
+            $table->string('dashboard_route')->default('/');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

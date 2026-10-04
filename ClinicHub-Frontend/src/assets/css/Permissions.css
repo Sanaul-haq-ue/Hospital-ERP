@@ -226,6 +226,35 @@
     border-top: 2px solid var(--outline-variant);
 }
 
+/* ---------- section header rows (parent menu items) ---------- */
+.matrix-table tbody tr.row-section-header {
+    background: var(--surface-container-low);
+    border-top: 2px solid var(--outline-variant);
+    border-bottom: 1px solid var(--outline-variant);
+}
+
+.matrix-table tbody tr.row-section-header:hover {
+    background: var(--surface-container-low);
+}
+
+.matrix-table tbody tr.row-section-header td {
+    padding: .55rem var(--sp-lg);
+}
+
+.module-cell-section {
+    font-size: var(--fs-label-md);
+    font-weight: var(--fw-label-lg, 600);
+    color: var(--primary);
+    letter-spacing: .03em;
+    text-transform: uppercase;
+    gap: var(--sp-sm);
+}
+
+.module-cell-section .material-symbols-outlined {
+    font-size: 17px;
+    color: var(--primary) !important;
+}
+
 .matrix-table td {
     padding: .6rem var(--sp-md);
     font-size: var(--fs-body-sm);

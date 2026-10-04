@@ -170,6 +170,15 @@ body {
   min-height: 100vh;
 }
 
+.main-canvas {
+  min-height: 100vh;
+}
+
+.modal-body {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
 .font-mono {
   font-family: 'Geist', monospace;
 }
@@ -427,4 +436,369 @@ button {
 .nav-sublink.active {
   color: var(--primary);
   font-weight: 600;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================================================
+   User Profile Modal — Bootstrap 5 companion styles
+   Assumes your existing :root / [data-theme="dark"] token
+   file (with --primary, --on-surface, --outline-variant, etc.)
+   is already loaded on the page.
+   ========================================================= */
+
+.font-mono {
+  font-family: 'Geist', monospace;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.letter-spacing-2 {
+  letter-spacing: .2em;
+}
+
+/* ---------- Overlay ---------- */
+.modal-overlay-custom {
+  background: rgba(11, 28, 48, .4);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  padding: var(--sp-md);
+}
+
+/* ---------- Modal shell ---------- */
+.modal-content-custom {
+  background: var(--surface-container-lowest);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  max-height: 90vh;
+}
+
+.modal-body-custom {
+  overflow-y: auto;
+  max-height: 70vh;
+  padding: var(--sp-lg);
+}
+
+.modal-header-custom,
+.modal-footer-custom {
+  background: color-mix(in srgb, var(--surface-container-low) 60%, transparent);
+  border-color: var(--outline-variant);
+  padding: var(--sp-md) var(--sp-lg);
+}
+
+.modal-title-custom {
+  color: var(--on-background);
+  font-weight: 700;
+}
+
+.btn-close-custom {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--radius-lg);
+  background: transparent;
+  color: var(--outline);
+  transition: background-color .2s, color .2s;
+}
+
+.btn-close-custom:hover {
+  color: var(--on-surface);
+  background: var(--surface-variant);
+}
+
+.icon-chip-primary {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  color: var(--primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ---------- Profile summary card ---------- */
+.summary-card-custom {
+  background: color-mix(in srgb, var(--surface-container-low) 40%, transparent);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-xl);
+}
+
+.avatar-img-custom {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--primary-container);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .12);
+}
+
+.status-dot-badge {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--surface-container-lowest);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-container-lowest);
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--tertiary);
+  display: inline-block;
+}
+
+.text-tertiary-tok {
+  color: var(--tertiary);
+}
+
+.role-badge-custom {
+  border: 1px solid var(--outline-variant);
+  background: transparent;
+  color: var(--on-surface);
+  font-weight: 500;
+  font-size: var(--fs-label-md);
+  padding: .3rem .65rem;
+  border-radius: var(--radius-full);
+}
+
+.status-tag-custom {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  background: color-mix(in srgb, var(--tertiary) 12%, transparent);
+  color: var(--tertiary);
+  font-weight: 600;
+  font-size: .75rem;
+  padding: .3rem .75rem;
+  border-radius: var(--radius-full);
+}
+
+/* ---------- Section labels ---------- */
+.section-label-custom {
+  font-size: var(--fs-label-md);
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+/* ---------- Info panels ---------- */
+.info-panel-custom {
+  background: var(--surface-container-lowest);
+  border: 1px solid color-mix(in srgb, var(--outline-variant) 80%, transparent);
+  border-radius: var(--radius-xl);
+  padding: var(--sp-md);
+  margin: 0;
+}
+
+.field-pill-custom {
+  background: color-mix(in srgb, var(--surface-container-low) 60%, transparent);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-lg);
+}
+
+.btn-icon-custom {
+  border: none;
+  background: transparent;
+  color: var(--outline);
+  padding: .2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: color .2s;
+}
+
+.btn-icon-custom:hover {
+  color: var(--primary);
+}
+
+/* ---------- Document cards ---------- */
+.doc-card-custom {
+  background: color-mix(in srgb, var(--surface-container-low) 40%, transparent);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-xl);
+  transition: border-color .2s;
+}
+
+.doc-card-custom:hover {
+  border-color: color-mix(in srgb, var(--primary) 40%, transparent);
+}
+
+.doc-icon-chip {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-lg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.doc-icon-chip-primary {
+  background: color-mix(in srgb, var(--primary-container) 10%, transparent);
+  color: var(--primary);
+}
+
+.doc-icon-chip-secondary {
+  background: color-mix(in srgb, var(--secondary-container) 30%, transparent);
+  color: var(--secondary);
+}
+
+.verified-badge-custom {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  background: color-mix(in srgb, var(--tertiary-container) 10%, transparent);
+  color: var(--tertiary);
+  border: 1px solid color-mix(in srgb, var(--tertiary) 20%, transparent);
+  font-size: 11px;
+  font-weight: 500;
+  padding: .15rem .55rem;
+  border-radius: var(--radius-full);
+}
+
+/* ---------- Buttons ---------- */
+.btn-doc-primary {
+  background: var(--primary);
+  color: var(--on-primary);
+  border: none;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .08);
+}
+
+.btn-doc-primary:hover {
+  background: color-mix(in srgb, var(--primary) 90%, black);
+  color: var(--on-primary);
+}
+
+.btn-doc-secondary {
+  background: var(--secondary);
+  color: var(--on-secondary);
+  border: none;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .08);
+}
+
+.btn-doc-secondary:hover {
+  background: color-mix(in srgb, var(--secondary) 90%, black);
+  color: var(--on-secondary);
+}
+
+.btn-brand-primary {
+  background: var(--primary);
+  color: var(--on-primary);
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: .5rem 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .08);
+}
+
+.btn-brand-primary:hover {
+  background: color-mix(in srgb, var(--primary) 90%, black);
+  color: var(--on-primary);
+}
+
+.btn-outline-secondary-custom {
+  border: 1px solid var(--outline);
+  color: var(--on-surface-variant);
+  background: transparent;
+  border-radius: var(--radius-lg);
+  padding: .5rem 1rem;
+}
+
+.btn-outline-secondary-custom:hover {
+  background: var(--surface-variant);
+}
+
+.text-primary-tok {
+  color: var(--primary);
+}
+
+/* =========================================================
+   Responsive tweaks
+   ========================================================= */
+@media (max-width: 575.98px) {
+  .modal-body-custom {
+    padding: var(--sp-md);
+  }
+
+  .modal-header-custom,
+  .modal-footer-custom {
+    padding: var(--sp-sm) var(--sp-md);
+  }
+
+  .avatar-img-custom {
+    width: 64px;
+    height: 64px;
+  }
+
+  .modal-footer-custom {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .modal-footer-custom>div:last-child {
+    display: flex;
+    gap: .5rem;
+  }
+
+  .modal-footer-custom .btn {
+    flex: 1;
+  }
+}
+
+@media (min-width: 576px) {
+  .border-sm-top-0 {
+    border-top: none !important;
+    padding-top: 0 !important;
+  }
 }

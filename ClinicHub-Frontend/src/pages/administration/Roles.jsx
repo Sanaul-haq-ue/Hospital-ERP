@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import "../../assets/css/Roles.css"
 import api from '../../api/axios';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { hasPermission } from "../../utils/permissions";
 
 export default function Roles() {
     const [roles, setRoles] = useState([]);
@@ -42,6 +42,11 @@ export default function Roles() {
         try {
             const payload = { name: name.trim(), short_description, is_active: isActive };
             const response = await api.post('/store-role', payload);
+
+            setRoles((prevRoles) => [
+                response.data,
+                ...prevRoles,
+            ]);
 
             document.activeElement?.blur();
             window.bootstrap.Modal.getInstance(
@@ -90,9 +95,6 @@ export default function Roles() {
 
             const payload = { name: name.trim(), short_description, is_active: isActive };
 
-            console.log("Update Role ID:", editingRole.id);
-            console.log("Update Payload:", payload);
-
             const response = await api.put(`/update-role/${editingRole.id}`, payload);
 
             setRoles((prevRole) => prevRole.map((role) => role.id === editingRole.id ? response.data : role));
@@ -131,10 +133,12 @@ export default function Roles() {
                         <p className="page-subtext">Create and manage user roles and their access levels.</p>
                     </div>
                     <div className="d-flex align-items-center gap-2 flex-shrink-0">
-                        <button type="button" className="btn btn-brand-primary" data-bs-toggle="modal" data-bs-target="#addModal" data-modal-title="Add New Role">
-                            <span className="material-symbols-outlined fs-sm" onClick={resetFrom}>add</span>
-                            Add Role
-                        </button>
+                        {hasPermission("roles.create") && (
+                            <button type="button" className="btn btn-brand-primary" data-bs-toggle="modal" data-bs-target="#addModal" data-modal-title="Add New Role">
+                                <span className="material-symbols-outlined fs-sm" onClick={resetFrom}>add</span>
+                                Add Role
+                            </button>
+                        )}
                     </div>
                 </div>
 
@@ -159,9 +163,11 @@ export default function Roles() {
                                         </div>
                                     </div>
                                     <div className="role-card-actions">
-                                        <button type="button" onClick={() => handelEdit(role)} className="btn-icon-ghost" aria-label="Edit" data-bs-toggle="modal" data-bs-target="#editModal" data-modal-title="Edit Role">
-                                            <span className="material-symbols-outlined fs-sm">edit</span>
-                                        </button>
+                                        {hasPermission("roles.edit") && (
+                                            <button type="button" onClick={() => handelEdit(role)} className="btn-icon-ghost" aria-label="Edit" data-bs-toggle="modal" data-bs-target="#editModal" data-modal-title="Edit Role">
+                                                <span className="material-symbols-outlined fs-sm">edit</span>
+                                            </button>
+                                        )}
                                     </div>
                                 </div>
                                 <p className="role-card-desc">{role.short_description || 'no Description yet'}</p>
@@ -194,7 +200,8 @@ export default function Roles() {
                                     <div className="text-danger mt-1">
                                         {errors.name[0]}
                                     </div>
-                                )}                           </div>
+                                )}
+                            </div>
                             <div>
                                 <label htmlFor="role-desc" className="form-label form-label-brand">Short Description</label>
                                 <textarea className="form-control form-control-brand" id="role-desc" rows="3" placeholder="Briefly describe the purpose of this role..."

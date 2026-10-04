@@ -600,3 +600,367 @@
 .material-symbols-outlined.fs-sm {
     font-size: 18px;
 }
+
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    border: 0;
+    background: transparent;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--on-surface-variant);
+    cursor: pointer;
+}
+
+.password-toggle:hover {
+    color: var(--primary);
+}
+
+.password-toggle .material-symbols-outlined {
+    font-size: 20px;
+}
+
+
+/* =============================================================
+   VIEW USER MODAL — custom classes
+   ============================================================= */
+
+/* --- Overlay / backdrop --- */
+.modal-overlay-custom {
+    position: fixed;
+    inset: 0;
+    z-index: 1055;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    overflow-y: auto;
+    animation: fadeInOverlay 0.18s ease;
+}
+
+@keyframes fadeInOverlay {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* --- Modal shell --- */
+.modal-content-custom {
+    background: var(--surface-container-lowest);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-xl);
+    color: var(--on-surface);
+    box-shadow: 0 8px 32px rgba(11, 28, 48, 0.18);
+    animation: slideUpModal 0.22s ease;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 100%;
+}
+
+/* Card sizing wrapper — constrains width inside the overlay */
+.view-modal-card {
+    width: 100%;
+    max-width: 800px;
+}
+
+@keyframes slideUpModal {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Modal header --- */
+.modal-header-custom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--outline-variant);
+    background: var(--surface-container-low);
+    flex-shrink: 0;
+}
+
+.modal-title-custom {
+    font-size: var(--fs-headline-sm);
+    font-weight: var(--fw-headline-sm);
+    color: var(--on-background);
+}
+
+/* Icon chip (header icon badge) */
+.icon-chip-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-lg);
+    background: var(--primary-container);
+    color: var(--on-primary-container);
+    flex-shrink: 0;
+}
+
+/* --- Close button (X) --- */
+.btn-close-custom {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-full);
+    border: none;
+    background: transparent;
+    color: var(--on-surface-variant);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.btn-close-custom:hover {
+    background: var(--surface-container-high);
+    color: var(--on-surface);
+}
+
+/* --- Modal body --- */
+.modal-body-custom {
+    padding: 1.25rem;
+    overflow-y: auto;
+    flex: 1 1 auto;
+}
+
+/* --- Profile summary card (top block with avatar) --- */
+.summary-card-custom {
+    background: var(--surface-container-low);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-xl);
+}
+
+/* Avatar image */
+.avatar-img-custom {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 3px solid var(--surface-container-lowest);
+    background: var(--surface-container);
+    display: block;
+}
+
+/* Status dot badge (coloured dot on avatar corner) */
+.status-dot-badge {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    border-radius: var(--radius-full);
+    border: 2px solid var(--surface-container-lowest);
+    background: var(--tertiary);
+}
+
+.status-dot-badge .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-full);
+    background: #fff;
+}
+
+/* Role badge inside modal */
+.role-badge-custom {
+    background: rgba(37, 99, 235, .12);
+    color: var(--primary);
+    border: 1px solid rgba(37, 99, 235, .22);
+    border-radius: var(--radius-full);
+    font-size: 11px;
+    font-weight: var(--fw-label-md);
+    padding: .15rem .6rem;
+}
+
+/* Status tag (Active / Inactive) */
+.status-tag-custom {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    background: rgba(0, 125, 85, .1);
+    color: var(--tertiary);
+    border-radius: var(--radius-full);
+    font-size: 11px;
+    font-weight: var(--fw-label-md);
+    padding: .25rem .75rem;
+}
+
+.status-tag-custom .status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: var(--radius-full);
+    background: var(--tertiary);
+    flex-shrink: 0;
+}
+
+/* --- Section label (h4 inside body sections) --- */
+.section-label-custom {
+    font-size: var(--fs-label-md);
+    font-weight: var(--fw-label-md);
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--on-surface-variant);
+}
+
+/* Color token shorthands used in modal */
+.text-primary-tok  { color: var(--primary); }
+.text-tertiary-tok { color: var(--tertiary); }
+
+/* --- Info panel (grid of label + value rows) --- */
+.info-panel-custom {
+    background: var(--surface-container-low);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-xl);
+    padding: 1rem;
+}
+
+/* --- Field pill (username / password row) --- */
+.field-pill-custom {
+    background: var(--surface-container);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-lg);
+    font-size: var(--fs-body-sm);
+}
+
+/* letter-spacing util used on password dots */
+.letter-spacing-2 {
+    letter-spacing: .2em;
+}
+
+/* Small icon button inside field pill */
+.btn-icon-custom {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius);
+    border: none;
+    background: transparent;
+    color: var(--on-surface-variant);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.btn-icon-custom:hover {
+    background: var(--surface-variant);
+    color: var(--primary);
+}
+
+/* --- Document cards (NID / Passport) --- */
+.doc-card-custom {
+    background: var(--surface-container-low);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-xl);
+}
+
+/* Document icon chips */
+.doc-icon-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-lg);
+    flex-shrink: 0;
+}
+
+.doc-icon-chip-primary {
+    background: var(--primary-container);
+    color: var(--on-primary-container);
+}
+
+.doc-icon-chip-secondary {
+    background: var(--secondary-container);
+    color: var(--on-secondary-container);
+}
+
+/* Verified badge */
+.verified-badge-custom {
+    display: inline-flex;
+    align-items: center;
+    gap: .25rem;
+    background: rgba(0, 125, 85, .1);
+    color: var(--tertiary);
+    border: 1px solid rgba(0, 125, 85, .2);
+    border-radius: var(--radius-full);
+    font-size: 11px;
+    font-weight: var(--fw-label-md);
+    padding: .15rem .55rem;
+    white-space: nowrap;
+}
+
+/* Document download buttons */
+.btn-doc-primary {
+    background: var(--primary-container);
+    color: var(--on-primary-container);
+    border: 1px solid rgba(37, 99, 235, .2);
+    border-radius: var(--radius-lg);
+    font-size: var(--fs-label-md);
+    font-weight: var(--fw-label-md);
+    padding: .3rem .75rem;
+    transition: filter 0.15s ease;
+}
+
+.btn-doc-primary:hover {
+    filter: brightness(0.92);
+}
+
+.btn-doc-secondary {
+    background: var(--secondary-container);
+    color: var(--on-secondary-container);
+    border: 1px solid rgba(0, 106, 97, .2);
+    border-radius: var(--radius-lg);
+    font-size: var(--fs-label-md);
+    font-weight: var(--fw-label-md);
+    padding: .3rem .75rem;
+    transition: filter 0.15s ease;
+}
+
+.btn-doc-secondary:hover {
+    filter: brightness(0.92);
+}
+
+/* --- Modal footer --- */
+.modal-footer-custom {
+    border-top: 1px solid var(--outline-variant);
+    background: var(--surface-container-low);
+    padding: .875rem 1.25rem;
+    flex-shrink: 0;
+}
+
+/* Outline secondary button (modal Close button) */
+.btn-outline-secondary-custom {
+    background: transparent;
+    border: 1px solid var(--outline);
+    color: var(--on-surface-variant);
+    border-radius: var(--radius-lg);
+    font-size: var(--fs-label-md);
+    font-weight: var(--fw-label-md);
+    padding: .5rem 1.125rem;
+    transition: background-color 0.15s ease;
+}
+
+.btn-outline-secondary-custom:hover {
+    background: var(--surface-container);
+    color: var(--on-surface);
+}
+
+/* font-mono utility (fallback if not globally defined) */
+.font-mono {
+    font-family: 'Geist', ui-monospace, monospace;
+}

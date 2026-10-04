@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";

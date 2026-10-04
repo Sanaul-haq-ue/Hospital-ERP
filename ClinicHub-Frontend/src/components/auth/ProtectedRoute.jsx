@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import { Navigate, Outlet, useNavigate } from 'react-router-dom'
-import api from '../api/axios'
+import api from "../../api/axios";
 
 const IDLE_LIMIT = 15 * 60 * 1000 // 15 minutes
 

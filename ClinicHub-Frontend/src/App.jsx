@@ -7,7 +7,6 @@ import Dashboard from './pages/dashboard/Dashboard'
 import DashboardDoctor from './pages/dashboard/DashboardDoctor'
 
 import DoctorManage from './pages/doctor/DoctorManage'
-import Department from './pages/doctor/Department'
 import Specialization from './pages/doctor/Specialization'
 import SubSpecialization from './pages/doctor/SubSpecialization'
 
@@ -21,15 +20,19 @@ import Patient from './pages/patientCare/Patient'
 import DoctorSchedule from './pages/patientCare/DoctorSchedule'
 import Queue from './pages/patientCare/Queue'
 
+import Department from './pages/hr/Department'
+
 import UsersManagement from './pages/administration/UsersManagement'
 import Roles from './pages/administration/Roles'
 import Permissions from './pages/administration/Permissions'
 import Activity from './pages/administration/Activity'
 
 import Login from './pages/loginRegister/Login'
+import NotFound from './pages/errors/NotFound'
 
-import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 import DashboardLayout from "./layouts/DashboardLayout";
+import PermissionRoute from "./components/auth/PermissionRoute";
 
 function App() {
 
@@ -44,13 +47,16 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route element={<DashboardLayout />}>
 
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/dashboard-doctor" element={<DashboardDoctor />} />
+            <Route element={<PermissionRoute permission="dashboard.view" />}>
+              <Route path="/" element={<Dashboard />} />
+            </Route>
+            <Route element={<PermissionRoute permission="doctor_dashboard.view" />}>
+              <Route path="/dashboard-doctor" element={<DashboardDoctor />} />
+            </Route>
 
             <Route path="/consultation" element={<Consultation />} />
 
             <Route path="/doctor/manage" element={<DoctorManage />} />
-            <Route path="/doctor/department" element={<Department />} />
             <Route path="/doctor/specialization" element={<Specialization />} />
             <Route path="/doctor/sub-specialization" element={<SubSpecialization />} />
 
@@ -62,18 +68,26 @@ function App() {
             <Route path="/patient-care/doctor-schedule" element={<DoctorSchedule />} />
             <Route path="/patient-care/queue" element={<Queue />} />
 
-            <Route path="/administration/users" element={<UsersManagement />} />
-            <Route path="/administration/roles" element={<Roles />} />
-            <Route path="/administration/permissions" element={<Permissions />} />
+            <Route path="/hr/department" element={<Department />} />
+
+            <Route element={<PermissionRoute permission="users.view" />}>
+              <Route path="/administration/users" element={<UsersManagement />} />
+            </Route>
+            <Route element={<PermissionRoute permission="roles.view" />}>
+              <Route path="/administration/roles" element={<Roles />} />
+            </Route>
+            <Route element={<PermissionRoute permission="permission.view" />}>
+              <Route path="/administration/permissions" element={<Permissions />} />
+            </Route>
             <Route path="/administration/activity" element={<Activity />} />
 
           </Route>
         </Route>
-
+        <Route path="*" element={<NotFound />} />
 
       </Routes>
       <ToastContainer position="top-right" autoClose={3000} />
-    </BrowserRouter>
+    </BrowserRouter >
 
   )
 }

@@ -1,6 +1,7 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import api from '../api/axios';
+import { hasPermission } from "../utils/permissions";
 
 export default function Navbar({ collapsed }) {
     const location = useLocation();
@@ -53,7 +54,7 @@ export default function Navbar({ collapsed }) {
         } finally {
             localStorage.removeItem('token');
             localStorage.removeItem('user');
-            navigate('/login', {state:{ loggedOut: true}});
+            navigate('/login', { state: { loggedOut: true } });
         }
     }
 
@@ -82,15 +83,18 @@ export default function Navbar({ collapsed }) {
             </NavLink>
 
             <div className="nav-links">
-                <NavLink to="/" className={({ isActive }) => `nav-link-item ${isActive ? "active" : ""}`}>
-                    <span className="material-symbols-outlined" data-weight="fill">dashboard</span>
-                    <span className="text-label-md">Dashboard</span>
-                </NavLink>
-
-                <NavLink to="/dashboard-doctor" className={({ isActive }) => `nav-link-item ${isActive ? "active" : ""}`}>
-                    <span className="material-symbols-outlined" data-weight="fill">dashboard</span>
-                    <span className="text-label-md">Doctor Dashboard</span>
-                </NavLink>
+                {hasPermission("dashboard.view") && (
+                    <NavLink to="/" className={({ isActive }) => `nav-link-item ${isActive ? "active" : ""}`}>
+                        <span className="material-symbols-outlined" data-weight="fill">dashboard</span>
+                        <span className="text-label-md">Dashboard</span>
+                    </NavLink>
+                )}
+                {hasPermission("doctor_dashboard.view") && (
+                    <NavLink to="/dashboard-doctor" className={({ isActive }) => `nav-link-item ${isActive ? "active" : ""}`}>
+                        <span className="material-symbols-outlined" data-weight="fill">dashboard</span>
+                        <span className="text-label-md">Doctor Dashboard</span>
+                    </NavLink>
+                )}
 
                 <div className="nav-group">
                     <button
@@ -112,9 +116,6 @@ export default function Navbar({ collapsed }) {
                         <div className="nav-submenu" ref={contentRef}>
                             <NavLink to="/doctor/manage" className={({ isActive }) => `nav-sublink ${isActive ? "active" : ""}`}>
                                 Doctor Manage
-                            </NavLink>
-                            <NavLink to="/doctor/department" className={({ isActive }) => `nav-sublink ${isActive ? "active" : ""}`}>
-                                Department
                             </NavLink>
                             <NavLink to="/doctor/specialization" className={({ isActive }) => `nav-sublink ${isActive ? "active" : ""}`}>
                                 Specialization
@@ -245,6 +246,11 @@ export default function Navbar({ collapsed }) {
                             <NavLink to="/hr/employees" className={({ isActive }) => `nav-sublink ${isActive ? "active" : ""}`} >
                                 Employees
                             </NavLink>
+                            {hasPermission("dept.view") && (
+                                <NavLink to="/hr/department" className={({ isActive }) => `nav-sublink ${isActive ? "active" : ""}`}>
+                                    Department
+                                </NavLink>
+                            )}
                             <NavLink to="/hr/attendance" className={({ isActive }) => `nav-sublink ${isActive ? "active" : ""}`} >
                                 Attendance
                             </NavLink>
@@ -270,18 +276,21 @@ export default function Navbar({ collapsed }) {
 
                     <div className="nav-submenu-wrap" style={{ maxHeight: adminOpen ? `${adminContentRef.current?.scrollHeight ?? 300}px` : "0px", }} >
                         <div className="nav-submenu" ref={adminContentRef}>
-
-                            <NavLink to="/administration/users" className={({ isActive }) => `nav-sublink ${isActive ? "active" : ""}`}>
-                                Users
-                            </NavLink>
-
-                            <NavLink to="/administration/roles" className={({ isActive }) => `nav-sublink ${isActive ? "active" : ""}`}>
-                                Roles
-                            </NavLink>
-
-                            <NavLink to="/administration/permissions" className={({ isActive }) => `nav-sublink ${isActive ? "active" : ""}`}>
-                                Permissions
-                            </NavLink>
+                            {hasPermission("users.view") && (
+                                <NavLink to="/administration/users" className={({ isActive }) => `nav-sublink ${isActive ? "active" : ""}`}>
+                                    Users
+                                </NavLink>
+                            )}
+                            {hasPermission("roles.view") && (
+                                <NavLink to="/administration/roles" className={({ isActive }) => `nav-sublink ${isActive ? "active" : ""}`}>
+                                    Roles
+                                </NavLink>
+                            )}
+                            {hasPermission("permission.view") && (
+                                <NavLink to="/administration/permissions" className={({ isActive }) => `nav-sublink ${isActive ? "active" : ""}`}>
+                                    Permissions
+                                </NavLink>
+                            )}
                             <NavLink to="/administration/activity" className={({ isActive }) => `nav-sublink ${isActive ? "active" : ""}`}>
                                 User Activity
                             </NavLink>
