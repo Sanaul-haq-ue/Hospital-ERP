@@ -8,6 +8,7 @@ use App\Http\Controllers\administration\RoleController;
 use App\Http\Controllers\Administration\PermissionController;
 
 use App\Http\Controllers\hr\DeptController;
+use App\Http\Controllers\hr\EmployeeController;
 
 
 Route::post('/login',[AuthController::class,'login']);
@@ -39,6 +40,9 @@ Route::middleware('auth:sanctum')->group(function(){
 
     Route::get('/dept',[DeptController::class,'index']);
     Route::post('/store/dept',[DeptController::class,'store']);
-    Route::put('/update/dept/{id}',[DeptController::class,'update']);
+    Route::post('/update/dept/{id}',[DeptController::class,'update']);
+    Route::delete('/delete/dept/{id}', [DeptController::class, 'destroy']);
+
+    Route::post('/employees/store', [EmployeeController::class, 'store']);
 
 });

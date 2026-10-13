@@ -6,7 +6,6 @@ import './App.css'
 import Dashboard from './pages/dashboard/Dashboard'
 import DashboardDoctor from './pages/dashboard/DashboardDoctor'
 
-import DoctorManage from './pages/doctor/DoctorManage'
 import Specialization from './pages/doctor/Specialization'
 import SubSpecialization from './pages/doctor/SubSpecialization'
 
@@ -20,6 +19,7 @@ import Patient from './pages/patientCare/Patient'
 import DoctorSchedule from './pages/patientCare/DoctorSchedule'
 import Queue from './pages/patientCare/Queue'
 
+import Employee from './pages/hr/Employee'
 import Department from './pages/hr/Department'
 
 import UsersManagement from './pages/administration/UsersManagement'
@@ -56,7 +56,6 @@ function App() {
 
             <Route path="/consultation" element={<Consultation />} />
 
-            <Route path="/doctor/manage" element={<DoctorManage />} />
             <Route path="/doctor/specialization" element={<Specialization />} />
             <Route path="/doctor/sub-specialization" element={<SubSpecialization />} />
 
@@ -67,8 +66,13 @@ function App() {
             <Route path="/patient-care/patients" element={<Patient />} />
             <Route path="/patient-care/doctor-schedule" element={<DoctorSchedule />} />
             <Route path="/patient-care/queue" element={<Queue />} />
-
-            <Route path="/hr/department" element={<Department />} />
+            
+            <Route element={<PermissionRoute permission="employees.view" />}>
+              <Route path="/hr/employees" element={<Employee />} />
+            </Route>
+            <Route element={<PermissionRoute permission="dept.view" />}>
+              <Route path="/hr/department" element={<Department />} />
+            </Route>
 
             <Route element={<PermissionRoute permission="users.view" />}>
               <Route path="/administration/users" element={<UsersManagement />} />
