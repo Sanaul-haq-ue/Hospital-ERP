@@ -43,6 +43,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/update/dept/{id}',[DeptController::class,'update']);
     Route::delete('/delete/dept/{id}', [DeptController::class, 'destroy']);
 
+    Route::get('/employees', [EmployeeController::class, 'index']);
     Route::post('/employees/store', [EmployeeController::class, 'store']);
 
 });

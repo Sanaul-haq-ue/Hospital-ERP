@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\hr;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\hr\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -27,6 +28,23 @@ class EmployeeController extends Controller
         if (!$hasPermission) {
             abort(403, 'You do not have permission to perform this action.');
         }
+    }
+
+    public function index(Request $request)
+    {
+        $this->checkPermission($request->user(), 'employees.view');
+
+        return Employee::with([
+            'department:id,parent_id,department_code,name',
+            'department.parent:id,parent_id,department_code,name',
+            'department.parent.parent:id,parent_id,department_code,name',
+            'department.parent.parent.parent:id,parent_id,department_code,name',
+            'educations',
+            'experiences',
+            'schedules',
+        ])
+            ->latest()
+            ->get();
     }
 
     public function store(Request $request)
@@ -87,6 +105,7 @@ class EmployeeController extends Controller
             // The existing employees table stores this field as full_name.
             $employeeData['full_name'] = $employeeData['name'];
             unset($employeeData['name']);
+            $employeeData['created_by'] = $request->user()->id;
             // employee_code is NOT NULL, so provide a unique temporary value for INSERT.
             $employeeData['employee_code'] = 'EMP-TMP-' . Str::uuid();
             $employee = Employee::create($employeeData);

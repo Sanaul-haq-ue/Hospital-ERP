@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import api from "../../api/axios";
 import { toast } from 'react-toastify';
 import "../../assets/css/Employee.css"
@@ -8,6 +8,10 @@ export default function Employee() {
     const [experienceEntries, setExperienceEntries] = useState([0]);
     const [photoPreview, setPhotoPreview] = useState("");
     const [saving, setSaving] = useState(false);
+    const [employees, setEmployees] = useState([]);
+    const [selectedEmployee, setSelectedEmployee] = useState(null);
+    const [loadingEmployees, setLoadingEmployees] = useState(true);
+    const [employeeLoadError, setEmployeeLoadError] = useState("");
     const [errors, setErrors] = useState({});
     const [departments, setDepartments] = useState([]);
     const [departmentSearch, setDepartmentSearch] = useState("");
@@ -15,7 +19,29 @@ export default function Employee() {
     const [selectedDepartmentId, setSelectedDepartmentId] = useState("");
     const [departmentDropdownOpen, setDepartmentDropdownOpen] = useState(false);
     const [departmentLoadError, setDepartmentLoadError] = useState("");
+    const currentUserId = (() => {
+        try {
+            return JSON.parse(localStorage.getItem("user") || "null")?.id ?? "";
+        } catch {
+            return "";
+        }
+    })();
     const addEntry = (setEntries) => setEntries((entries) => [...entries, Date.now() + Math.random()]);
+
+    const fetchEmployees = useCallback(async () => {
+        setLoadingEmployees(true);
+        try {
+            const response = await api.get("/employees");
+            setEmployees(response.data);
+            setEmployeeLoadError("");
+        } catch (error) {
+            const message = error.response?.data?.message || "Could not load employees.";
+            setEmployeeLoadError(message);
+            toast.error(message);
+        } finally {
+            setLoadingEmployees(false);
+        }
+    }, []);
 
     useEffect(() => {
         const fetchDepartments = async () => {
@@ -31,7 +57,8 @@ export default function Employee() {
         };
 
         fetchDepartments();
-    }, []);
+        fetchEmployees();
+    }, [fetchEmployees]);
 
     const visibleDepartments = departments.filter((department) =>
         `${department.department_code} ${department.name}`.toLowerCase().includes(departmentSearch.trim().toLowerCase())
@@ -137,6 +164,7 @@ export default function Employee() {
             setEducationEntries([0]);
             setExperienceEntries([0]);
             setErrors({});
+            await fetchEmployees();
             window.bootstrap?.Modal.getInstance(document.getElementById("addEditModal"))?.hide();
             toast.success(`${response.data.message} Employee ID: ${response.data.employee.employee_code}`);
         } catch (error) {
@@ -157,17 +185,14 @@ export default function Employee() {
                 {/* <!-- Page header --> */}
                 <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-md mb-lg">
                     <div style={{ maxWidth: "640px" }}>
-                        <h2 className="text-headline-lg-mobile text-on-surface-tok mb-2">Doctors Directory</h2>
+                        <h2 className="text-headline-lg-mobile text-on-surface-tok mb-2">Employee Directory</h2>
                         <p className="text-body-lg text-on-surface-variant-tok mb-0" style={{ lineHeight: "1.6" }}>
                             Manage employee information, professional details, schedules, and documents across the facility.
                         </p>
                     </div>
                     <div className="d-flex align-items-center gap-sm flex-shrink-0">
-                        <button className="btn-tok btn-outline-tok" type="button">
-                            <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>download</span> Export
-                        </button>
                         <button className="btn-tok btn-primary-tok" type="button" data-bs-toggle="modal" data-bs-target="#addEditModal" onclick="prepareAddDoctor()">
-                            <span className="material-symbols-outlined" style={{ fontSize: "20px" }}>add</span> Add Doctor
+                            <span className="material-symbols-outlined" style={{ fontSize: "20px" }}>add</span> Add Employee
                         </button>
                     </div>
                 </div>
@@ -215,93 +240,69 @@ export default function Employee() {
                             <thead>
                                 <tr>
                                     <th style={{ width: "64px" }}>ID</th>
-                                    <th>Doctor Profile</th>
-                                    <th>Department &amp; Spec.</th>
+                                    <th>Employee Profile</th>
+                                    <th>Department &amp; Designation</th>
                                     <th>Experience</th>
-                                    <th className="text-end">Fee</th>
-                                    <th>Status</th>
                                     <th className="text-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {/* <!-- Row 1 --> */}
-                                <tr>
-                                    <td className="text-data-mono text-on-surface-variant-tok">#1024</td>
-                                    <td>
-                                        <div className="doctor-profile-cell" data-bs-toggle="modal" data-bs-target="#viewModal" onclick="loadDoctorProfile('robert-chen')">
-                                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4FEhJgn5_UqF6aIs_poNRuoh6BPb61QiE6jThqGrZfDXEmhOE7FOC70Z93xfXS-1Any_OggGQSPy7HRgQd_z0WKLdHFqEGJLJCo2-aBJoLg0ZU1tdgkqVPWeviQ0UUh-oV7JvCe2UTXRN5acpZoPrKLj_w66o6MSQJilLM-AT71EHzqTFys58n1K2h2KKPMWo36nHVhUNl0pVw2-LEvXc8cF58fj7lVifjZREwvPRjRJ2bBytrxVM" alt="Dr. Robert Chen" />
-                                            <div>
-                                                <div className="doctor-name">Dr. Robert Chen</div>
-                                                <div className="doctor-contact">r.chen@clinichub.com &bull; +1 555-0198</div>
+                                {loadingEmployees ? (
+                                    <tr><td colSpan="5" className="text-center py-4">Loading employees...</td></tr>
+                                ) : employeeLoadError ? (
+                                    <tr><td colSpan="5" className="text-center py-4 text-danger">{employeeLoadError}</td></tr>
+                                ) : employees.length === 0 ? (
+                                    <tr><td colSpan="5" className="text-center py-4">No employees saved yet.</td></tr>
+                                ) : employees.map((employee) => {
+                                    const imageUrl = employee.profile_photo_path
+                                        ? `${api.defaults.baseURL.replace(/\/api\/?$/, "")}/assets/user/img/${encodeURIComponent(employee.profile_photo_path)}`
+                                        : null;
+                                    return <tr key={employee.id}>
+                                        <td className="text-data-mono text-on-surface-variant-tok">{employee.employee_code}</td>
+                                        <td>
+                                            <div className="doctor-profile-cell">
+                                                {imageUrl ? <img src={imageUrl} alt={employee.full_name} /> : <span className="material-symbols-outlined">person</span>}
+                                                <div>
+                                                    <div className="doctor-name">{employee.full_name}</div>
+                                                    <div className="doctor-contact">{employee.email} &bull; {employee.phone}</div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="text-body-md text-on-surface-tok">Cardiology</div>
-                                        <div className="text-label-md text-on-surface-variant-tok mt-1">Interventional Cardiologist</div>
-                                    </td>
-                                    <td className="text-body-md text-on-surface-tok">15 Years</td>
-                                    <td className="text-data-mono text-on-surface-tok text-end">$250</td>
-                                    <td>
-                                        <span className="badge-status badge-active"><span className="dot"></span>Active</span>
-                                    </td>
-                                    <td className="text-center">
-                                        <div className="row-actions">
-                                            <button className="icon-btn" title="View Profile" data-bs-toggle="modal" data-bs-target="#viewModal" onclick="loadDoctorProfile('robert-chen')"><span className="material-symbols-outlined" style={{ fontSize: "20px" }}>visibility</span></button>
-                                            <button className="icon-btn" title="Edit" data-bs-toggle="modal" data-bs-target="#addEditModal" onclick="prepareEditDoctor('robert-chen')"><span className="material-symbols-outlined" style={{ fontSize: "20px" }}>edit</span></button>
-                                            <button className="icon-btn" title="Delete" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal" onclick="prepareDeleteDoctor('Dr. Robert Chen')"><span className="material-symbols-outlined" style={{ fontSize: "20px" }}>delete</span></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                {/* <!-- Row 2 --> */}
-                                <tr>
-                                    <td className="text-data-mono text-on-surface-variant-tok">#1025</td>
-                                    <td>
-                                        <div className="doctor-profile-cell" data-bs-toggle="modal" data-bs-target="#viewModal" onclick="loadDoctorProfile('elena-rodriguez')">
-                                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD4oP4wP1VaAJ7xs_BKG1rICg7NlJxaYG3jNKMEppPxtoHtCknhPhSKQOVHriy5GzKcMHuvg7BJVl1UZ9iVYUXXN0-RZbRAN7TFqm7NPHBXRs-ub8XhDhVG_-a9hoB8wI3pU68Vot-_cT9iLTWec1sI1XlMfnIe7L4yzYwlALsis9L_P9e9ThU21dRiQW-w64C5uJnypc3l1VkOPhdDRPJ_EYU-w-u12kFvCma6M21dYqF4EDfpHCkH" alt="Dr. Elena Rodriguez" />
-                                            <div>
-                                                <div className="doctor-name">Dr. Elena Rodriguez</div>
-                                                <div className="doctor-contact">e.rodriguez@clinichub.com &bull; +1 555-0211</div>
+                                        </td>
+                                        <td>
+                                            <div className="text-body-md text-on-surface-tok">
+                                                {employee.department ? `${employee.department.name}` : "—"}
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div className="text-body-md text-on-surface-tok">Pediatrics</div>
-                                        <div className="text-label-md text-on-surface-variant-tok mt-1">Neonatal Care</div>
-                                    </td>
-                                    <td className="text-body-md text-on-surface-tok">8 Years</td>
-                                    <td className="text-data-mono text-on-surface-tok text-end">$150</td>
-                                    <td>
-                                        <span className="badge-status badge-active"><span className="dot"></span>Active</span>
-                                    </td>
-                                    <td className="text-center">
-                                        <div className="row-actions">
-                                            <button className="icon-btn" title="View Profile" data-bs-toggle="modal" data-bs-target="#viewModal" onclick="loadDoctorProfile('elena-rodriguez')"><span className="material-symbols-outlined" style={{ fontSize: "20px" }}>visibility</span></button>
-                                            <button className="icon-btn" title="Edit" data-bs-toggle="modal" data-bs-target="#addEditModal" onclick="prepareEditDoctor('elena-rodriguez')"><span className="material-symbols-outlined" style={{ fontSize: "20px" }}>edit</span></button>
-                                            <button className="icon-btn" title="Delete" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal" onclick="prepareDeleteDoctor('Dr. Elena Rodriguez')"><span className="material-symbols-outlined" style={{ fontSize: "20px" }}>delete</span></button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                            <div className="text-label-md text-on-surface-variant-tok mt-1">{employee.designation}</div>
+                                        </td>
+                                        <td className="text-body-md text-on-surface-tok">{employee.experience_years} Years</td>
+                                        <td className="text-center">
+                                            <div className="row-actions">
+                                                <button type="button" className="icon-btn" title="View Employee" aria-label={`View ${employee.full_name}`} data-bs-toggle="modal" data-bs-target="#viewModal" onClick={() => setSelectedEmployee(employee)}>
+                                                    <span className="material-symbols-outlined" style={{ fontSize: "20px" }}>visibility</span>
+                                                </button>
+                                                <button type="button" className="icon-btn" title="Edit Employee" aria-label={`Edit ${employee.full_name}`} data-bs-toggle="modal" data-bs-target="#addEditModal">
+                                                    <span className="material-symbols-outlined" style={{ fontSize: "20px" }}>edit</span>
+                                                </button>
+                                                <button type="button" className="icon-btn" title="Delete Employee" aria-label={`Delete ${employee.full_name}`} data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">
+                                                    <span className="material-symbols-outlined" style={{ fontSize: "20px" }}>delete</span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>;
+                                })}
                             </tbody>
                         </table>
                     </div>
 
                     {/* <!-- Pagination --> */}
                     <div className="table-footer mt-auto">
-                        <span className="text-body-sm text-on-surface-variant-tok">Showing 1 to 2 of 24 entries</span>
-                        <div className="d-flex align-items-center gap-1">
-                            <button className="page-btn" disabled><span className="material-symbols-outlined" style={{ fontSize: "20px" }}>chevron_left</span></button>
-                            <button className="page-btn active">1</button>
-                            <button className="page-btn">2</button>
-                            <button className="page-btn">3</button>
-                            <button className="page-btn"><span className="material-symbols-outlined" style={{ fontSize: "20px" }}>chevron_right</span></button>
-                        </div>
+                        <span className="text-body-sm text-on-surface-variant-tok">{employees.length} employee{employees.length === 1 ? "" : "s"}</span>
                     </div>
                 </div>
             </div>
 
 
-            {/* ADD / EDIT Employee MODAL (Bootstrap modal) */}
+            {/* ADD Employee MODAL */}
             <div className="modal fade" id="addEditModal" tabindex="-1" aria-labelledby="addEditModalTitle" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered modal-xl">
                     <div className="modal-content modal-content-tok" style={{ maxHeight: "90vh" }}>
@@ -323,6 +324,7 @@ export default function Employee() {
                                     });
                                 }
                             }}>
+                                <input type="hidden" name="created_by" value={currentUserId} />
                                 {/* <!-- Section 1: Basic Info --> */}
                                 <section className="form-section accent-primary">
                                     <h4 className="form-section-title"><span className="material-symbols-outlined text-primary-tok" style={{ fontSize: "20px" }}>person</span>Basic Information</h4>
@@ -587,7 +589,7 @@ export default function Employee() {
                 </div>
             </div>
 
-            {/* VIEW DOCTOR MODAL */}
+            {/* VIEW Employee MODAL */}
             <div className="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalTitle" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered modal-lg">
                     <div className="modal-content modal-content-tok" style={{ maxHeight: "90vh" }}>
@@ -596,18 +598,18 @@ export default function Employee() {
                             <button type="button" className="modal-close-btn position-absolute" style={{ top: "16px", right: "16px", zIndex: 2 }} data-bs-dismiss="modal" aria-label="Close">
                                 <span className="material-symbols-outlined">close</span>
                             </button>
-                            <img id="viewDoctorPhoto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4FEhJgn5_UqF6aIs_poNRuoh6BPb61QiE6jThqGrZfDXEmhOE7FOC70Z93xfXS-1Any_OggGQSPy7HRgQd_z0WKLdHFqEGJLJCo2-aBJoLg0ZU1tdgkqVPWeviQ0UUh-oV7JvCe2UTXRN5acpZoPrKLj_w66o6MSQJilLM-AT71EHzqTFys58n1K2h2KKPMWo36nHVhUNl0pVw2-LEvXc8cF58fj7lVifjZREwvPRjRJ2bBytrxVM" alt="Profile" />
+                            {selectedEmployee?.profile_photo_path ? <img src={`${api.defaults.baseURL.replace(/\/api\/?$/, "")}/assets/user/img/${encodeURIComponent(selectedEmployee.profile_photo_path)}`} alt={selectedEmployee.full_name} /> : <div className="profile-photo-placeholder"><span className="material-symbols-outlined">person</span></div>}
                             <div className="flex-grow-1 mt-2 mt-sm-0">
                                 <div className="d-flex flex-column flex-sm-row align-items-center align-items-sm-center gap-2 mb-1">
-                                    <h3 className="text-headline-lg text-on-surface-tok mb-0" id="viewDoctorName">Dr. Robert Chen</h3>
-                                    <span className="badge-status badge-active"><span className="dot"></span>Active</span>
+                                    <h3 className="text-headline-lg text-on-surface-tok mb-0" id="viewModalTitle">{selectedEmployee?.full_name || "Employee"}</h3>
                                 </div>
-                                <p className="text-headline-sm text-primary-tok mb-2" id="viewDoctorTitle">Senior Interventional Cardiologist</p>
+                                <p className="text-headline-sm text-primary-tok mb-2">{selectedEmployee?.designation || "—"} <span className="text-on-surface-variant-tok">({selectedEmployee?.employee_code || "—"})</span></p>
                                 <div className="d-flex flex-wrap justify-content-center justify-content-sm-start gap-3 text-body-md text-on-surface-variant-tok">
-                                    <span className="d-flex align-items-center gap-1"><span className="material-symbols-outlined" style={{ fontSize: "16px" }}>local_hospital</span><span id="viewDoctorDept">Medicine &gt; Cardiology</span></span>
-                                    <span className="d-flex align-items-center gap-1"><span className="material-symbols-outlined" style={{ fontSize: "16px" }}>mail</span><span id="viewDoctorEmail">r.chen@clinichub.com</span></span>
-                                    <span className="d-flex align-items-center gap-1"><span className="material-symbols-outlined" style={{ fontSize: "16px" }}>call</span><span id="viewDoctorPhone">+1 555-0198</span></span>
+                                    <span className="d-flex align-items-center gap-1"><span className="material-symbols-outlined" style={{ fontSize: "16px" }}>local_hospital</span>{(() => { const path = []; let department = selectedEmployee?.department; while (department) { path.unshift(department.name); department = department.parent; } return path.join(" - ") || "—"; })()}</span>
+                                    <span className="d-flex align-items-center gap-1"><span className="material-symbols-outlined" style={{ fontSize: "16px" }}>mail</span>{selectedEmployee?.email || "—"}</span>
+                                    <span className="d-flex align-items-center gap-1"><span className="material-symbols-outlined" style={{ fontSize: "16px" }}>call</span>{selectedEmployee?.phone || "—"}</span>
                                 </div>
+                                <div className="text-body-sm text-on-surface-variant-tok mt-3">{[selectedEmployee?.address, selectedEmployee?.city, selectedEmployee?.district, selectedEmployee?.zip_code].filter(Boolean).join(", ") || "Address not provided"}</div>
                             </div>
                         </div>
 
@@ -618,9 +620,40 @@ export default function Employee() {
                                     <div className="detail-card">
                                         <h4 className="text-headline-sm text-on-surface-tok">Professional</h4>
                                         <div className="d-flex flex-column gap-3">
-                                            <div><span className="text-on-surface-variant-tok d-block" style={{ fontSize: "13px" }}>Qualification</span><span className="fw-semibold">MBBS, MD (Cardiology), FACC</span></div>
-                                            <div><span className="text-on-surface-variant-tok d-block" style={{ fontSize: "13px" }}>BMDC Reg. No</span><span className="fw-semibold text-data-mono">REG-874291</span></div>
-                                            <div><span className="text-on-surface-variant-tok d-block" style={{ fontSize: "13px" }}>Experience</span><span className="fw-semibold">15 Years</span></div>
+                                            <div><span className="text-on-surface-variant-tok d-block" style={{ fontSize: "13px" }}>Qualification</span><span className="fw-semibold">{selectedEmployee?.qualification || "—"}</span></div>
+                                            <div><span className="text-on-surface-variant-tok d-block" style={{ fontSize: "13px" }}>License Number</span><span className="fw-semibold text-data-mono">{selectedEmployee?.license_number || "—"}</span></div>
+                                            <div><span className="text-on-surface-variant-tok d-block" style={{ fontSize: "13px" }}>Experience</span><span className="fw-semibold">{selectedEmployee?.experience_years ?? 0} Years</span></div>
+                                            <div><span className="text-on-surface-variant-tok d-block" style={{ fontSize: "13px" }}>Previous Workplace</span><span className="fw-semibold">{selectedEmployee?.previous_workplace || "—"}</span></div>
+                                            <div><span className="text-on-surface-variant-tok d-block" style={{ fontSize: "13px" }}>Memberships</span><span className="fw-semibold">{selectedEmployee?.memberships || "—"}</span></div>
+                                        </div>
+                                    </div>
+                                    <div className="detail-card">
+                                        <h4 className="text-headline-sm text-on-surface-tok">Documents</h4>
+                                        <div className="d-flex flex-column gap-3">
+                                            {[
+                                                ["CV / Resume", selectedEmployee?.cv_path],
+                                                ["NID", selectedEmployee?.nid_path],
+                                                ["Other Document", selectedEmployee?.other_document_path],
+                                            ].map(([label, fileName]) => (
+                                                <div key={label} className="d-flex align-items-center justify-content-between gap-2">
+                                                    <div className="d-flex flex-column">
+                                                        <span className="text-on-surface-variant-tok" style={{ fontSize: "13px" }}>{label}</span>
+                                                        <span className="fw-semibold">{fileName ? "Available" : "Not found"}</span>
+                                                    </div>
+                                                    {fileName && <a
+                                                        className="btn-tok btn-outline-tok d-inline-flex align-items-center gap-1"
+                                                        style={{ padding: "6px 10px", fontSize: "12px", textDecoration: "none" }}
+                                                        href={`${api.defaults.baseURL.replace(/\/api\/?$/, "")}/assets/user/document/${encodeURIComponent(fileName)}`}
+                                                        download={fileName}
+                                                        target="_blank"
+                                                        rel="noreferrer"
+                                                        aria-label={`Download ${label}`}
+                                                    >
+                                                        <span className="material-symbols-outlined" style={{ fontSize: "17px" }}>download</span>
+                                                        Download
+                                                    </a>}
+                                                </div>
+                                            ))}
                                         </div>
                                     </div>
                                 </div>
@@ -628,41 +661,34 @@ export default function Employee() {
                                 {/* <!-- Right column --> */}
                                 <div className="col-12 col-md-8 d-flex flex-column gap-lg">
                                     <div className="detail-card">
-                                        <h4 className="text-headline-sm text-on-surface-tok" style={{ borderBottom: "none", marginBottom: "8px", paddingBottom: 0 }}>About</h4>
-                                        <p className="text-body-md text-on-surface-variant-tok mb-0" style={{ lineHeight: "1.6" }}>
-                                            Dr. Robert Chen is a leading interventional cardiologist with over 15 years of experience in complex coronary interventions. He specializes in minimally invasive procedures and has a strong focus on preventative cardiovascular care.
-                                        </p>
+                                        <h4 className="text-headline-sm text-on-surface-tok" style={{ borderBottom: "none", marginBottom: "8px", paddingBottom: 0 }}>Bio</h4>
+                                        <p className="text-body-md text-on-surface-variant-tok mb-0" style={{ lineHeight: "1.6" }}>{selectedEmployee?.bio || "No biography provided."}</p>
+                                        
                                     </div>
 
                                     <div className="detail-card">
-                                        <h4 className="text-headline-sm text-on-surface-tok">Experience &amp; Education</h4>
+                                        <h4 className="text-headline-sm text-on-surface-tok">Experience</h4>
                                         <div className="timeline">
-                                            <div className="timeline-item current">
-                                                <span className="timeline-dot"></span>
-                                                <div className="text-body-md fw-semibold text-on-surface-tok">Senior Consultant, Cardiology</div>
-                                                <div className="text-body-sm text-primary-tok">ClinicHub Medical Center &bull; 2018 - Present</div>
-                                            </div>
-                                            <div className="timeline-item">
-                                                <span className="timeline-dot"></span>
-                                                <div className="text-body-md fw-semibold text-on-surface-tok">Attending Cardiologist</div>
-                                                <div className="text-body-sm text-on-surface-variant-tok">Metro General Hospital &bull; 2012 - 2018</div>
-                                            </div>
-                                            <div className="timeline-item">
-                                                <span className="timeline-dot"></span>
-                                                <div className="text-body-md fw-semibold text-on-surface-tok">MD in Cardiology</div>
-                                                <div className="text-body-sm text-on-surface-variant-tok">Johns Hopkins University &bull; 2010</div>
-                                            </div>
+                                            {(selectedEmployee?.experiences || []).map((item) => <div className="timeline-item" key={`experience-${item.id}`}><span className="timeline-dot"></span><div className="text-body-md fw-semibold text-on-surface-tok">{item.position || "Position not specified"}</div><div className="text-body-sm text-primary-tok">{item.workplace || "Workplace not specified"} &bull; {item.start_date || "—"} - {item.currently_working ? "Present" : item.end_date || "—"}</div></div>)}
+                                            {!selectedEmployee?.experiences?.length && <p className="text-body-sm text-on-surface-variant-tok mb-0">No experience records.</p>}
+                                        </div>
+                                    </div>
+
+                                    <div className="detail-card">
+                                        <h4 className="text-headline-sm text-on-surface-tok">Education</h4>
+                                        <div className="timeline">
+                                            {(selectedEmployee?.educations || []).map((item) => <div className="timeline-item" key={`education-${item.id}`}><span className="timeline-dot"></span><div className="text-body-md fw-semibold text-on-surface-tok">{item.degree || "Degree not specified"}</div><div className="text-body-sm text-on-surface-variant-tok">{item.institution || "Institution not specified"} &bull; {item.year || "—"}</div>{item.description && <div className="text-body-sm text-on-surface-variant-tok">{item.description}</div>}</div>)}
+                                            {!selectedEmployee?.educations?.length && <p className="text-body-sm text-on-surface-variant-tok mb-0">No education records.</p>}
                                         </div>
                                     </div>
 
                                     <div className="detail-card">
                                         <h4 className="text-headline-sm text-on-surface-tok">Weekly Schedule</h4>
                                         <table className="schedule-table">
-                                            <thead><tr><th>Day</th><th>Time</th><th>Room</th></tr></thead>
+                                            <thead><tr><th>Day</th><th>Time</th><th>Status</th></tr></thead>
                                             <tbody>
-                                                <tr><td className="fw-medium">Monday</td><td className="text-data-mono">09:00 AM - 01:00 PM</td><td>302</td></tr>
-                                                <tr><td className="fw-medium">Wednesday</td><td className="text-data-mono">10:00 AM - 02:00 PM</td><td>302</td></tr>
-                                                <tr><td className="fw-medium">Friday</td><td className="text-data-mono">09:00 AM - 12:00 PM</td><td>302</td></tr>
+                                                {(selectedEmployee?.schedules || []).map((item) => <tr key={item.id}><td className="fw-medium">{item.day}</td><td className="text-data-mono">{item.start_time && item.end_time ? `${item.start_time.slice(0, 5)} - ${item.end_time.slice(0, 5)}` : "—"}</td><td>{item.status || "—"}</td></tr>)}
+                                                {!selectedEmployee?.schedules?.length && <tr><td colSpan="3" className="text-on-surface-variant-tok">No schedule available.</td></tr>}
                                             </tbody>
                                         </table>
                                     </div>
@@ -670,12 +696,6 @@ export default function Employee() {
                             </div>
                         </div>
 
-                        <div className="modal-footer-tok">
-                            <button type="button" className="btn-tok btn-outline-tok" data-bs-dismiss="modal">Close</button>
-                            <button type="button" className="btn-tok btn-primary-tok" id="viewToEditBtn">
-                                <span className="material-symbols-outlined" style={{ fontSize: "18px" }}>edit</span> Edit Doctor
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>

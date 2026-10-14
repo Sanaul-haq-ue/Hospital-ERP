@@ -32,6 +32,11 @@ return new class extends Migration
             $table->string('cv_path')->nullable();
             $table->string('nid_path')->nullable();
             $table->string('other_document_path')->nullable();
+            $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('edited_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->timestamp('edited_at')->nullable();
+            $table->foreignId('deleted_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->softDeletes();
             $table->timestamps();
         });
 
