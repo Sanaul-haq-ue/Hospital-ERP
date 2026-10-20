@@ -24,6 +24,114 @@ class PermissionSeeder extends Seeder
                 'action' => 'view',
                 'display_name' => 'View Doctor Dashboard',
             ],
+            
+            // Doctors Section
+            
+            // Appointments
+            // [
+            //     'name' => 'appointments.view',
+            //     'module' => 'appointments',
+            //     'action' => 'view',
+            //     'display_name' => 'View Appointments',
+            // ],
+            // [
+            //     'name' => 'appointments.create',
+            //     'module' => 'appointments',
+            //     'action' => 'create',
+            //     'display_name' => 'Create Appointments',
+            // ],
+            // [
+            //     'name' => 'appointments.edit',
+            //     'module' => 'appointments',
+            //     'action' => 'edit',
+            //     'display_name' => 'Edit Appointments',
+            // ],
+            // [
+            //     'name' => 'appointments.delete',
+            //     'module' => 'appointments',
+            //     'action' => 'delete',
+            //     'display_name' => 'Delete Appointments',
+            // ],
+
+            // HR Section
+            // Departments
+            [
+                'name' => 'dept.view',
+                'module' => 'dept',
+                'action' => 'view',
+                'display_name' => 'View Departments',
+            ],
+            [
+                'name' => 'dept.create',
+                'module' => 'dept',
+                'action' => 'create',
+                'display_name' => 'Create Departments',
+            ],
+            [
+                'name' => 'dept.edit',
+                'module' => 'dept',
+                'action' => 'edit',
+                'display_name' => 'Edit Departments',
+            ],
+            [
+                'name' => 'dept.delete',
+                'module' => 'dept',
+                'action' => 'delete',
+                'display_name' => 'Delete Departments',
+            ],
+
+            // Employee
+            [
+                'name' => 'employee.view',
+                'module' => 'employee',
+                'action' => 'view',
+                'display_name' => 'View Employee',
+            ],
+            [
+                'name' => 'employee.create',
+                'module' => 'employee',
+                'action' => 'create',
+                'display_name' => 'Create Employee',
+            ],
+            [
+                'name' => 'employee.edit',
+                'module' => 'employee',
+                'action' => 'edit',
+                'display_name' => 'Edit Employee',
+            ],
+            [
+                'name' => 'employee.delete',
+                'module' => 'employee',
+                'action' => 'delete',
+                'display_name' => 'Delete Employee',
+            ],
+
+            // Shift
+            [
+                'name' => 'shift.view',
+                'module' => 'shift',
+                'action' => 'view',
+                'display_name' => 'View Shift',
+            ],
+            [
+                'name' => 'shift.create',
+                'module' => 'shift',
+                'action' => 'create',
+                'display_name' => 'Create Shift',
+            ],
+            [
+                'name' => 'shift.edit',
+                'module' => 'shift',
+                'action' => 'edit',
+                'display_name' => 'Edit Shift',
+            ],
+            [
+                'name' => 'shift.delete',
+                'module' => 'shift',
+                'action' => 'delete',
+                'display_name' => 'Delete Shift',
+            ],
+
             // Administration Section
             // Users
             [
@@ -99,110 +207,6 @@ class PermissionSeeder extends Seeder
                 'module' => 'permission',
                 'action' => 'delete',
                 'display_name' => 'Delete Permission',
-            ],
-            // Doctors Section
-            // Doctor Manage
-            [
-                'name' => 'docM.view',
-                'module' => 'docM',
-                'action' => 'view',
-                'display_name' => 'View Doctors',
-            ],
-            [
-                'name' => 'docM.create',
-                'module' => 'docM',
-                'action' => 'create',
-                'display_name' => 'Create Doctors',
-            ],
-            [
-                'name' => 'docM.edit',
-                'module' => 'docM',
-                'action' => 'edit',
-                'display_name' => 'Edit Doctors',
-            ],
-            [
-                'name' => 'docM.delete',
-                'module' => 'docM',
-                'action' => 'delete',
-                'display_name' => 'Delete Doctors',
-            ],
-            // Specialization
-            [
-                'name' => 'Spec.view',
-                'module' => 'Spec',
-                'action' => 'view',
-                'display_name' => 'View Departments',
-            ],
-            [
-                'name' => 'Spec.create',
-                'module' => 'Spec',
-                'action' => 'create',
-                'display_name' => 'Create Departments',
-            ],
-            [
-                'name' => 'Spec.edit',
-                'module' => 'Spec',
-                'action' => 'edit',
-                'display_name' => 'Edit Departments',
-            ],
-            [
-                'name' => 'Spec.delete',
-                'module' => 'Spec',
-                'action' => 'delete',
-                'display_name' => 'Delete Departments',
-            ],
-
-            // Appointments
-            // [
-            //     'name' => 'appointments.view',
-            //     'module' => 'appointments',
-            //     'action' => 'view',
-            //     'display_name' => 'View Appointments',
-            // ],
-            // [
-            //     'name' => 'appointments.create',
-            //     'module' => 'appointments',
-            //     'action' => 'create',
-            //     'display_name' => 'Create Appointments',
-            // ],
-            // [
-            //     'name' => 'appointments.edit',
-            //     'module' => 'appointments',
-            //     'action' => 'edit',
-            //     'display_name' => 'Edit Appointments',
-            // ],
-            // [
-            //     'name' => 'appointments.delete',
-            //     'module' => 'appointments',
-            //     'action' => 'delete',
-            //     'display_name' => 'Delete Appointments',
-            // ],
-
-            // HR Section
-            // Departments
-            [
-                'name' => 'dept.view',
-                'module' => 'dept',
-                'action' => 'view',
-                'display_name' => 'View Departments',
-            ],
-            [
-                'name' => 'dept.create',
-                'module' => 'dept',
-                'action' => 'create',
-                'display_name' => 'Create Departments',
-            ],
-            [
-                'name' => 'dept.edit',
-                'module' => 'dept',
-                'action' => 'edit',
-                'display_name' => 'Edit Departments',
-            ],
-            [
-                'name' => 'dept.delete',
-                'module' => 'dept',
-                'action' => 'delete',
-                'display_name' => 'Delete Departments',
             ],
         ];
 

@@ -1,0 +1,239 @@
+@import "./Specialization.css";
+
+/* Add-shift form: keep the weekly schedule readable and scrollable. */
+.availability-page #addShift .modal-dialog {
+  width: calc(100% - 2rem);
+  max-width: 920px;
+  max-height: calc(100vh - 24px);
+  max-height: calc(100dvh - 24px);
+}
+
+.availability-page #addShift .modal-content {
+  max-height: 100%;
+}
+
+.availability-page #addShift .modal-body {
+  padding: 14px clamp(16px, 2.5vw, 24px);
+}
+
+.availability-page #addShift .modal-body.d-flex {
+  gap: 12px !important;
+}
+
+.availability-page #addShift .availability-schedule-section {
+  position: relative;
+  padding: 14px 16px 16px;
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-xl);
+  background: var(--surface-container-lowest);
+}
+
+.availability-page #addShift .availability-schedule-section::before {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: color-mix(in srgb, var(--tertiary-fixed) 55%, transparent);
+  content: "";
+}
+
+.availability-schedule-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.availability-schedule-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: var(--on-surface);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.availability-schedule-title .material-symbols-outlined {
+  color: var(--tertiary);
+  font-size: 20px;
+}
+
+.availability-grid-labels,
+.availability-day-row {
+  display: grid;
+  grid-template-columns: minmax(150px, 1.35fr) repeat(2, minmax(120px, 1fr)) minmax(140px, 1.1fr);
+  gap: 12px;
+  align-items: center;
+}
+
+.availability-grid-labels {
+  padding: 0 12px 8px;
+  color: var(--on-surface-variant);
+  font-size: var(--fs-label-md);
+  font-weight: 600;
+}
+
+.availability-page #scheduleList {
+  gap: 5px !important;
+}
+
+.availability-page .availability-day-row {
+  display: grid;
+  grid-template-columns: minmax(150px, 1.35fr) repeat(2, minmax(120px, 1fr)) minmax(140px, 1.1fr);
+  padding: 4px 8px;
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-lg);
+  background: var(--surface-container-low);
+}
+
+.availability-page .availability-day-row .form-control-tok,
+.availability-page .availability-day-row .form-select-tok {
+  min-width: 0;
+  min-height: 36px;
+  padding: 5px 9px;
+  font-size: 13px;
+  background: var(--surface-container-lowest);
+}
+
+.availability-page .availability-day-label {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  min-height: 38px;
+  padding: 5px 9px;
+  font-size: 13px;
+  background: var(--surface-container-lowest);
+  border-color: color-mix(in srgb, var(--primary) 35%, var(--outline-variant));
+  border-left: 3px solid var(--primary);
+  border-style: solid;
+  border-width: 1px 1px 1px 3px;
+  border-radius: var(--radius-lg);
+  color: var(--on-surface);
+  font-weight: 700;
+}
+
+.availability-page #addShift .modal-footer {
+  gap: 10px;
+  padding: 14px clamp(16px, 2.5vw, 28px);
+}
+
+@media (max-width: 767.98px) {
+  .availability-page #addShift .modal-dialog {
+    width: calc(100% - 1rem);
+    margin: .5rem auto;
+  }
+
+  .availability-grid-labels {
+    display: none;
+  }
+
+  .availability-page .availability-day-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .availability-page .availability-day-row select[name*="[day]"] {
+    grid-column: 1 / -1;
+  }
+
+  .availability-page #addShift .availability-schedule-section {
+    padding: 12px;
+  }
+}
+
+.availability-page .sp-pill-inactive {
+  color: var(--on-surface-variant);
+  background-color: var(--surface-container-high);
+}
+
+.availability-page .sp-table-card {
+  overflow: hidden;
+  color: var(--on-surface);
+  background-color: var(--surface);
+  border: 1px solid var(--outline-variant);
+  border-radius: var(--radius-xl);
+}
+
+.availability-page .sp-table {
+  --bs-table-bg: var(--surface);
+  --bs-table-color: var(--on-surface);
+  --bs-table-border-color: var(--outline-variant);
+  margin-bottom: 0;
+}
+
+.availability-page .sp-table thead th {
+  color: var(--on-surface-variant);
+  background-color: var(--surface-container-low);
+  border: 0;
+  white-space: nowrap;
+}
+
+.availability-page .sp-table tbody td {
+  color: var(--on-surface);
+  background-color: var(--surface);
+  border-color: var(--outline-variant);
+  vertical-align: middle;
+}
+
+.availability-page .sp-table tbody tr:hover td {
+  background-color: var(--surface-container-lowest);
+}
+
+.availability-page .sp-desc-cell,
+.availability-page .sp-mono {
+  color: var(--on-surface-variant);
+}
+
+.availability-page .sp-table-footer {
+  color: var(--on-surface-variant);
+  background-color: var(--surface-container-low);
+  border-top: 1px solid var(--outline-variant);
+}
+
+.availability-page .sp-page-btn {
+  color: var(--on-surface);
+  background-color: transparent;
+  border-color: var(--outline-variant);
+}
+
+.availability-page .sp-page-btn:hover {
+  background-color: var(--surface);
+}
+
+.availability-page .sp-page-btn.active {
+  color: var(--on-primary);
+  background-color: var(--primary);
+}
+
+[data-bs-theme="dark"] .availability-page .sp-table-card {
+  background-color: var(--surface);
+  border-color: var(--outline-variant);
+}
+
+[data-bs-theme="dark"] .availability-page .sp-table,
+[data-bs-theme="dark"] .availability-page .sp-table thead th,
+[data-bs-theme="dark"] .availability-page .sp-table tbody td {
+  --bs-table-bg: var(--surface);
+  --bs-table-color: var(--on-surface);
+  --bs-table-border-color: var(--outline-variant);
+  color: var(--on-surface);
+}
+
+[data-bs-theme="dark"] .availability-page .sp-table thead th {
+  color: var(--on-surface-variant);
+  background-color: var(--surface-container-low);
+}
+
+[data-bs-theme="dark"] .availability-page .sp-table tbody td {
+  background-color: var(--surface);
+}
+
+[data-bs-theme="dark"] .availability-page .sp-table tbody tr:hover td {
+  background-color: var(--surface-container-lowest);
+}
+
+[data-bs-theme="dark"] .availability-page .sp-table-footer {
+  color: var(--on-surface-variant);
+  background-color: var(--surface-container-low);
+  border-color: var(--outline-variant);
+}

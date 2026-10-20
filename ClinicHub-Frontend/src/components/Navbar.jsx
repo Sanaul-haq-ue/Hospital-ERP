@@ -242,7 +242,7 @@ export default function Navbar({ collapsed }) {
 
                     <div className="nav-submenu-wrap" style={{ maxHeight: hrOpen ? `${hrContentRef.current?.scrollHeight ?? 300}px` : "0px", }} >
                         <div className="nav-submenu" ref={hrContentRef}>
-                            {hasPermission("employees.view") && (
+                            {hasPermission("employee.view") && (
                                 <NavLink to="/hr/employees" className={({ isActive }) => `nav-sublink ${isActive ? "active" : ""}`} >
                                     Employees
                                 </NavLink>
@@ -250,6 +250,11 @@ export default function Navbar({ collapsed }) {
                             {hasPermission("dept.view") && (
                                 <NavLink to="/hr/department" className={({ isActive }) => `nav-sublink ${isActive ? "active" : ""}`}>
                                     Department
+                                </NavLink>
+                            )}
+                            {hasPermission("shift.view") && (
+                                <NavLink to="/hr/shift" className={({ isActive }) => `nav-sublink ${isActive ? "active" : ""}`} >
+                                    Shift
                                 </NavLink>
                             )}
                             <NavLink to="/hr/attendance" className={({ isActive }) => `nav-sublink ${isActive ? "active" : ""}`} >

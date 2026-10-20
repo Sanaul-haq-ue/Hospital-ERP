@@ -460,6 +460,18 @@
     .multi-entry-row {
         grid-template-columns: repeat(12, 1fr);
     }
+
+    .employee-edit-education-row > :nth-child(1) { grid-column: span 3; }
+    .employee-edit-education-row > :nth-child(2) { grid-column: span 3; }
+    .employee-edit-education-row > :nth-child(3) { grid-column: span 2; }
+    .employee-edit-education-row > :nth-child(4) { grid-column: span 3; }
+    .employee-edit-education-row > :nth-child(5) { grid-column: span 1; }
+
+    .employee-edit-experience-row > :nth-child(1) { grid-column: span 3; }
+    .employee-edit-experience-row > :nth-child(2) { grid-column: span 3; }
+    .employee-edit-experience-row > :nth-child(3) { grid-column: span 2; }
+    .employee-edit-experience-row > :nth-child(4) { grid-column: span 3; }
+    .employee-edit-experience-row > :nth-child(5) { grid-column: span 1; }
 }
 
 .multi-entry-remove {
@@ -614,28 +626,6 @@
 
 .timeline-item.current .timeline-dot {
     background: var(--primary);
-}
-
-.schedule-table {
-    width: 100%;
-    text-align: left;
-    font-size: var(--fs-body-md);
-    border-collapse: collapse;
-}
-
-.schedule-table thead {
-    font-size: var(--fs-label-md);
-    color: var(--on-surface-variant);
-    background: var(--surface-container-low);
-}
-
-.schedule-table th,
-.schedule-table td {
-    padding: 8px;
-}
-
-.schedule-table tbody tr {
-    border-bottom: 1px solid color-mix(in srgb, var(--outline-variant) 50%, transparent);
 }
 
 /* Delete confirm modal */

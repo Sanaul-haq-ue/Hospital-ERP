@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/axios';
+import Avatar from '../assets/Img/Avatar.png';
 
 export default function Header({ isDark, toggleDarkMode, sidebarCollapsed, toggleSidebar }) {
     const navigate = useNavigate();
@@ -49,7 +50,7 @@ export default function Header({ isDark, toggleDarkMode, sidebarCollapsed, toggl
                     <button className="icon-btn"><span className="material-symbols-outlined">notifications</span></button>
                     <button className="icon-btn"><span className="material-symbols-outlined">apps</span></button>
                     <img className="avatar" alt="User profile"
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwYYvEZYDdYxWFm2Q-MGGbCooqFGFPcI3JJgs6eIlW3oZtzOfcOLfi8Y7cLia0LL49lujoC9JXXshsjDIUebvvmeBPIKg4ePtlEpFRe3q4_vAYNr_Yf3wycKTtiyT6nyghQ34cB9ndSATgmIOjfxzzysQEvwLJSdCHQz9eCMOcJk0RWIC0EGJ_Pog4-1uFseDuqqG1JC6dfCzszQOBzgCKmj0CrSgXW2oD3SLzpmY2CtxDRxE_zJ0O" />
+                        src={Avatar} />
                 </div>
             </header>
 
@@ -112,7 +113,7 @@ export default function Header({ isDark, toggleDarkMode, sidebarCollapsed, toggl
                     <div className="profile-group">
                         <button className="profile-trigger">
                             <img className="avatar" style={{ marginLeft: 0 }} alt="Account Switcher"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMbDtdmzo27ud1S5ivt5Rk2p_R2pJOEkSg2euUR9EG1hk3xlG1KjmRG313wlBSG8OO9M09Y-8crRmSCUGoticLWdDQxGZxWZAuWUTAcGAyBtYEn_xkQ-qZH4cmEyI-IsQpxdsaZ5HDer8ES_GWE-wL6qRqy79iEZqp4Ir1RzHEJXE8-Vut822mbpp2-OIVh7-iH1etNcr_0bYhfSvnDSX_w6Joo1pc2sl0FMBg9Xbdg_kzc8zX8PoW" />
+                                src={user?.profile_photo || Avatar} />
                             <span className="material-symbols-outlined text-outline-tok">expand_more</span>
                         </button>
                         <div className="dropdown-menu-custom profile-menu">

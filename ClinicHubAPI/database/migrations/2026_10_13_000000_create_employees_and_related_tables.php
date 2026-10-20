@@ -40,7 +40,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        foreach (['employee_educations', 'employee_experiences', 'employee_schedules'] as $tableName) {
+        foreach (['employee_educations', 'employee_experiences'] as $tableName) {
             Schema::create($tableName, function (Blueprint $table) use ($tableName) {
                 $table->id();
                 $table->foreignId('employee_id')->constrained('employees')->cascadeOnDelete();
@@ -49,17 +49,12 @@ return new class extends Migration
                     $table->string('institution')->nullable();
                     $table->string('year', 10)->nullable();
                     $table->text('description')->nullable();
-                } elseif ($tableName === 'employee_experiences') {
+                } else {
                     $table->string('workplace')->nullable();
                     $table->string('position')->nullable();
                     $table->date('start_date')->nullable();
                     $table->date('end_date')->nullable();
                     $table->boolean('currently_working')->default(false);
-                } else {
-                    $table->string('day', 12);
-                    $table->time('start_time')->nullable();
-                    $table->time('end_time')->nullable();
-                    $table->string('status', 20)->default('Work Day');
                 }
                 $table->timestamps();
             });
@@ -68,7 +63,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('employee_schedules');
         Schema::dropIfExists('employee_experiences');
         Schema::dropIfExists('employee_educations');
         Schema::dropIfExists('employees');

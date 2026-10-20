@@ -9,6 +9,7 @@ use App\Http\Controllers\Administration\PermissionController;
 
 use App\Http\Controllers\hr\DeptController;
 use App\Http\Controllers\hr\EmployeeController;
+use App\Http\Controllers\hr\ShiftController;
 
 
 Route::post('/login',[AuthController::class,'login']);
@@ -45,5 +46,12 @@ Route::middleware('auth:sanctum')->group(function(){
 
     Route::get('/employees', [EmployeeController::class, 'index']);
     Route::post('/employees/store', [EmployeeController::class, 'store']);
+    Route::post('/employees/update/{id}', [EmployeeController::class, 'update']);
+    Route::delete('/employees/delete/{id}', [EmployeeController::class, 'destroy']);
+
+    Route::get('/shifts', [ShiftController::class, 'index']);
+    Route::post('/shifts/store', [ShiftController::class, 'store']);
+    Route::post('/shifts/update/{id}', [ShiftController::class, 'update']);
+    Route::delete('/shifts/delete/{id}', [ShiftController::class, 'destroy']);
 
 });

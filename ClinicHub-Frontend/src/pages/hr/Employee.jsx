@@ -1,13 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
 import api from "../../api/axios";
 import { toast } from 'react-toastify';
+import { hasPermission } from "../../utils/permissions";
 import "../../assets/css/Employee.css"
+import Avatar from "../../assets/Img/Avatar.png";
 
 export default function Employee() {
     const [educationEntries, setEducationEntries] = useState([0]);
     const [experienceEntries, setExperienceEntries] = useState([0]);
     const [photoPreview, setPhotoPreview] = useState("");
     const [saving, setSaving] = useState(false);
+    const [deleting, setDeleting] = useState(false);
     const [employees, setEmployees] = useState([]);
     const [selectedEmployee, setSelectedEmployee] = useState(null);
     const [loadingEmployees, setLoadingEmployees] = useState(true);
@@ -63,6 +66,7 @@ export default function Employee() {
     const visibleDepartments = departments.filter((department) =>
         `${department.department_code} ${department.name}`.toLowerCase().includes(departmentSearch.trim().toLowerCase())
     );
+
     const handlePhotoChange = (event) => {
         const file = event.target.files?.[0];
         if (!file) return;
@@ -100,6 +104,7 @@ export default function Employee() {
         };
         reader.readAsDataURL(file);
     };
+
     const handleDocumentChange = (event) => {
         const { name, files } = event.target;
         const file = files?.[0];
@@ -127,14 +132,17 @@ export default function Employee() {
             return next;
         });
     };
+
     const getFieldError = (field) => {
         const error = errors[field];
         return Array.isArray(error) ? error[0] : error;
     };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const form = event.currentTarget;
         const formData = Object.fromEntries(new FormData(form).entries());
+        if (!formData.is_doctor) formData.is_doctor = "0";
         const requiredFields = [
             ["name", "Full name is required."],
             ["gender", "Gender is required."],
@@ -157,7 +165,9 @@ export default function Employee() {
         setSaving(true);
         setErrors({});
         try {
-            const response = await api.post("/employees/store", new FormData(form));
+            const data = new FormData(form);
+            if (!data.has('is_doctor')) data.set('is_doctor', '0');
+            const response = await api.post("/employees/store", data);
             form.reset();
             form.querySelectorAll('input[name$="[end_date]"]').forEach((input) => { input.disabled = false; });
             setPhotoPreview("");
@@ -179,6 +189,44 @@ export default function Employee() {
         }
     };
 
+    const handleEditSubmit = async (event) => {
+        event.preventDefault();
+        if (!selectedEmployee) return;
+        const form = event.currentTarget;
+        const data = new FormData(form);
+        data.set('dept_id', selectedDepartmentId);
+        if (!data.has('is_doctor')) data.set('is_doctor', '0');
+        setSaving(true);
+        setErrors({});
+        try {
+            const response = await api.post(`/employees/update/${selectedEmployee.id}`, data, { headers: { 'Content-Type': 'multipart/form-data' } });
+            await fetchEmployees();
+            window.bootstrap?.Modal.getInstance(document.getElementById('editEmployeeModal'))?.hide();
+            toast.success(response.data.message || 'Employee updated successfully.');
+        } catch (error) {
+            const validationErrors = error.response?.data?.errors;
+            if (validationErrors) setErrors(validationErrors);
+            toast.error(validationErrors ? Object.values(validationErrors).flat()[0] : error.response?.data?.message || 'Could not update employee. Please try again.');
+        } finally { setSaving(false); }
+    };
+
+    const handleDeleteEmployee = async () => {
+        if (!selectedEmployee || deleting) return;
+
+        setDeleting(true);
+        try {
+            const response = await api.delete(`/employees/delete/${selectedEmployee.id}`);
+            await fetchEmployees();
+            window.bootstrap?.Modal.getInstance(document.getElementById("deleteConfirmModal"))?.hide();
+            toast.success(response.data.message || "Employee deleted successfully.");
+            setSelectedEmployee(null);
+        } catch (error) {
+            toast.error(error.response?.data?.message || "Could not delete employee. Please try again.");
+        } finally {
+            setDeleting(false);
+        }
+    };
+
     return (
         <>
             <div>
@@ -187,13 +235,22 @@ export default function Employee() {
                     <div style={{ maxWidth: "640px" }}>
                         <h2 className="text-headline-lg-mobile text-on-surface-tok mb-2">Employee Directory</h2>
                         <p className="text-body-lg text-on-surface-variant-tok mb-0" style={{ lineHeight: "1.6" }}>
-                            Manage employee information, professional details, schedules, and documents across the facility.
+                            Manage employee information, professional details, and documents across the facility.
                         </p>
                     </div>
                     <div className="d-flex align-items-center gap-sm flex-shrink-0">
-                        <button className="btn-tok btn-primary-tok" type="button" data-bs-toggle="modal" data-bs-target="#addEditModal" onclick="prepareAddDoctor()">
-                            <span className="material-symbols-outlined" style={{ fontSize: "20px" }}>add</span> Add Employee
-                        </button>
+                        {hasPermission("employee.create") && (
+                            <button className="btn-tok btn-primary-tok" type="button" data-bs-toggle="modal" data-bs-target="#addEditModal" onClick={() => {
+                                setPhotoPreview("");
+                                setSelectedDepartment("");
+                                setSelectedDepartmentId("");
+                                setDepartmentSearch("");
+                                setDepartmentDropdownOpen(false);
+                                setErrors({});
+                            }}>
+                                <span className="material-symbols-outlined" style={{ fontSize: "20px" }}>add</span> Add Employee
+                            </button>
+                        )}
                     </div>
                 </div>
 
@@ -261,7 +318,12 @@ export default function Employee() {
                                         <td className="text-data-mono text-on-surface-variant-tok">{employee.employee_code}</td>
                                         <td>
                                             <div className="doctor-profile-cell">
-                                                {imageUrl ? <img src={imageUrl} alt={employee.full_name} /> : <span className="material-symbols-outlined">person</span>}
+                                                {imageUrl ? <img src={imageUrl} alt={employee.full_name} />
+                                                    :
+                                                    <span className="material-symbols-outlined">
+                                                        <img src={Avatar} alt="Default employee profile" />
+                                                    </span>
+                                                }
                                                 <div>
                                                     <div className="doctor-name">{employee.full_name}</div>
                                                     <div className="doctor-contact">{employee.email} &bull; {employee.phone}</div>
@@ -280,12 +342,16 @@ export default function Employee() {
                                                 <button type="button" className="icon-btn" title="View Employee" aria-label={`View ${employee.full_name}`} data-bs-toggle="modal" data-bs-target="#viewModal" onClick={() => setSelectedEmployee(employee)}>
                                                     <span className="material-symbols-outlined" style={{ fontSize: "20px" }}>visibility</span>
                                                 </button>
-                                                <button type="button" className="icon-btn" title="Edit Employee" aria-label={`Edit ${employee.full_name}`} data-bs-toggle="modal" data-bs-target="#addEditModal">
-                                                    <span className="material-symbols-outlined" style={{ fontSize: "20px" }}>edit</span>
-                                                </button>
-                                                <button type="button" className="icon-btn" title="Delete Employee" aria-label={`Delete ${employee.full_name}`} data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">
-                                                    <span className="material-symbols-outlined" style={{ fontSize: "20px" }}>delete</span>
-                                                </button>
+                                                {hasPermission("employee.edit") && (
+                                                    <button type="button" className="icon-btn" title="Edit Employee" aria-label={`Edit ${employee.full_name}`} data-bs-toggle="modal" data-bs-target="#editEmployeeModal" onClick={() => { setSelectedEmployee(employee); setPhotoPreview(employee.profile_photo_path ? `${api.defaults.baseURL.replace(/\/api\/?$/, "")}/assets/user/img/${encodeURIComponent(employee.profile_photo_path)}` : ""); setSelectedDepartment(employee.department ? `${employee.department.department_code} - ${employee.department.name}` : ""); setSelectedDepartmentId(String(employee.dept_id || "")); setEducationEntries((employee.educations || []).map((item) => item.id)); if (!employee.educations?.length) setEducationEntries([0]); setExperienceEntries((employee.experiences || []).map((item) => item.id)); if (!employee.experiences?.length) setExperienceEntries([0]); setErrors({}); }}>
+                                                        <span className="material-symbols-outlined" style={{ fontSize: "20px" }}>edit</span>
+                                                    </button>
+                                                )}
+                                                {hasPermission("employee.delete") && (
+                                                    <button type="button" className="icon-btn" title="Delete Employee" aria-label={`Delete ${employee.full_name}`} data-bs-toggle="modal" data-bs-target="#deleteConfirmModal" onClick={() => setSelectedEmployee(employee)}>
+                                                        <span className="material-symbols-outlined" style={{ fontSize: "20px" }}>delete</span>
+                                                    </button>
+                                                )}
                                             </div>
                                         </td>
                                     </tr>;
@@ -359,13 +425,13 @@ export default function Employee() {
                                                     {getFieldError("gender") && <small className="text-danger" role="alert">{getFieldError("gender")}</small>}
                                                 </div>
                                                 <div className="col-12 col-sm-6 d-flex flex-column gap-1">
-                                                    <label className="form-label-tok">Date of Birth</label>
-                                                    <input type="date" className="form-control-tok" name="date_of_birth" />
-                                                </div>
-                                                <div className="col-12 col-sm-6 d-flex flex-column gap-1">
                                                     <label className="form-label-tok">Phone Number <span className="required-star">*</span></label>
                                                     <input type="tel" className="form-control-tok" id="phone" name="phone" placeholder="01........." required />
                                                     {getFieldError("phone") && <small className="text-danger" role="alert">{getFieldError("phone")}</small>}
+                                                </div>
+                                                <div className="col-12 col-sm-6 d-flex flex-column gap-1">
+                                                    <label className="form-label-tok">Date of Birth</label>
+                                                    <input type="date" className="form-control-tok" name="date_of_birth" />
                                                 </div>
                                                 <div className="col-12 col-sm-6 d-flex flex-column gap-1">
                                                     <label className="form-label-tok">Email Address <span className="required-star">*</span></label>
@@ -392,6 +458,23 @@ export default function Employee() {
                                                     <label className="form-label-tok">Bio</label>
                                                     <textarea className="form-control-tok" name="bio" style={{ minHeight: "80px" }} placeholder="Short professional bio..."></textarea>
                                                 </div>
+                                                <div className="col-12 col-sm-6 d-flex flex-column gap-1">
+                                                    <label className="form-label-tok" for="ssDeptFilter">Shift<span className="required-star">*</span></label>
+                                                    <select className="ss-filter-select" id="ssDeptFilter">
+                                                        <option selected disabled>Select Shift</option>
+                                                        <option value="">Day Shift</option>
+                                                        <option value="">Night Shift</option>
+                                                    </select>
+                                                </div>
+                                                <div className="col-12 col-sm-6 d-flex flex-column gap-1">
+                                                    <div className="d-flex align-items-center gap-3 mt-2">
+                                                        <span className="form-label-tok mb-0">Is this Doctor?</span>
+                                                        <label className="d-flex align-items-center gap-2 text-body-md text-on-surface-tok mb-0">
+                                                            <input type="checkbox" id="isDoctor" name="is_doctor" value="1" /> Yes
+                                                        </label>
+                                                    </div>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -559,25 +642,6 @@ export default function Employee() {
                                     </div>
                                 </section>
 
-                                {/* <!-- Section 6: Schedule (weekly) --> */}
-                                <section className="form-section accent-tertiary-fixed">
-                                    <div className="d-flex align-items-center justify-content-between mb-md">
-                                        <h4 className="form-section-title mb-0"><span className="material-symbols-outlined" style={{ fontSize: "20px", color: "var(--on-tertiary-fixed-variant)" }}>calendar_month</span>Schedule</h4>
-                                    </div>
-                                    <div className="d-flex flex-column gap-sm" id="scheduleList">
-                                        {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map((day, index) => <div className="multi-entry-row" key={day}>
-                                            <select className="form-select-tok" name={`schedule[${index}][day]`} style={{ gridColumn: "span 3" }} defaultValue={day}>
-                                                <option>{day}</option>
-                                            </select>
-                                            <input type="time" name={`schedule[${index}][start_time]`} aria-label={`${day} start time`} className="form-control-tok" style={{ gridColumn: "span 3" }} />
-                                            <input type="time" name={`schedule[${index}][end_time]`} aria-label={`${day} end time`} className="form-control-tok" style={{ gridColumn: "span 3" }} />
-                                            <select className="form-select-tok" name={`schedule[${index}][status]`} style={{ gridColumn: "span 3" }} defaultValue="Work Day">
-                                                <option>Work Day</option><option>Off Day</option>
-                                            </select>
-                                        </div>)}
-                                    </div>
-                                </section>
-
                             </form>
                         </div>
 
@@ -585,6 +649,119 @@ export default function Employee() {
                             <button type="button" className="btn-tok btn-outline-tok" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" form="doctorForm" className="btn-tok btn-primary-tok" id="saveEmployeeBtn" disabled={saving}>{saving ? "Saving..." : "Save Employee"}</button>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* EDIT Employee MODAL */}
+            <div className="modal fade" id="editEmployeeModal" tabIndex="-1" aria-labelledby="editEmployeeModalTitle" aria-hidden="true">
+                <div className="modal-dialog modal-dialog-centered modal-xl">
+                    <div className="modal-content modal-content-tok" style={{ maxHeight: "90vh" }}>
+                        <div className="modal-header-tok"><h3 className="text-headline-md text-on-surface-tok mb-0" id="editEmployeeModalTitle">Edit Employee</h3><button type="button" className="modal-close-btn" data-bs-dismiss="modal" aria-label="Close"><span className="material-symbols-outlined">close</span></button></div>
+                        <div className="modal-body-tok">
+                            {selectedEmployee && <form key={selectedEmployee.id} className="d-flex flex-column gap-xl mx-auto" style={{ maxWidth: "960px" }} id="editEmployeeForm" onSubmit={handleEditSubmit} noValidate>
+                                <section className="form-section accent-primary"><h4 className="form-section-title">Basic Information</h4><div className="row g-md">
+                                    <div className="col-12 col-md-3 d-flex flex-column align-items-center gap-3">
+                                        <label className="photo-upload" htmlFor="editPhotoInput">{photoPreview ?
+                                            <img alt="Selected profile preview" src={photoPreview} /> : <span className="material-symbols-outlined">add_a_photo</span>}
+                                            <input type="file" accept=".jpg,.jpeg,.png,image/jpeg,image/png" className="d-none" id="editPhotoInput" name="profile_photo" onChange={handlePhotoChange} />
+                                        </label><small>JPG, PNG max 2MB</small>
+                                    </div>
+                                    <div className="col-12 col-md-9">
+                                        <div className="row g-md">
+                                            {[['name', 'Full Name', selectedEmployee.full_name],
+                                            ['phone', 'Phone Number', selectedEmployee.phone],
+                                            ['email', 'Email Address', selectedEmployee.email],
+                                            ['date_of_birth', 'Date of Birth', selectedEmployee.date_of_birth?.slice(0, 10)],
+                                            ['address', 'Address', selectedEmployee.address],
+                                            ['city', 'City', selectedEmployee.city],
+                                            ['district', 'District', selectedEmployee.district],
+                                            ['zip_code', 'ZIP Code', selectedEmployee.zip_code],
+                                            ['bio', 'Bio', selectedEmployee.bio]].map(([name, label, value]) =>
+                                                <div className="col-12 col-sm-6 d-flex flex-column gap-1" key={name}>
+                                                    <label className="form-label-tok">{label}</label>
+                                                    {name === 'bio' ? <textarea className="form-control-tok" name={name} defaultValue={value || ''} /> :
+                                                        <input className="form-control-tok" name={name} type={name === 'date_of_birth' ? 'date' : 'text'} defaultValue={value || ''} />}
+                                                </div>
+                                            )}
+                                            <div className="col-12 col-sm-6 d-flex flex-column gap-1">
+                                                <label className="form-label-tok">Gender</label>
+                                                <select className="form-select-tok" name="gender" defaultValue={selectedEmployee.gender}>
+                                                    <option value="male">Male</option>
+                                                    <option value="female">Female</option>
+                                                    <option value="other">Other</option>
+                                                </select>
+                                            </div>
+                                            <div className="col-12 col-sm-6 d-flex flex-column gap-1">
+                                                <div className="d-flex align-items-center gap-3 mt-2">
+                                                    <span className="form-label-tok mb-0">Is this Doctor?</span>
+                                                    <label className="d-flex align-items-center gap-2 text-body-md text-on-surface-tok mb-0">
+                                                        <input type="checkbox" id="editIsDoctor" name="is_doctor" value="1" defaultChecked={Number(selectedEmployee.is_doctor) === 1} /> Yes
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </section>
+                                <section className="form-section accent-secondary">
+                                    <h4 className="form-section-title">Professional Details</h4>
+                                    <div className="row g-md">
+                                        <div className="col-12 col-md-6">
+                                            <label className="form-label-tok">Department</label>
+                                            <input type="hidden" name="dept_id" value={selectedDepartmentId} />
+                                            <div className="position-relative">
+                                                <button type="button" className="form-select-tok w-100 text-start" onClick={() => setDepartmentDropdownOpen((open) => !open)}>{selectedDepartment || 'Select Department'}
+                                                </button>{departmentDropdownOpen &&
+                                                    <div className="position-absolute w-100 bg-white border rounded shadow-sm" style={{ zIndex: 20, maxHeight: 240, overflowY: 'auto' }}>{visibleDepartments.map((dept) =>
+                                                        <button type="button" className="d-block w-100 text-start border-0 bg-white p-2" key={dept.id} onClick={() => { setSelectedDepartment(`${dept.department_code} - ${dept.name}`); setSelectedDepartmentId(String(dept.id)); setDepartmentDropdownOpen(false); }}>{dept.department_code} - {dept.name}
+                                                        </button>
+                                                    )}
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                        {[
+                                            ['designation', 'Designation'],
+                                            ['qualification', 'Qualification'],
+                                            ['experience_years', 'Experience (Years)'],
+                                            ['license_number', 'BMDC / License Reg. No'],
+                                            ['previous_workplace', 'Previous Workplace'],
+                                            ['memberships', 'Memberships']].map(([name, label]) =>
+                                                <div className="col-12 col-md-6 d-flex flex-column gap-1" key={name}>
+                                                    <label className="form-label-tok">{label}</label>
+                                                    <input className="form-control-tok" name={name} defaultValue={selectedEmployee[name] ?? ''} type={name === 'experience_years' ? 'number' : 'text'} />
+                                                </div>
+                                            )}
+                                    </div></section>
+                                <section className="form-section accent-primary-fixed">
+                                    <div className="d-flex align-items-center justify-content-between mb-md"><h4 className="form-section-title mb-0">Education</h4><button className="btn-tok btn-text-tok" type="button" onClick={() => addEntry(setEducationEntries)}><span className="material-symbols-outlined" style={{ fontSize: 18 }}>add</span> Add Education</button></div>
+                                    <div className="d-flex flex-column gap-sm">{educationEntries.map((entry, index) => { const item = selectedEmployee.educations?.find((record) => record.id === entry); return <div className="multi-entry-row employee-edit-education-row" key={entry}><input className="form-control-tok" name={`education[${index}][degree]`} defaultValue={item?.degree || ''} placeholder="Degree (e.g. MBBS)" /><input className="form-control-tok" name={`education[${index}][institution]`} defaultValue={item?.institution || ''} placeholder="Institution" /><input className="form-control-tok" name={`education[${index}][year]`} defaultValue={item?.year || ''} placeholder="Year" /><input className="form-control-tok" name={`education[${index}][description]`} defaultValue={item?.description || ''} placeholder="Description" /><button type="button" className="multi-entry-remove" onClick={() => setEducationEntries((entries) => entries.filter((row) => row !== entry))}><span className="material-symbols-outlined">delete</span></button></div>; })}{educationEntries.length === 0 && <input type="hidden" name="education[0][degree]" value="" />}</div>
+                                </section>
+                                <section className="form-section accent-secondary-fixed">
+                                    <div className="d-flex align-items-center justify-content-between mb-md"><h4 className="form-section-title mb-0">Experience</h4><button className="btn-tok btn-text-tok" type="button" style={{ color: 'var(--secondary)' }} onClick={() => addEntry(setExperienceEntries)}><span className="material-symbols-outlined" style={{ fontSize: 18 }}>add</span> Add Experience</button></div>
+                                    <div className="d-flex flex-column gap-sm">{experienceEntries.map((entry, index) => { const item = selectedEmployee.experiences?.find((record) => record.id === entry); return <div className="multi-entry-row employee-edit-experience-row" key={entry}><input className="form-control-tok" name={`experience[${index}][workplace]`} defaultValue={item?.workplace || ''} placeholder="Hospital / Clinic" /><input className="form-control-tok" name={`experience[${index}][position]`} defaultValue={item?.position || ''} placeholder="Position" /><input className="form-control-tok" type="date" name={`experience[${index}][start_date]`} defaultValue={item?.start_date?.slice(0, 10) || ''} /><div className="d-flex flex-column gap-1"><input className="form-control-tok" type="date" name={`experience[${index}][end_date]`} defaultValue={item?.end_date?.slice(0, 10) || ''} placeholder="End date" /><label className="d-flex align-items-center gap-2 text-label-md text-on-surface-variant-tok"><input type="hidden" name={`experience[${index}][currently_working]`} value="0" /><input type="checkbox" name={`experience[${index}][currently_working]`} value="1" defaultChecked={Boolean(item?.currently_working)} /> Currently working</label></div><button type="button" className="multi-entry-remove" onClick={() => setExperienceEntries((entries) => entries.filter((row) => row !== entry))}><span className="material-symbols-outlined">delete</span></button></div>; })}{experienceEntries.length === 0 && <input type="hidden" name="experience[0][workplace]" value="" />}</div>
+                                </section>
+                                <section className="form-section accent-primary-fixed">
+                                    <h4 className="form-section-title"><span className="material-symbols-outlined text-primary-tok" style={{ fontSize: "20px" }}>description</span>Documents</h4>
+                                    <div className="row g-md">
+                                        {[
+                                            ["cv_document", "CV / Resume", "cv_path"],
+                                            ["nid_document", "NID", "nid_path"],
+                                            ["other_document", "Other Document", "other_document_path"],
+                                        ].map(([inputName, label, pathName]) => (
+                                            <div className="col-12 col-md-4 d-flex flex-column gap-1" key={inputName}>
+                                                <label className="form-label-tok" htmlFor={`edit-${inputName}`}>{label}</label>
+                                                <input type="file" id={`edit-${inputName}`} name={inputName} accept=".pdf,application/pdf" className="form-control-tok" onChange={handleDocumentChange} />
+                                                {selectedEmployee[pathName] ? <small className="text-on-surface-variant-tok">Current file: {selectedEmployee[pathName]}. Upload a new PDF to replace it.</small> : <small className="text-on-surface-variant-tok">No file uploaded. PDF files only, max 100 KB.</small>}
+                                                {getFieldError(inputName) && <small className="text-danger" role="alert">{getFieldError(inputName)}</small>}
+                                            </div>
+                                        ))}
+                                    </div>
+                                </section>
+                            </form>}
+                        </div>
+                        <div className="modal-footer-tok"><button type="button" className="btn-tok btn-outline-tok" data-bs-dismiss="modal">Cancel</button><button type="submit" form="editEmployeeForm" className="btn-tok btn-primary-tok" disabled={saving}>{saving ? 'Saving...' : 'Update Employee'}</button></div>
                     </div>
                 </div>
             </div>
@@ -598,7 +775,12 @@ export default function Employee() {
                             <button type="button" className="modal-close-btn position-absolute" style={{ top: "16px", right: "16px", zIndex: 2 }} data-bs-dismiss="modal" aria-label="Close">
                                 <span className="material-symbols-outlined">close</span>
                             </button>
-                            {selectedEmployee?.profile_photo_path ? <img src={`${api.defaults.baseURL.replace(/\/api\/?$/, "")}/assets/user/img/${encodeURIComponent(selectedEmployee.profile_photo_path)}`} alt={selectedEmployee.full_name} /> : <div className="profile-photo-placeholder"><span className="material-symbols-outlined">person</span></div>}
+                            {selectedEmployee?.profile_photo_path ? <img src={`${api.defaults.baseURL.replace(/\/api\/?$/, "")}/assets/user/img/${encodeURIComponent(selectedEmployee.profile_photo_path)}`} alt={selectedEmployee.full_name} />
+                                :
+                                <div className="profile-photo-placeholder">
+                                    <img src={Avatar} alt="Default employee profile" />
+                                </div>
+                            }
                             <div className="flex-grow-1 mt-2 mt-sm-0">
                                 <div className="d-flex flex-column flex-sm-row align-items-center align-items-sm-center gap-2 mb-1">
                                     <h3 className="text-headline-lg text-on-surface-tok mb-0" id="viewModalTitle">{selectedEmployee?.full_name || "Employee"}</h3>
@@ -620,6 +802,7 @@ export default function Employee() {
                                     <div className="detail-card">
                                         <h4 className="text-headline-sm text-on-surface-tok">Professional</h4>
                                         <div className="d-flex flex-column gap-3">
+                                            <div><span className="text-on-surface-variant-tok d-block" style={{ fontSize: "13px" }}>Doctor</span><span className="fw-semibold">{Number(selectedEmployee?.is_doctor) === 1 ? "Yes" : "No"}</span></div>
                                             <div><span className="text-on-surface-variant-tok d-block" style={{ fontSize: "13px" }}>Qualification</span><span className="fw-semibold">{selectedEmployee?.qualification || "—"}</span></div>
                                             <div><span className="text-on-surface-variant-tok d-block" style={{ fontSize: "13px" }}>License Number</span><span className="fw-semibold text-data-mono">{selectedEmployee?.license_number || "—"}</span></div>
                                             <div><span className="text-on-surface-variant-tok d-block" style={{ fontSize: "13px" }}>Experience</span><span className="fw-semibold">{selectedEmployee?.experience_years ?? 0} Years</span></div>
@@ -663,7 +846,7 @@ export default function Employee() {
                                     <div className="detail-card">
                                         <h4 className="text-headline-sm text-on-surface-tok" style={{ borderBottom: "none", marginBottom: "8px", paddingBottom: 0 }}>Bio</h4>
                                         <p className="text-body-md text-on-surface-variant-tok mb-0" style={{ lineHeight: "1.6" }}>{selectedEmployee?.bio || "No biography provided."}</p>
-                                        
+
                                     </div>
 
                                     <div className="detail-card">
@@ -682,16 +865,6 @@ export default function Employee() {
                                         </div>
                                     </div>
 
-                                    <div className="detail-card">
-                                        <h4 className="text-headline-sm text-on-surface-tok">Weekly Schedule</h4>
-                                        <table className="schedule-table">
-                                            <thead><tr><th>Day</th><th>Time</th><th>Status</th></tr></thead>
-                                            <tbody>
-                                                {(selectedEmployee?.schedules || []).map((item) => <tr key={item.id}><td className="fw-medium">{item.day}</td><td className="text-data-mono">{item.start_time && item.end_time ? `${item.start_time.slice(0, 5)} - ${item.end_time.slice(0, 5)}` : "—"}</td><td>{item.status || "—"}</td></tr>)}
-                                                {!selectedEmployee?.schedules?.length && <tr><td colSpan="3" className="text-on-surface-variant-tok">No schedule available.</td></tr>}
-                                            </tbody>
-                                        </table>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -708,14 +881,16 @@ export default function Employee() {
                             <div className="delete-icon-wrap">
                                 <span className="material-symbols-outlined" style={{ fontSize: "32px" }}>delete_forever</span>
                             </div>
-                            <h3 className="text-headline-md text-on-surface-tok mb-2" id="deleteConfirmTitle">Delete Doctor?</h3>
+                            <h3 className="text-headline-md text-on-surface-tok mb-2" id="deleteConfirmTitle">Delete Employee?</h3>
                             <p className="text-body-md text-on-surface-variant-tok mb-0">
-                                Are you sure you want to delete <strong id="deleteDoctorName">this doctor</strong>? This action cannot be undone.
+                                Are you sure you want to delete <strong>{selectedEmployee?.full_name || "this employee"}</strong>? This will move the employee to the deleted records.
                             </p>
                         </div>
                         <div className="modal-footer-tok justify-content-center">
                             <button type="button" className="btn-tok btn-outline-tok flex-fill" data-bs-dismiss="modal">Cancel</button>
-                            <button type="button" className="btn-tok btn-danger-tok flex-fill" onclick="confirmDelete()">Delete Doctor</button>
+                            <button type="button" className="btn-tok btn-danger-tok flex-fill" onClick={handleDeleteEmployee} disabled={deleting}>
+                                {deleting ? "Deleting…" : "Delete Employee"}
+                            </button>
                         </div>
                     </div>
                 </div>

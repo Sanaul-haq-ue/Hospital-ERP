@@ -21,6 +21,7 @@ import Queue from './pages/patientCare/Queue'
 
 import Employee from './pages/hr/Employee'
 import Department from './pages/hr/Department'
+import Shift from './pages/hr/Shift'
 
 import UsersManagement from './pages/administration/UsersManagement'
 import Roles from './pages/administration/Roles'
@@ -66,12 +67,15 @@ function App() {
             <Route path="/patient-care/patients" element={<Patient />} />
             <Route path="/patient-care/doctor-schedule" element={<DoctorSchedule />} />
             <Route path="/patient-care/queue" element={<Queue />} />
-            
+
             <Route element={<PermissionRoute permission="employees.view" />}>
               <Route path="/hr/employees" element={<Employee />} />
             </Route>
             <Route element={<PermissionRoute permission="dept.view" />}>
               <Route path="/hr/department" element={<Department />} />
+            </Route>
+            <Route element={<PermissionRoute permission="shift.view" />}>
+              <Route path="/hr/shift" element={<Shift />} />
             </Route>
 
             <Route element={<PermissionRoute permission="users.view" />}>

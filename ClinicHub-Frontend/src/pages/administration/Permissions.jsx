@@ -41,7 +41,57 @@ export default function Permissions() {
             icon: 'dashboard',
             section: null,
         },
-        // User Section
+        //////////////////// Appointment //////////////////////
+        {
+            name: 'appointment',
+            label: 'Appointment',
+            icon: 'event',
+            section: 'Appointment',
+            sectionIcon: 'Appointment',
+        },
+        
+        // Doctor Section
+        // {
+        //     name: 'docM',
+        //     label: 'Doctor Manage',
+        //     icon: 'event',
+        //     section: 'Doctor',
+        //     sectionIcon: 'medical_services',
+        // },
+        
+        // {
+        //     name: 'appointments',
+        //     label: 'Appointments',
+        //     icon: 'calendar_month',
+        //     section: 'Appointments',
+        //     sectionIcon: 'calendar_month',
+        // },
+
+        //////////////////// HR Section //////////////////////
+        // Department
+        {
+            name: 'dept',
+            label: 'Department',
+            icon: 'event',
+            section: 'HR',
+            sectionIcon: 'HR',
+        },
+        // Employee
+        {
+            name: 'employee',
+            label: 'Employee',
+            icon: 'event',
+            section: null,
+        },
+        // Shift
+        {
+            name: 'shift',
+            label: 'Shift',
+            icon: 'event',
+            section: null,
+        },
+
+        //////////////////// User Section //////////////////////
         {
             name: 'users',
             label: 'Users',
@@ -61,35 +111,7 @@ export default function Permissions() {
             icon: 'rule',
             section: null,
         },
-        // Doctor Section
-        {
-            name: 'docM',
-            label: 'Doctor Manage',
-            icon: 'event',
-            section: 'Doctor',
-            sectionIcon: 'medical_services',
-        },
-        {
-            name: 'Spec',
-            label: 'Specialization',
-            icon: 'event',
-            section: null,
-        },
-        // {
-        //     name: 'appointments',
-        //     label: 'Appointments',
-        //     icon: 'calendar_month',
-        //     section: 'Appointments',
-        //     sectionIcon: 'calendar_month',
-        // },
-        // HR Section
-        {
-            name: 'dept',
-            label: 'Department',
-            icon: 'event',
-            section: 'HR',
-            sectionIcon: 'HR',
-        },
+        
     ]
 
     /*
