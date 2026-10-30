@@ -27,6 +27,7 @@ class PermissionSeeder extends Seeder
             
             // Doctors Section
             
+            
             // Appointments
             // [
             //     'name' => 'appointments.view',
@@ -52,6 +53,57 @@ class PermissionSeeder extends Seeder
             //     'action' => 'delete',
             //     'display_name' => 'Delete Appointments',
             // ],
+            
+            // Appointment Type
+            [
+                'name' => 'appointmentType.view',
+                'module' => 'appointmentType',
+                'action' => 'view',
+                'display_name' => 'View Appointment Type',
+            ],
+            [
+                'name' => 'appointmentType.create',
+                'module' => 'appointmentType',
+                'action' => 'create',
+                'display_name' => 'Create Appointment Type',
+            ],
+            [
+                'name' => 'appointmentType.edit',
+                'module' => 'appointmentType',
+                'action' => 'edit',
+                'display_name' => 'Edit Appointment Type',
+            ],
+            [
+                'name' => 'appointmentType.delete',
+                'module' => 'appointmentType',
+                'action' => 'delete',
+                'display_name' => 'Delete Appointment Type',
+            ],
+            // Doctor Appointment Configurations
+            [
+                'name' => 'dac.view',
+                'module' => 'dac',
+                'action' => 'view',
+                'display_name' => 'View Doctor Appointment Configurations',
+            ],
+            [
+                'name' => 'dac.create',
+                'module' => 'dac',
+                'action' => 'create',
+                'display_name' => 'Create Doctor Appointment Configurations',
+            ],
+            [
+                'name' => 'dac.edit',
+                'module' => 'dac',
+                'action' => 'edit',
+                'display_name' => 'Edit Doctor Appointment Configurations',
+            ],
+            [
+                'name' => 'dac.delete',
+                'module' => 'dac',
+                'action' => 'delete',
+                'display_name' => 'Delete Doctor Appointment Configurations',
+            ],
 
             // HR Section
             // Departments

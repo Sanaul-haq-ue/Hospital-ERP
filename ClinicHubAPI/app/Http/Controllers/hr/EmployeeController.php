@@ -39,6 +39,7 @@ class EmployeeController extends Controller
             'department.parent:id,parent_id,department_code,name',
             'department.parent.parent:id,parent_id,department_code,name',
             'department.parent.parent.parent:id,parent_id,department_code,name',
+            'shift:id,shift_name,is_active',
             'educations',
             'experiences',
         ])
@@ -65,6 +66,7 @@ class EmployeeController extends Controller
             'is_doctor' => 'nullable|boolean',
 
             'dept_id' => ['required', 'integer', Rule::exists('depts', 'id')->where('is_active', 1)],
+            'shift_id' => ['required', 'integer', Rule::exists('shifts', 'id')->where('is_active', 1)->whereNull('deleted_at')],
             'designation' => 'required|string|max:150',
             'qualification' => 'nullable|string|max:255',
             'experience_years' => 'required|integer|min:0|max:100',
@@ -173,6 +175,7 @@ class EmployeeController extends Controller
             'is_doctor' => 'nullable|boolean',
 
             'dept_id' => ['required','integer',Rule::exists('depts','id')->where('is_active',1)],
+            'shift_id' => ['required','integer',Rule::exists('shifts','id')->whereNull('deleted_at')],
             'designation' => 'required|string|max:150',
             'qualification' => 'nullable|string|max:255',
             'experience_years' => 'required|integer|min:0|max:100',

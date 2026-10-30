@@ -1,0 +1,114 @@
+.appointment-types-page .appointment-type-table-card {
+    overflow: hidden;
+    color: var(--on-surface);
+    background-color: var(--surface);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-xl);
+}
+
+.appointment-types-page .appointment-type-table {
+    --bs-table-bg: var(--surface);
+    --bs-table-color: var(--on-surface);
+    --bs-table-border-color: var(--outline-variant);
+    --bs-table-hover-bg: var(--surface-container-lowest);
+    margin-bottom: 0;
+}
+
+.appointment-types-page .appointment-type-table thead {
+    --bs-table-bg: var(--surface-container-low);
+    --bs-table-color: var(--on-surface-variant);
+}
+
+.appointment-types-page .appointment-type-table tbody {
+    --bs-table-bg: var(--surface);
+    --bs-table-color: var(--on-surface);
+    --bs-table-hover-bg: var(--surface-container-lowest);
+}
+
+.appointment-types-page .appointment-type-table thead th {
+    color: var(--on-surface-variant);
+    background-color: var(--surface-container-low);
+    border-color: var(--outline-variant);
+    white-space: nowrap;
+}
+
+.appointment-types-page .appointment-type-table tbody td {
+    color: var(--on-surface);
+    background-color: var(--surface);
+    border-color: var(--outline-variant);
+    vertical-align: middle;
+}
+
+.appointment-types-page .appointment-type-table tbody tr:hover td {
+    background-color: var(--surface-container-lowest);
+}
+
+.appointment-types-page .appointment-type-table .sp-desc-cell,
+.appointment-types-page .appointment-type-table .sp-mono {
+    color: var(--on-surface-variant);
+}
+
+.appointment-types-page .appointment-type-table .sp-pill-active {
+    color: var(--tertiary-container);
+    background-color: rgba(0, 125, 85, .1);
+}
+
+.appointment-types-page .appointment-type-table .sp-pill-inactive {
+    color: var(--on-surface-variant);
+    background-color: var(--surface-container-high);
+}
+
+.appointment-types-page .appointment-type-table .sp-row-actions {
+    opacity: 1;
+}
+
+.appointment-types-page .appointment-type-table .sp-action-btn {
+    color: var(--on-surface-variant);
+}
+
+.appointment-types-page .appointment-type-table .sp-action-btn:hover {
+    color: var(--primary);
+    background-color: var(--surface-container-high);
+}
+
+[data-theme="dark"] .appointment-types-page .appointment-type-table-card,
+[data-bs-theme="dark"] .appointment-types-page .appointment-type-table-card {
+    color: var(--on-surface);
+    background-color: var(--surface);
+    border-color: var(--outline-variant);
+}
+
+[data-theme="dark"] .appointment-types-page .appointment-type-table,
+[data-theme="dark"] .appointment-types-page .appointment-type-table thead th,
+[data-theme="dark"] .appointment-types-page .appointment-type-table tbody td,
+[data-bs-theme="dark"] .appointment-types-page .appointment-type-table,
+[data-bs-theme="dark"] .appointment-types-page .appointment-type-table thead th,
+[data-bs-theme="dark"] .appointment-types-page .appointment-type-table tbody td {
+    --bs-table-bg: var(--surface);
+    --bs-table-color: var(--on-surface);
+    --bs-table-border-color: var(--outline-variant);
+    color: var(--on-surface);
+}
+
+[data-theme="dark"] .appointment-types-page .appointment-type-table thead th,
+[data-bs-theme="dark"] .appointment-types-page .appointment-type-table thead th {
+    --bs-table-bg: var(--surface-container-low);
+    color: var(--on-surface-variant);
+    background-color: var(--surface-container-low);
+}
+
+[data-theme="dark"] .appointment-types-page .appointment-type-table tbody td,
+[data-bs-theme="dark"] .appointment-types-page .appointment-type-table tbody td {
+    background-color: var(--surface);
+}
+
+[data-theme="dark"] .appointment-types-page .appointment-type-table tbody tr:hover td,
+[data-bs-theme="dark"] .appointment-types-page .appointment-type-table tbody tr:hover td {
+    background-color: var(--surface-container-lowest);
+}
+
+[data-theme="dark"] .appointment-types-page .appointment-type-table .sp-pill-active,
+[data-bs-theme="dark"] .appointment-types-page .appointment-type-table .sp-pill-active {
+    color: var(--tertiary-fixed-dim);
+    background-color: rgba(78, 222, 163, .16);
+}

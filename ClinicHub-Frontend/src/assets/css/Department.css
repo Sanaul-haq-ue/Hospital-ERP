@@ -126,9 +126,24 @@
 }
 
 .dp-table {
+    --bs-table-bg: var(--surface-container-lowest);
+    --bs-table-color: var(--on-surface);
+    --bs-table-border-color: var(--outline-variant);
+    --bs-table-hover-bg: var(--surface-container-low);
     min-width: 800px;
     margin-bottom: 0;
     border-collapse: collapse;
+}
+
+.dp-table thead {
+    --bs-table-bg: var(--surface-container-low);
+    --bs-table-color: var(--on-surface-variant);
+}
+
+.dp-table tbody {
+    --bs-table-bg: var(--surface-container-lowest);
+    --bs-table-color: var(--on-surface);
+    --bs-table-hover-bg: var(--surface-container-low);
 }
 
 .dp-table thead tr {
@@ -159,6 +174,7 @@
     padding: var(--sp-sm) var(--sp-md);
     vertical-align: middle;
     color: var(--on-surface);
+    background-color: var(--surface-container-lowest);
     font-size: var(--fs-body-md);
     border-bottom: 1px solid var(--outline-variant);
 }
@@ -167,8 +183,8 @@
     border-bottom: none;
 }
 
-.dp-table tbody tr:hover {
-    background: var(--surface-container-low);
+.dp-table tbody tr:hover td {
+    background-color: var(--surface-container-low);
 }
 
 .dp-mono {
@@ -200,11 +216,13 @@
     color: #c5221f;
 }
 
+[data-theme="dark"] .dp-pill-active,
 [data-bs-theme="dark"] .dp-pill-active {
     background: rgba(78, 222, 163, .18);
     color: var(--tertiary-fixed-dim);
 }
 
+[data-theme="dark"] .dp-pill-inactive,
 [data-bs-theme="dark"] .dp-pill-inactive {
     background: rgba(255, 218, 214, .16);
     color: #ffb4ab;
@@ -223,6 +241,12 @@
 .dp-table tbody tr:hover .dp-row-actions,
 .dp-table tbody tr:focus-within .dp-row-actions {
     opacity: 1;
+}
+
+@media (hover: none) {
+    .dp-row-actions {
+        opacity: 1;
+    }
 }
 
 .dp-action-btn {
@@ -351,4 +375,32 @@
 .dp-toast .material-symbols-outlined {
     color: var(--secondary-fixed-dim);
     font-size: 18px;
+}
+
+[data-theme="dark"] .dp-table,
+[data-theme="dark"] .dp-table thead th,
+[data-theme="dark"] .dp-table tbody td,
+[data-bs-theme="dark"] .dp-table,
+[data-bs-theme="dark"] .dp-table thead th,
+[data-bs-theme="dark"] .dp-table tbody td {
+    --bs-table-bg: var(--surface-container-lowest);
+    --bs-table-color: var(--on-surface);
+    --bs-table-border-color: var(--outline-variant);
+    color: var(--on-surface);
+}
+
+[data-theme="dark"] .dp-table thead th,
+[data-bs-theme="dark"] .dp-table thead th {
+    background-color: var(--surface-container-low);
+    color: var(--on-surface-variant);
+}
+
+[data-theme="dark"] .dp-table tbody td,
+[data-bs-theme="dark"] .dp-table tbody td {
+    background-color: var(--surface-container-lowest);
+}
+
+[data-theme="dark"] .dp-table tbody tr:hover td,
+[data-bs-theme="dark"] .dp-table tbody tr:hover td {
+    background-color: var(--surface-container-high);
 }

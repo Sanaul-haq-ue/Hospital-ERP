@@ -35,6 +35,22 @@ class ShiftController extends Controller
         return Shift::with('days')->latest()->get();
     }
 
+    public function employeeOptions(Request $request)
+    {
+        $user = $request->user();
+        $canView = $user->role_id === 1 || ($user->role
+            && $user->role->permissions()
+                ->whereIn('name', ['employee.view', 'employee.create', 'employee.edit'])
+                ->exists());
+
+        abort_unless($canView, 403, 'You do not have permission to view shifts.');
+
+        return Shift::query()
+            ->where('is_active', true)
+            ->orderBy('shift_name')
+            ->get(['id', 'shift_name']);
+    }
+
     public function store(Request $request)
     {
         $this->checkPermission($request->user(), 'shift.create');

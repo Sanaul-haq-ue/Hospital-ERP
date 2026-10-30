@@ -40,13 +40,21 @@ export default function Login() {
             }
 
         } catch (err) {
-            if (err.response) {
-                setErrorMsg(err.response.data.message || 'Login failed.')
+            const status = err.response?.status;
+            const data = err.response?.data;
+
+            if (status === 401) {
+                toast.error(data?.message || 'Incorrect password.');
+            } else if (data?.errors) {
+                const firstError = Object.values(data.errors).flat()[0];
+                setErrorMsg(firstError || data.message || 'Login failed.');
+            } else if (data?.message) {
+                setErrorMsg(data.message);
             } else {
-                setErrorMsg('Network error. Please check your connection.')
+                setErrorMsg('Network error. Please check your connection.');
             }
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
     }
 

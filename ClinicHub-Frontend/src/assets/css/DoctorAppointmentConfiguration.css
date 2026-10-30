@@ -1,0 +1,542 @@
+/* =========================================================
+   Doctor Appointment Configuration - page styles
+   Requires: Bootstrap 5.3 + your existing root css file
+   (uses its variables: --primary, --on-surface, etc.)
+   Do NOT redefine :root here.
+   ========================================================= */
+
+/* ---------- Layout: sidebar + main ---------- */
+.ac-sidebar {
+    --bs-offcanvas-width: 16rem;
+    --bs-offcanvas-bg: var(--surface-container-lowest);
+    --bs-offcanvas-color: var(--on-surface);
+}
+
+.ac-sidebar .offcanvas-body {
+    flex-grow: 1;
+    padding: 0;
+    overflow-y: auto;
+}
+
+.ac-sidebar-inner {
+    min-height: 100%;
+    background: var(--surface-container-lowest);
+    border-right: 1px solid var(--outline-variant);
+}
+
+.ac-main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+@media (min-width: 768px) {
+    .ac-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 16rem;
+        z-index: 1030;
+    }
+
+    .ac-main {
+        margin-left: 16rem;
+    }
+}
+
+/* ---------- Sidebar ---------- */
+.ac-logo {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--radius-lg);
+    background: var(--primary);
+    color: var(--on-primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
+}
+
+.ac-nav-link {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .75rem 1rem;
+    border-radius: var(--radius-lg);
+    color: var(--on-surface-variant);
+    font-weight: 500;
+    transition: background-color .15s ease, color .15s ease;
+}
+
+.ac-nav-link:hover {
+    background: var(--surface-container-low);
+    color: var(--on-surface);
+}
+
+.ac-nav-link.active {
+    background: var(--surface-container-high);
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.ac-nav-link.active .material-symbols-outlined {
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.ac-nav-link-danger {
+    color: var(--error);
+}
+
+.ac-nav-link-danger:hover {
+    background: var(--error-container);
+    color: var(--on-error-container);
+}
+
+.ac-sidebar-footer {
+    border-top: 1px solid var(--outline-variant);
+}
+
+/* ---------- Top bar ---------- */
+.ac-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+    background: var(--surface-container-lowest);
+    border-bottom: 1px solid var(--outline-variant);
+}
+
+.ac-search-wrap {
+    max-width: 28rem;
+}
+
+.ac-divider-v {
+    width: 1px;
+    height: 1.5rem;
+    background: var(--outline-variant);
+}
+
+.ac-notif-dot {
+    position: absolute;
+    top: .4rem;
+    right: .4rem;
+    width: .5rem;
+    height: .5rem;
+    border-radius: 50%;
+    background: var(--error);
+}
+
+.ac-avatar-sm {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: var(--primary-fixed);
+    color: var(--primary);
+    border: 1px solid var(--outline-variant);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* ---------- Content wrapper ---------- */
+.ac-content {
+    width: 100%;
+    max-width: 80rem;
+    margin: 0 auto;
+}
+
+.ac-page-header {
+    border-bottom: 1px solid var(--outline-variant);
+}
+
+.ac-breadcrumb {
+    --bs-breadcrumb-divider-color: var(--on-surface-variant);
+    --bs-breadcrumb-item-active-color: var(--primary);
+    margin-bottom: .375rem;
+}
+
+.ac-breadcrumb .breadcrumb-item a {
+    color: var(--on-surface-variant);
+}
+
+.ac-breadcrumb .breadcrumb-item a:hover {
+    color: var(--primary);
+}
+
+.ac-breadcrumb .breadcrumb-item.active {
+    font-weight: 600;
+}
+
+/* ---------- Stat badges ---------- */
+.ac-stat {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .5rem .875rem;
+    background: var(--surface-container-lowest);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+}
+
+.ac-stat-label {
+    font-size: .75rem;
+    line-height: 1rem;
+    color: var(--on-surface-variant);
+}
+
+/* ---------- Cards ---------- */
+.ac-card {
+    background: var(--surface-container-lowest);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+}
+
+.ac-card-soft {
+    background: var(--surface-container-low);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-xl);
+}
+
+.ac-card-header {
+    border-bottom: 1px solid var(--outline-variant);
+}
+
+.ac-divider-top {
+    border-top: 1px solid var(--outline-variant);
+}
+
+.ac-icon-chip {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--radius-lg);
+    background: var(--surface-container-high);
+    color: var(--primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* ---------- Typography / icon helpers ---------- */
+.ac-text-xs {
+    font-size: .75rem;
+    line-height: 1rem;
+}
+
+.ac-text-body-lg {
+    font-size: var(--fs-body-lg);
+    line-height: var(--lh-body-lg);
+}
+
+.ac-text-on-surface {
+    color: var(--on-surface);
+}
+
+.ac-uppercase {
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+.ac-icon-xs {
+    font-size: 14px;
+}
+
+.ac-icon-sm {
+    font-size: 16px;
+}
+
+.ac-icon-md {
+    font-size: 18px;
+}
+
+.ac-icon-lg {
+    font-size: 20px;
+}
+
+.ac-icon-xl {
+    font-size: 24px;
+}
+
+/* ---------- Form controls ---------- */
+.ac-control,
+.ac-addon {
+    background-color: var(--surface-container-lowest);
+    color: var(--on-surface);
+    border-color: var(--outline-variant);
+    font-size: var(--fs-body-md);
+    line-height: var(--lh-body-md);
+    padding-top: .625rem;
+    padding-bottom: .625rem;
+    border-radius: var(--radius-lg);
+}
+
+.ac-control::placeholder {
+    color: var(--on-surface-variant);
+}
+
+.ac-control:focus {
+    background-color: var(--surface-container-lowest);
+    color: var(--on-surface);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 1px var(--primary);
+}
+
+.ac-control-muted,
+.ac-addon-muted {
+    background-color: var(--surface-container-low);
+}
+
+.ac-control-muted:focus {
+    background-color: var(--surface-container-low);
+}
+
+.ac-control-sm {
+    font-size: .75rem;
+    padding-top: .375rem;
+    padding-bottom: .375rem;
+}
+
+.ac-addon {
+    color: var(--on-surface-variant);
+    font-weight: 500;
+}
+
+.input-group>.ac-addon:first-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.input-group>.ac-addon:last-child {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.input-group>.ac-control:not(:first-child) {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.input-group>.ac-control:not(:last-child) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.ac-price-input {
+    font-weight: 600;
+}
+
+.ac-doctor-select {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    padding: .625rem;
+    background: var(--surface-container-lowest);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.ac-doctor-select:hover {
+    border-color: var(--outline);
+}
+
+.ac-doctor-select:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 1px var(--primary);
+}
+
+/* ---------- Switch ---------- */
+.ac-switch-panel {
+    background: var(--surface-container-low);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-xl);
+    padding: 1rem;
+}
+
+.ac-switch .form-check-input {
+    width: 2.75rem;
+    height: 1.5rem;
+    margin: 0;
+    background-color: var(--outline-variant);
+    border-color: var(--outline-variant);
+    cursor: pointer;
+}
+
+.ac-switch .form-check-input:checked {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.ac-switch .form-check-input:focus {
+    box-shadow: 0 0 0 .2rem color-mix(in srgb, var(--primary) 25%, transparent);
+}
+
+/* ---------- Pills / badges ---------- */
+.ac-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: .375rem;
+    padding: .125rem .625rem;
+    border-radius: var(--radius-full);
+    font-size: .75rem;
+    font-weight: 500;
+    line-height: 1.25rem;
+    border: 1px solid var(--outline-variant);
+    white-space: nowrap;
+}
+
+.ac-pill-dot {
+    width: .375rem;
+    height: .375rem;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+.ac-pill-primary {
+    background: var(--surface-container);
+    color: var(--primary);
+}
+
+.ac-pill-secondary {
+    background: var(--secondary-container);
+    color: var(--on-secondary-container);
+    border-color: var(--secondary);
+}
+
+.ac-pill-error {
+    background: var(--error-container);
+    color: var(--on-error-container);
+    border-color: var(--error);
+}
+
+.ac-pill-muted {
+    background: var(--surface-container-high);
+    color: var(--on-surface-variant);
+}
+
+.ac-pill-active {
+    background: var(--tertiary-fixed);
+    color: var(--on-tertiary-fixed);
+    border-color: var(--tertiary);
+    font-weight: 600;
+}
+
+.ac-tag {
+    display: inline-block;
+    padding: .125rem .5rem;
+    border-radius: var(--radius-lg);
+    background: var(--secondary-container);
+    color: var(--on-secondary-container);
+    font-size: .75rem;
+    font-weight: 500;
+}
+
+.ac-avatar-lg {
+    width: 3rem;
+    height: 3rem;
+    border-radius: var(--radius-xl);
+    background: var(--surface-container-high);
+    color: var(--primary);
+    border: 1px solid var(--outline-variant);
+    font-weight: 700;
+    font-size: 1.125rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* ---------- Table ---------- */
+.ac-table {
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--on-surface);
+    --bs-table-hover-bg: var(--surface-container-low);
+    --bs-table-hover-color: var(--on-surface);
+    --bs-table-border-color: var(--outline-variant);
+    margin: 0;
+    min-width: 46rem;
+}
+
+.ac-table thead th {
+    background: var(--surface-container-low);
+    color: var(--on-surface-variant);
+    font-size: var(--fs-label-md);
+    font-weight: 600;
+    letter-spacing: var(--ls-label-md);
+    padding: .75rem 1.25rem;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--outline-variant);
+}
+
+.ac-table tbody td {
+    padding: .875rem 1.25rem;
+    vertical-align: middle;
+    font-size: var(--fs-body-sm);
+}
+
+.ac-table .ac-mono {
+    font-family: 'Geist', monospace;
+    font-size: var(--fs-data-mono);
+}
+
+.ac-table-footer {
+    background: var(--surface-container-low);
+    border-top: 1px solid var(--outline-variant);
+}
+
+/* ---------- Pagination ---------- */
+.ac-pagination {
+    --bs-pagination-color: var(--on-surface);
+    --bs-pagination-bg: var(--surface-container-lowest);
+    --bs-pagination-border-color: var(--outline-variant);
+    --bs-pagination-hover-color: var(--on-surface);
+    --bs-pagination-hover-bg: var(--surface-container-low);
+    --bs-pagination-hover-border-color: var(--outline-variant);
+    --bs-pagination-focus-color: var(--on-surface);
+    --bs-pagination-focus-bg: var(--surface-container-low);
+    --bs-pagination-focus-box-shadow: none;
+    --bs-pagination-active-color: var(--on-primary);
+    --bs-pagination-active-bg: var(--primary);
+    --bs-pagination-active-border-color: var(--primary);
+    --bs-pagination-disabled-color: var(--on-surface-variant);
+    --bs-pagination-disabled-bg: var(--surface-container-lowest);
+    --bs-pagination-disabled-border-color: var(--outline-variant);
+    --bs-pagination-font-size: .75rem;
+    gap: .375rem;
+}
+
+.ac-pagination .page-link {
+    border-radius: var(--radius) !important;
+}
+
+.ac-pagination .page-item.disabled .page-link {
+    opacity: .5;
+}
+
+/* ---------- Footer ---------- */
+.ac-footer {
+    background: var(--surface-container-lowest);
+    border-top: 1px solid var(--outline-variant);
+    color: var(--on-surface-variant);
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 575.98px) {
+    .ac-stat {
+        flex: 1 1 100%;
+    }
+
+    .ac-table thead th,
+    .ac-table tbody td {
+        padding-left: .875rem;
+        padding-right: .875rem;
+    }
+}

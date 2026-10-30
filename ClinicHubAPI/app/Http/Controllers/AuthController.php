@@ -26,15 +26,23 @@ class AuthController extends Controller
     
     public function login(Request $request)
     {
+        
+
         $validation = Validator::make($request->all(), [
-            'email' => 'Required|email',
+            'email' => 'required|email',
             'password' => 'required|string|min:8',
+        ], [
+            'email.required' => 'Email address is required.',
+            'email.email' => 'Please enter a valid email address.',
+            'password.required' => 'Password is required.',
+            'password.min' => 'Password must be at least 8 characters.',
         ]);
+
         if ($validation->fails()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Validation Error',
-                'error' => $validation->errors(),
+                'message' => 'Validation failed.',
+                'errors' => $validation->errors(),
             ], 422);
         }
 
@@ -65,7 +73,13 @@ class AuthController extends Controller
                 ], 401);
             }
 
-            $token = $user->createToken('auth-token')->plainTextToken;
+            $expiresAt = now()->addHours(4);
+
+            $token = $user->createToken(
+                'auth-token',
+                ['*'],
+                $expiresAt
+            )->plainTextToken;
 
             return response()->json([
                 'success' => true,

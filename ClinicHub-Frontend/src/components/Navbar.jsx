@@ -114,9 +114,6 @@ export default function Navbar({ collapsed }) {
                         style={{ maxHeight: open ? `${contentRef.current?.scrollHeight ?? 300}px` : "0px", }} >
 
                         <div className="nav-submenu" ref={contentRef}>
-                            <NavLink to="/doctor/manage" className={({ isActive }) => `nav-sublink ${isActive ? "active" : ""}`}>
-                                Doctor Manage
-                            </NavLink>
                             <NavLink to="/doctor/specialization" className={({ isActive }) => `nav-sublink ${isActive ? "active" : ""}`}>
                                 Specialization
                             </NavLink>
@@ -155,6 +152,16 @@ export default function Navbar({ collapsed }) {
                             <NavLink to="/appointment/check-in" className={({ isActive }) => `nav-sublink ${isActive ? "active" : ""}`} >
                                 Check - In
                             </NavLink>
+                            {hasPermission("appointmentType.view") && (
+                                <NavLink to="/appointment/appointment-type" className={({ isActive }) => `nav-sublink ${isActive ? "active" : ""}`}>
+                                    Appointment Type
+                                </NavLink>
+                            )}
+                            {hasPermission("dac.view") && (
+                                <NavLink to="/appointment/doctor-appointment-configuration" className={({ isActive }) => `nav-sublink ${isActive ? "active" : ""}`}>
+                                    Doctor Appointment Configuration
+                                </NavLink>
+                            )}
 
                         </div>
                     </div>

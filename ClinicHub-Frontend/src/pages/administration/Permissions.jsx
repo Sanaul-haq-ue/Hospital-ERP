@@ -49,16 +49,24 @@ export default function Permissions() {
             section: 'Appointment',
             sectionIcon: 'Appointment',
         },
+        // Appointment Type
+        {
+            name: 'appointmentType',
+            label: 'Appointment Type',
+            icon: 'event',
+            section: null,
+        },
+        // Doctor Appointment Configurations
+        {
+            name: 'dac',
+            label: 'Doctor Appointment Configurations',
+            icon: 'event',
+            section: null,
+        },
         
-        // Doctor Section
-        // {
-        //     name: 'docM',
-        //     label: 'Doctor Manage',
-        //     icon: 'event',
-        //     section: 'Doctor',
-        //     sectionIcon: 'medical_services',
-        // },
+        //////////////////// Doctor //////////////////////
         
+
         // {
         //     name: 'appointments',
         //     label: 'Appointments',
@@ -111,7 +119,7 @@ export default function Permissions() {
             icon: 'rule',
             section: null,
         },
-        
+
     ]
 
     /*

@@ -17,6 +17,8 @@ export default function Employee() {
     const [employeeLoadError, setEmployeeLoadError] = useState("");
     const [errors, setErrors] = useState({});
     const [departments, setDepartments] = useState([]);
+    const [shifts, setShifts] = useState([]);
+    const [selectedShiftId, setSelectedShiftId] = useState("");
     const [departmentSearch, setDepartmentSearch] = useState("");
     const [selectedDepartment, setSelectedDepartment] = useState("");
     const [selectedDepartmentId, setSelectedDepartmentId] = useState("");
@@ -59,7 +61,17 @@ export default function Employee() {
             }
         };
 
+        const fetchShifts = async () => {
+            try {
+                const response = await api.get("/shifts/employee-options");
+                setShifts(response.data);
+            } catch (error) {
+                toast.error(error.response?.data?.message || "Could not load active shifts.");
+            }
+        };
+
         fetchDepartments();
+        fetchShifts();
         fetchEmployees();
     }, [fetchEmployees]);
 
@@ -148,6 +160,7 @@ export default function Employee() {
             ["gender", "Gender is required."],
             ["email", "Email is required."],
             ["phone", "Phone number is required."],
+            ["shift_id", "Please select a shift."],
             ["dept_id", "Please select a department."],
             ["designation", "Designation is required."],
             ["experience_years", "Experience years is required."],
@@ -171,6 +184,7 @@ export default function Employee() {
             form.reset();
             form.querySelectorAll('input[name$="[end_date]"]').forEach((input) => { input.disabled = false; });
             setPhotoPreview("");
+            setSelectedShiftId("");
             setEducationEntries([0]);
             setExperienceEntries([0]);
             setErrors({});
@@ -195,6 +209,7 @@ export default function Employee() {
         const form = event.currentTarget;
         const data = new FormData(form);
         data.set('dept_id', selectedDepartmentId);
+        data.set('shift_id', selectedShiftId);
         if (!data.has('is_doctor')) data.set('is_doctor', '0');
         setSaving(true);
         setErrors({});
@@ -242,6 +257,7 @@ export default function Employee() {
                         {hasPermission("employee.create") && (
                             <button className="btn-tok btn-primary-tok" type="button" data-bs-toggle="modal" data-bs-target="#addEditModal" onClick={() => {
                                 setPhotoPreview("");
+                                setSelectedShiftId("");
                                 setSelectedDepartment("");
                                 setSelectedDepartmentId("");
                                 setDepartmentSearch("");
@@ -343,7 +359,7 @@ export default function Employee() {
                                                     <span className="material-symbols-outlined" style={{ fontSize: "20px" }}>visibility</span>
                                                 </button>
                                                 {hasPermission("employee.edit") && (
-                                                    <button type="button" className="icon-btn" title="Edit Employee" aria-label={`Edit ${employee.full_name}`} data-bs-toggle="modal" data-bs-target="#editEmployeeModal" onClick={() => { setSelectedEmployee(employee); setPhotoPreview(employee.profile_photo_path ? `${api.defaults.baseURL.replace(/\/api\/?$/, "")}/assets/user/img/${encodeURIComponent(employee.profile_photo_path)}` : ""); setSelectedDepartment(employee.department ? `${employee.department.department_code} - ${employee.department.name}` : ""); setSelectedDepartmentId(String(employee.dept_id || "")); setEducationEntries((employee.educations || []).map((item) => item.id)); if (!employee.educations?.length) setEducationEntries([0]); setExperienceEntries((employee.experiences || []).map((item) => item.id)); if (!employee.experiences?.length) setExperienceEntries([0]); setErrors({}); }}>
+                                                    <button type="button" className="icon-btn" title="Edit Employee" aria-label={`Edit ${employee.full_name}`} data-bs-toggle="modal" data-bs-target="#editEmployeeModal" onClick={() => { setSelectedEmployee(employee); setPhotoPreview(employee.profile_photo_path ? `${api.defaults.baseURL.replace(/\/api\/?$/, "")}/assets/user/img/${encodeURIComponent(employee.profile_photo_path)}` : ""); setSelectedDepartment(employee.department ? `${employee.department.department_code} - ${employee.department.name}` : ""); setSelectedDepartmentId(String(employee.dept_id || "")); setSelectedShiftId(String(employee.shift_id || "")); setEducationEntries((employee.educations || []).map((item) => item.id)); if (!employee.educations?.length) setEducationEntries([0]); setExperienceEntries((employee.experiences || []).map((item) => item.id)); if (!employee.experiences?.length) setExperienceEntries([0]); setErrors({}); }}>
                                                         <span className="material-symbols-outlined" style={{ fontSize: "20px" }}>edit</span>
                                                     </button>
                                                 )}
@@ -458,14 +474,7 @@ export default function Employee() {
                                                     <label className="form-label-tok">Bio</label>
                                                     <textarea className="form-control-tok" name="bio" style={{ minHeight: "80px" }} placeholder="Short professional bio..."></textarea>
                                                 </div>
-                                                <div className="col-12 col-sm-6 d-flex flex-column gap-1">
-                                                    <label className="form-label-tok" for="ssDeptFilter">Shift<span className="required-star">*</span></label>
-                                                    <select className="ss-filter-select" id="ssDeptFilter">
-                                                        <option selected disabled>Select Shift</option>
-                                                        <option value="">Day Shift</option>
-                                                        <option value="">Night Shift</option>
-                                                    </select>
-                                                </div>
+
                                                 <div className="col-12 col-sm-6 d-flex flex-column gap-1">
                                                     <div className="d-flex align-items-center gap-3 mt-2">
                                                         <span className="form-label-tok mb-0">Is this Doctor?</span>
@@ -545,6 +554,17 @@ export default function Employee() {
                                             {departmentLoadError && <small className="text-danger" role="alert">{departmentLoadError}</small>}
                                             {!departmentLoadError && departments.length === 0 && <small className="text-on-surface-variant-tok">No active departments available.</small>}
                                         </div>
+                                        <div className="col-12 col-sm-6 d-flex flex-column gap-1">
+                                            <label className="form-label-tok" htmlFor="ssDeptFilter">Shift<span className="required-star">*</span></label>
+                                            <select className="ss-filter-select" id="ssDeptFilter" name="shift_id" value={selectedShiftId} onChange={(event) => {
+                                                setSelectedShiftId(event.target.value);
+                                                setErrors((current) => ({ ...current, shift_id: undefined }));
+                                            }}>
+                                                <option value="" disabled>Select Shift</option>
+                                                {shifts.map((shift) => <option key={shift.id} value={shift.id}>{shift.shift_name}</option>)}
+                                            </select>
+                                            {getFieldError("shift_id") && <small className="text-danger" role="alert">{getFieldError("shift_id")}</small>}
+                                        </div>
                                         <div className="col-12 col-md-6 d-flex flex-column gap-1">
                                             <label className="form-label-tok">Designation <span className="required-star">*</span></label>
                                             <input type="text" className="form-control-tok" name="designation" placeholder="e.g. Senior Consultant" required />
@@ -560,13 +580,14 @@ export default function Employee() {
                                             {getFieldError("experience_years") && <small className="text-danger" role="alert">{getFieldError("experience_years")}</small>}
                                         </div>
                                         <div className="col-12 col-md-6 d-flex flex-column gap-1">
-                                            <label className="form-label-tok">BMDC / License Reg. No <span className="required-star">*</span></label>
-                                            <input type="text" className="form-control-tok" name="license_number" placeholder="REG-123456" required />
-                                        </div>
-                                        <div className="col-12 col-md-6 d-flex flex-column gap-1">
                                             <label className="form-label-tok">Previous Workplace</label>
                                             <input type="text" className="form-control-tok" name="previous_workplace" placeholder="Previous Hospital/Clinic" />
                                         </div>
+                                        <div className="col-12 col-md-6 d-flex flex-column gap-1">
+                                            <label className="form-label-tok">BMDC / License Reg. No <span className="required-star">*</span></label>
+                                            <input type="text" className="form-control-tok" name="license_number" placeholder="REG-123456" required />
+                                        </div>
+                                        
                                         <div className="col-12 d-flex flex-column gap-1">
                                             <label className="form-label-tok">Memberships</label>
                                             <input type="text" className="form-control-tok" name="memberships" placeholder="e.g. AMA, ACP (comma separated)" />
@@ -692,6 +713,7 @@ export default function Employee() {
                                                     <option value="other">Other</option>
                                                 </select>
                                             </div>
+
                                             <div className="col-12 col-sm-6 d-flex flex-column gap-1">
                                                 <div className="d-flex align-items-center gap-3 mt-2">
                                                     <span className="form-label-tok mb-0">Is this Doctor?</span>
@@ -720,6 +742,18 @@ export default function Employee() {
                                                     </div>
                                                 }
                                             </div>
+                                        </div>
+                                        <div className="col-12 col-md-6 d-flex flex-column gap-1">
+                                            <label className="form-label-tok" htmlFor="editEmployeeShift">Shift <span className="required-star">*</span></label>
+                                            <select className="form-select-tok" id="editEmployeeShift" name="shift_id" value={selectedShiftId} aria-invalid={Boolean(getFieldError("shift_id"))} onChange={(event) => {
+                                                setSelectedShiftId(event.target.value);
+                                                setErrors((current) => ({ ...current, shift_id: undefined }));
+                                            }}>
+                                                <option value="">Select Shift</option>
+                                                {selectedEmployee?.shift_id && !shifts.some((shift) => String(shift.id) === String(selectedEmployee.shift_id)) && <option value={selectedEmployee.shift_id}>{selectedEmployee.shift?.shift_name || "Inactive shift"}</option>}
+                                                {shifts.map((shift) => <option key={shift.id} value={shift.id}>{shift.shift_name}</option>)}
+                                            </select>
+                                            {getFieldError("shift_id") && <small className="text-danger" role="alert">{getFieldError("shift_id")}</small>}
                                         </div>
                                         {[
                                             ['designation', 'Designation'],
@@ -802,11 +836,12 @@ export default function Employee() {
                                     <div className="detail-card">
                                         <h4 className="text-headline-sm text-on-surface-tok">Professional</h4>
                                         <div className="d-flex flex-column gap-3">
-                                            <div><span className="text-on-surface-variant-tok d-block" style={{ fontSize: "13px" }}>Doctor</span><span className="fw-semibold">{Number(selectedEmployee?.is_doctor) === 1 ? "Yes" : "No"}</span></div>
-                                            <div><span className="text-on-surface-variant-tok d-block" style={{ fontSize: "13px" }}>Qualification</span><span className="fw-semibold">{selectedEmployee?.qualification || "—"}</span></div>
-                                            <div><span className="text-on-surface-variant-tok d-block" style={{ fontSize: "13px" }}>License Number</span><span className="fw-semibold text-data-mono">{selectedEmployee?.license_number || "—"}</span></div>
+                                            <div><span className="text-on-surface-variant-tok d-block" style={{ fontSize: "13px" }}>Last Qualification</span><span className="fw-semibold">{selectedEmployee?.qualification || "—"}</span></div>
+                                            <div><span className="text-on-surface-variant-tok d-block" style={{ fontSize: "13px" }}>Shift</span><span className="fw-semibold">{selectedEmployee?.shift?.shift_name || "—"}</span></div>
                                             <div><span className="text-on-surface-variant-tok d-block" style={{ fontSize: "13px" }}>Experience</span><span className="fw-semibold">{selectedEmployee?.experience_years ?? 0} Years</span></div>
                                             <div><span className="text-on-surface-variant-tok d-block" style={{ fontSize: "13px" }}>Previous Workplace</span><span className="fw-semibold">{selectedEmployee?.previous_workplace || "—"}</span></div>
+                                            <div><span className="text-on-surface-variant-tok d-block" style={{ fontSize: "13px" }}>Doctor</span><span className="fw-semibold">{Number(selectedEmployee?.is_doctor) === 1 ? "Yes" : "No"}</span></div>
+                                            <div><span className="text-on-surface-variant-tok d-block" style={{ fontSize: "13px" }}>License Number</span><span className="fw-semibold text-data-mono">{selectedEmployee?.license_number || "—"}</span></div>
                                             <div><span className="text-on-surface-variant-tok d-block" style={{ fontSize: "13px" }}>Memberships</span><span className="fw-semibold">{selectedEmployee?.memberships || "—"}</span></div>
                                         </div>
                                     </div>
