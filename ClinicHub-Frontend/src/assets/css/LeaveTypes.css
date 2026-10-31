@@ -1,0 +1,693 @@
+/* =========================================================
+   Leave Types & Policies - page styles
+   Requires: Bootstrap 5.3 + your existing root css file.
+   No :root tokens, no header / sidebar styles in here.
+   Extra status colours are scoped to .lt-scope (dark override included).
+   ========================================================= */
+
+/* ---------- Scope: maps Bootstrap variables + extra colours ---------- */
+.lt-scope {
+    --lt-emerald: #059669;
+    --lt-emerald-text: #047857;
+    --lt-teal: #0d9488;
+    --lt-teal-text: #115e59;
+    --lt-slate: #64748b;
+    --lt-slate-text: #475569;
+    --lt-amber: #f59e0b;
+    --lt-amber-text: #92400e;
+    --lt-purple: #a855f7;
+    --lt-purple-text: #6b21a8;
+
+    --bs-body-color: var(--on-surface);
+    --bs-secondary-color: var(--on-surface-variant);
+    --bs-border-color: var(--outline-variant);
+}
+
+[data-theme="dark"] .lt-scope {
+    --lt-emerald-text: #34d399;
+    --lt-teal-text: #2dd4bf;
+    --lt-slate-text: #cbd5e1;
+    --lt-amber-text: #fbbf24;
+    --lt-purple-text: #d8b4fe;
+}
+
+.lt-content {
+    width: 100%;
+    max-width: 90rem;
+    margin: 0 auto;
+}
+
+/* ---------- Text helpers ---------- */
+.lt-text-strong {
+    color: var(--on-surface);
+}
+
+.lt-text-xs {
+    font-size: .75rem;
+    line-height: 1rem;
+}
+
+.lt-text-2xs {
+    font-size: .6875rem;
+    line-height: 1rem;
+}
+
+.lt-uppercase {
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+.lt-min-w-0 {
+    min-width: 0;
+}
+
+.lt-max-prose {
+    max-width: 48rem;
+}
+
+.lt-icon-2xs {
+    font-size: 14px;
+}
+
+.lt-icon-xs {
+    font-size: 16px;
+}
+
+.lt-icon-sm {
+    font-size: 18px;
+}
+
+.lt-icon-md {
+    font-size: 20px;
+}
+
+.lt-icon-lg {
+    font-size: 22px;
+}
+
+@media (max-width: 575.98px) {
+    .lt-title {
+        font-size: var(--fs-headline-lg-mobile);
+        line-height: var(--lh-headline-lg-mobile);
+    }
+}
+
+/* ---------- Breadcrumb ---------- */
+.lt-breadcrumb {
+    --bs-breadcrumb-divider-color: var(--on-surface-variant);
+    --bs-breadcrumb-item-active-color: var(--on-surface);
+    font-size: var(--fs-label-md);
+    margin-bottom: .375rem;
+}
+
+.lt-breadcrumb a {
+    color: var(--on-surface-variant);
+}
+
+.lt-breadcrumb a:hover {
+    color: var(--primary);
+}
+
+.lt-breadcrumb .active {
+    font-weight: 600;
+}
+
+/* ---------- Cards / panels ---------- */
+.lt-card {
+    --bs-card-bg: var(--surface-container-lowest);
+    --bs-card-cap-bg: var(--surface-container-lowest);
+    --bs-card-border-color: color-mix(in srgb, var(--outline-variant) 70%, transparent);
+    --bs-card-color: var(--on-surface);
+    --bs-card-border-radius: var(--radius-xl);
+    --bs-card-inner-border-radius: var(--radius-xl);
+}
+
+.lt-card .card-footer {
+    border-top: 1px solid color-mix(in srgb, var(--outline-variant) 60%, transparent);
+}
+
+.lt-divider-top {
+    border-top: 1px solid color-mix(in srgb, var(--outline-variant) 60%, transparent);
+}
+
+.lt-divider-bottom {
+    border-bottom: 1px solid color-mix(in srgb, var(--outline-variant) 70%, transparent);
+}
+
+.lt-panel {
+    background: color-mix(in srgb, var(--surface-container-low) 60%, transparent);
+    border: 1px solid color-mix(in srgb, var(--outline-variant) 60%, transparent);
+    border-radius: var(--radius-xl);
+    padding: 1rem;
+}
+
+.lt-row-panel {
+    background: var(--background);
+    border: 1px solid color-mix(in srgb, var(--outline-variant) 40%, transparent);
+    border-radius: var(--radius-lg);
+    padding: .5rem;
+}
+
+.lt-stat-panel {
+    background: var(--surface-container-lowest);
+    border: 1px solid color-mix(in srgb, var(--outline-variant) 60%, transparent);
+    border-radius: var(--radius-lg);
+    padding: .75rem;
+}
+
+.lt-option-panel {
+    background: color-mix(in srgb, var(--surface-container-low) 30%, transparent);
+    border: 1px solid color-mix(in srgb, var(--outline-variant) 70%, transparent);
+    border-radius: var(--radius-lg);
+    padding: .75rem;
+}
+
+.lt-banner {
+    background: var(--surface-container-low);
+    border: 1px solid color-mix(in srgb, var(--outline-variant) 60%, transparent);
+    border-radius: var(--radius-xl);
+}
+
+/* ---------- KPI ---------- */
+.lt-kpi-value {
+    font-family: 'Geist', monospace;
+}
+
+.lt-icon-chip {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--radius-lg);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.lt-icon-chip-sm {
+    width: 2rem;
+    height: 2rem;
+}
+
+.lt-icon-chip-md {
+    width: 2.25rem;
+    height: 2.25rem;
+}
+
+/* ---------- Tones ---------- */
+.lt-tone-primary {
+    background: var(--surface-container-high);
+    color: var(--primary);
+}
+
+.lt-tone-neutral {
+    background: var(--surface-container);
+    color: var(--on-surface-variant);
+}
+
+.lt-tone-secondary {
+    background: color-mix(in srgb, var(--secondary-container) 60%, transparent);
+    color: var(--secondary);
+}
+
+.lt-tone-secondary-soft {
+    background: color-mix(in srgb, var(--secondary-container) 40%, transparent);
+    color: var(--secondary);
+}
+
+.lt-tone-tertiary {
+    background: color-mix(in srgb, var(--tertiary-container) 20%, transparent);
+    color: var(--tertiary);
+}
+
+.lt-tone-error {
+    background: color-mix(in srgb, var(--error-container) 60%, transparent);
+    color: var(--error);
+}
+
+.lt-tone-variant {
+    background: color-mix(in srgb, var(--surface-variant) 40%, transparent);
+    color: var(--on-surface-variant);
+}
+
+.lt-tone-emerald {
+    background: color-mix(in srgb, var(--lt-emerald) 12%, transparent);
+    color: var(--lt-emerald-text);
+    border-color: color-mix(in srgb, var(--lt-emerald) 35%, transparent);
+}
+
+.lt-tone-teal {
+    background: color-mix(in srgb, var(--lt-teal) 12%, transparent);
+    color: var(--lt-teal-text);
+    border-color: color-mix(in srgb, var(--lt-teal) 35%, transparent);
+}
+
+.lt-tone-slate {
+    background: color-mix(in srgb, var(--lt-slate) 14%, transparent);
+    color: var(--lt-slate-text);
+    border-color: color-mix(in srgb, var(--lt-slate) 40%, transparent);
+}
+
+.lt-tone-amber {
+    background: color-mix(in srgb, var(--lt-amber) 16%, transparent);
+    color: var(--lt-amber-text);
+    border-color: color-mix(in srgb, var(--lt-amber) 40%, transparent);
+}
+
+.lt-tone-purple {
+    background: color-mix(in srgb, var(--lt-purple) 16%, transparent);
+    color: var(--lt-purple-text);
+}
+
+/* ---------- Pills / tags ---------- */
+.lt-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: .25rem;
+    padding: .125rem .625rem;
+    border-radius: var(--radius-full);
+    font-size: .6875rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+    white-space: nowrap;
+}
+
+.lt-pill-bordered {
+    border: 1px solid transparent;
+}
+
+.lt-pill-count {
+    font-family: 'Geist', monospace;
+}
+
+.lt-badge-box {
+    display: inline-block;
+    padding: .25rem .625rem;
+    border-radius: var(--radius-xl);
+    font-size: .75rem;
+    font-weight: 600;
+    border: 1px solid transparent;
+    white-space: nowrap;
+}
+
+.lt-code {
+    display: inline-block;
+    padding: .125rem .5rem;
+    border-radius: var(--radius);
+    font-family: 'Geist', monospace;
+    font-weight: 600;
+    background: var(--surface-container);
+    color: var(--on-surface-variant);
+}
+
+.lt-code-lg {
+    color: var(--on-surface);
+}
+
+.lt-dot {
+    display: inline-block;
+    width: .375rem;
+    height: .375rem;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+.lt-step {
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--primary) 10%, transparent);
+    color: var(--primary);
+    font-family: 'Geist', monospace;
+    font-size: .6875rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ---------- Tabs (Bootstrap nav-tabs, underline style) ---------- */
+.lt-tabs {
+    --bs-nav-tabs-border-width: 0;
+    border-bottom: 1px solid var(--outline-variant);
+    gap: 2rem;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.lt-tabs .nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: 0 0 .75rem;
+    margin-bottom: -1px;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
+    background: transparent;
+    color: var(--on-surface-variant);
+    font-size: var(--fs-body-md);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.lt-tabs .nav-link:hover {
+    color: var(--on-surface);
+    border-bottom-color: transparent;
+}
+
+.lt-tabs .nav-link.active {
+    background: transparent;
+    color: var(--primary);
+    font-weight: 600;
+    border-bottom-color: var(--primary);
+}
+
+.lt-tabs .nav-link .lt-pill {
+    background: var(--surface-container);
+    color: var(--on-surface-variant);
+}
+
+.lt-tabs .nav-link.active .lt-pill {
+    background: var(--surface-container-high);
+    color: var(--primary);
+}
+
+/* ---------- Buttons ---------- */
+.lt-btn-light {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    background: var(--surface-container-lowest);
+    color: var(--on-surface);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-lg);
+    font-size: var(--fs-label-md);
+    font-weight: 500;
+    padding: .5rem .875rem;
+}
+
+.lt-btn-light:hover {
+    background: var(--surface-container-low);
+    color: var(--on-surface);
+}
+
+.lt-btn-outline-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    background: transparent;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    border-radius: var(--radius-lg);
+    font-size: var(--fs-label-md);
+    font-weight: 500;
+    padding: .5rem .875rem;
+}
+
+.lt-btn-outline-primary:hover {
+    background: var(--surface-container-low);
+    color: var(--primary);
+}
+
+.lt-scope .btn-brand-primary.btn-sm,
+.lt-scope .btn-outline-secondary-custom.btn-sm {
+    padding: .5rem 1rem;
+    font-size: var(--fs-body-sm);
+    font-weight: 500;
+}
+
+.lt-icon-btn-sm {
+    padding: .25rem;
+    border-radius: var(--radius);
+}
+
+.lt-act-danger:hover {
+    color: var(--error);
+    background: color-mix(in srgb, var(--error-container) 40%, transparent);
+}
+
+.lt-act-secondary:hover {
+    color: var(--secondary);
+}
+
+.lt-link-btn {
+    border: 0;
+    background: transparent;
+    color: var(--primary);
+    font-size: var(--fs-label-md);
+    font-weight: 500;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: .25rem;
+}
+
+.lt-link-btn:hover {
+    text-decoration: underline;
+}
+
+/* ---------- Form controls (theme-aware) ---------- */
+.lt-scope .form-control,
+.lt-scope .form-select,
+.lt-scope .input-group-text {
+    background-color: var(--background);
+    color: var(--on-surface);
+    border-color: color-mix(in srgb, var(--outline-variant) 70%, transparent);
+}
+
+.lt-scope .form-control,
+.lt-scope .form-select {
+    font-size: var(--fs-body-sm);
+}
+
+.lt-scope .input-group-text {
+    color: var(--on-surface-variant);
+    font-size: var(--fs-label-md);
+    font-weight: 500;
+}
+
+.lt-scope .form-control::placeholder {
+    color: var(--outline);
+}
+
+.lt-scope .form-control:focus,
+.lt-scope .form-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 1px var(--primary);
+}
+
+.lt-label {
+    display: block;
+    margin-bottom: .25rem;
+    font-size: var(--fs-label-md);
+    font-weight: 500;
+    color: var(--on-surface-variant);
+}
+
+.lt-scope .form-check-input:checked {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.lt-scope .form-check-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 .15rem color-mix(in srgb, var(--primary) 30%, transparent);
+}
+
+.lt-scope .form-switch .form-check-input {
+    width: 2.75rem;
+    height: 1.5rem;
+    background-color: var(--surface-variant);
+    border-color: var(--surface-variant);
+}
+
+.lt-scope .form-switch .form-check-input:checked {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+/* ---------- Tables ---------- */
+.lt-table {
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--on-surface);
+    --bs-table-hover-bg: color-mix(in srgb, var(--surface-container-low) 40%, transparent);
+    --bs-table-hover-color: var(--on-surface);
+    --bs-table-border-color: color-mix(in srgb, var(--outline-variant) 40%, transparent);
+    margin: 0;
+    font-size: var(--fs-body-sm);
+}
+
+.lt-table thead th {
+    background: color-mix(in srgb, var(--surface-container-low) 60%, transparent);
+    color: var(--on-surface-variant);
+    font-size: var(--fs-label-md);
+    font-weight: 500;
+    letter-spacing: .05em;
+    padding: .75rem 1rem;
+    white-space: nowrap;
+    border-bottom: 1px solid color-mix(in srgb, var(--outline-variant) 70%, transparent);
+}
+
+.lt-table tbody td {
+    padding: .875rem 1rem;
+    vertical-align: middle;
+}
+
+.lt-table-types {
+    min-width: 80rem;
+}
+
+.lt-table-policies {
+    min-width: 64rem;
+}
+
+.lt-col-desc {
+    min-width: 16rem;
+}
+
+.lt-col-title {
+    min-width: 16rem;
+}
+
+.lt-mono {
+    font-family: 'Geist', monospace;
+}
+
+@media (max-width: 575.98px) {
+
+    .lt-table thead th,
+    .lt-table tbody td {
+        padding-left: .75rem;
+        padding-right: .75rem;
+    }
+}
+
+/* ---------- Pagination ---------- */
+.lt-pagination {
+    --bs-pagination-color: var(--on-surface);
+    --bs-pagination-bg: var(--surface-container-lowest);
+    --bs-pagination-border-color: var(--outline-variant);
+    --bs-pagination-hover-color: var(--on-surface);
+    --bs-pagination-hover-bg: var(--surface-container-low);
+    --bs-pagination-hover-border-color: var(--outline-variant);
+    --bs-pagination-focus-box-shadow: none;
+    --bs-pagination-active-color: var(--on-primary);
+    --bs-pagination-active-bg: var(--primary-container);
+    --bs-pagination-active-border-color: var(--primary-container);
+    --bs-pagination-disabled-color: var(--outline);
+    --bs-pagination-disabled-bg: var(--surface-container-lowest);
+    --bs-pagination-disabled-border-color: var(--outline-variant);
+    gap: .25rem;
+}
+
+.lt-pagination .page-link {
+    border-radius: var(--radius) !important;
+}
+
+.lt-pagination .page-item.disabled .page-link {
+    opacity: .5;
+}
+
+/* ---------- Modal ---------- */
+.lt-modal {
+    --bs-modal-bg: var(--surface-container-lowest);
+    --bs-modal-color: var(--on-surface);
+    --bs-modal-border-color: var(--outline-variant);
+    --bs-modal-border-radius: var(--radius-xl);
+    --bs-modal-header-border-color: color-mix(in srgb, var(--outline-variant) 70%, transparent);
+    --bs-modal-footer-border-color: color-mix(in srgb, var(--outline-variant) 70%, transparent);
+}
+
+.lt-modal .modal-header,
+.lt-modal .modal-footer {
+    background: color-mix(in srgb, var(--surface-container-low) 40%, transparent);
+}
+
+.lt-modal .modal-title {
+    color: var(--on-surface);
+}
+
+.lt-section-title {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    margin-bottom: .75rem;
+    font-size: var(--fs-body-md);
+    font-weight: 600;
+    color: var(--on-surface);
+}
+
+.lt-section-rule {
+    border: 0;
+    border-top: 1px solid color-mix(in srgb, var(--outline-variant) 60%, transparent);
+    opacity: 1;
+    margin: 1.5rem 0;
+}
+
+/* ---------- Offcanvas drawer ---------- */
+.lt-offcanvas {
+    --bs-offcanvas-width: 32rem;
+    --bs-offcanvas-bg: var(--surface-container-lowest);
+    --bs-offcanvas-color: var(--on-surface);
+    --bs-offcanvas-border-color: var(--outline-variant);
+    max-width: 100vw;
+}
+
+.lt-offcanvas .offcanvas-header,
+.lt-offcanvas-footer {
+    background: color-mix(in srgb, var(--surface-container-low) 50%, transparent);
+}
+
+.lt-offcanvas .offcanvas-header {
+    border-bottom: 1px solid color-mix(in srgb, var(--outline-variant) 70%, transparent);
+}
+
+.lt-offcanvas-footer {
+    border-top: 1px solid color-mix(in srgb, var(--outline-variant) 70%, transparent);
+    padding: 1rem;
+}
+
+/* ---------- Approval chain ---------- */
+.lt-chain {
+    position: relative;
+}
+
+.lt-chain::before {
+    content: '';
+    position: absolute;
+    left: .875rem;
+    top: .5rem;
+    bottom: .5rem;
+    width: 2px;
+    background: var(--outline-variant);
+}
+
+.lt-chain-item {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: .75rem;
+}
+
+.lt-chain-badge {
+    position: relative;
+    z-index: 1;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background: var(--primary-container);
+    color: var(--on-primary);
+    font-family: 'Geist', monospace;
+    font-size: .75rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.lt-chain-badge-final {
+    background: var(--secondary);
+    color: var(--on-secondary);
+}

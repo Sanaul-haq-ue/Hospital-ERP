@@ -12,6 +12,7 @@ export default function Navbar({ collapsed }) {
     const isFinanceActive = location.pathname.startsWith("/finance");
     const isPatientCareActive = location.pathname.startsWith("/patient-care");
     const isHrActive = location.pathname.startsWith("/hr");
+    const isLeaveActive = location.pathname.startsWith("/leave");
     const isAppointmentActive = location.pathname.startsWith("/appointment");
 
     const [open, setOpen] = useState(isChildActive);
@@ -19,6 +20,7 @@ export default function Navbar({ collapsed }) {
     const [financeOpen, setFinanceOpen] = useState(isFinanceActive);
     const [patientCareOpen, setPatientCareOpen] = useState(isPatientCareActive);
     const [hrOpen, setHrOpen] = useState(isHrActive);
+    const [leaveOpen, setLeaveOpen] = useState(isLeaveActive);
     const [appointmentOpen, setappointmentOpen] = useState(isAppointmentActive);
 
     const contentRef = useRef(null);
@@ -26,6 +28,7 @@ export default function Navbar({ collapsed }) {
     const financeContentRef = useRef(null);
     const patientCareContentRef = useRef(null);
     const hrContentRef = useRef(null);
+    const leaveContentRef = useRef(null);
     const appointmentContentRef = useRef(null);
 
     useEffect(() => {
@@ -34,6 +37,7 @@ export default function Navbar({ collapsed }) {
         setFinanceOpen(isFinanceActive);
         setPatientCareOpen(isPatientCareActive);
         setHrOpen(isHrActive);
+        setLeaveOpen(isLeaveActive);
         setappointmentOpen(isAppointmentActive);
     }, [
         isChildActive,
@@ -41,6 +45,7 @@ export default function Navbar({ collapsed }) {
         isFinanceActive,
         isPatientCareActive,
         isHrActive,
+        isLeaveActive,
         isAppointmentActive
     ]);
 
@@ -273,6 +278,46 @@ export default function Navbar({ collapsed }) {
                             <NavLink to="/hr/payroll" className={({ isActive }) => `nav-sublink ${isActive ? "active" : ""}`} >
                                 Payroll
                             </NavLink>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div className="nav-group">
+                    <button
+                        type="button"
+                        className={`nav-link-toggle w-100 ${isLeaveActive ? "active" : ""}`}
+                        onClick={() => setLeaveOpen(!leaveOpen)}
+                        aria-expanded={leaveOpen}
+                    >
+                        <span className="material-symbols-outlined">settings</span>
+                        <span className="text-label-md flex-grow-1"> Leave </span>
+                        <span className={`material-symbols-outlined chevron ${leaveOpen ? "rotated" : ""}`} > expand_more </span>
+                    </button>
+
+                    <div className="nav-submenu-wrap" style={{ maxHeight: leaveOpen ? `${leaveContentRef.current?.scrollHeight ?? 300}px` : "0px", }} >
+                        <div className="nav-submenu" ref={leaveContentRef}>
+
+                            <NavLink to="leave/leave-dashboard" className={({ isActive }) => `nav-sublink ${isActive ? "active" : ""}`} >
+                                Leave Dashboard
+                            </NavLink>
+
+                            <NavLink to="/leave/leave-applications" className={({ isActive }) => `nav-sublink ${isActive ? "active" : ""}`} >
+                                Leave Applications
+                            </NavLink>
+                            <NavLink to="/leave/apply-for-leave" className={({ isActive }) => `nav-sublink ${isActive ? "active" : ""}`} >
+                                Apply for Leave
+                            </NavLink>
+                            <NavLink to="/leave/leave-requests" className={({ isActive }) => `nav-sublink ${isActive ? "active" : ""}`} >
+                                My Leave Requests
+                            </NavLink>
+                            <NavLink to="/leave/leave-balance" className={({ isActive }) => `nav-sublink ${isActive ? "active" : ""}`} >
+                                Leave Balance
+                            </NavLink>
+                            <NavLink to="/leave/leave-types" className={({ isActive }) => `nav-sublink ${isActive ? "active" : ""}`} >
+                                Leave Types & Policies
+                            </NavLink>
+                            
 
                         </div>
                     </div>

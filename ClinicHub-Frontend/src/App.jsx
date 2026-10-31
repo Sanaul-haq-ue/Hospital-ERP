@@ -25,6 +25,13 @@ import Employee from './pages/hr/Employee'
 import Department from './pages/hr/Department'
 import Shift from './pages/hr/Shift'
 
+import LeaveDashboard from './pages/leave/LeaveDashboard'
+import LeaveApplications from './pages/leave/LeaveApplications'
+import ApplyForLeave from './pages/leave/ApplyForLeave'
+import LeaveRequests from './pages/leave/LeaveRequests'
+import LeaveBalance from './pages/leave/LeaveBalance'
+import LeaveTypes from './pages/leave/LeaveTypes'
+
 import UsersManagement from './pages/administration/UsersManagement'
 import Roles from './pages/administration/Roles'
 import Permissions from './pages/administration/Permissions'
@@ -85,6 +92,13 @@ function App() {
             <Route element={<PermissionRoute permission="shift.view" />}>
               <Route path="/hr/shift" element={<Shift />} />
             </Route>
+
+            <Route path="/leave/leave-dashboard" element={<LeaveDashboard />} />
+            <Route path="/leave/leave-applications" element={<LeaveApplications />} />
+            <Route path="/leave/apply-for-leave" element={<ApplyForLeave />} />
+            <Route path="/leave/leave-requests" element={<LeaveRequests />} />
+            <Route path="/leave/leave-balance" element={<LeaveBalance />} />
+            <Route path="/leave/leave-types" element={<LeaveTypes />} />
 
             <Route element={<PermissionRoute permission="users.view" />}>
               <Route path="/administration/users" element={<UsersManagement />} />

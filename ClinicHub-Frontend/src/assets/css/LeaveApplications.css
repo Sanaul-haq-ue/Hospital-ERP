@@ -1,0 +1,565 @@
+/* =========================================================
+   Leave Applications - page styles
+   Requires: Bootstrap 5.3 + Bootstrap Icons + your root css.
+   No :root tokens, no header / sidebar styles in here.
+   Status colours are scoped to .lv-scope (with dark override).
+   ========================================================= */
+
+/* ---------- Scope: maps Bootstrap variables to your tokens ---------- */
+.lv-scope {
+    --lv-success: #16a34a;
+    --lv-success-text: #15803d;
+    --lv-warning: #d97706;
+    --lv-warning-text: #92400e;
+    --lv-danger: #dc2626;
+    --lv-danger-text: #b91c1c;
+    --lv-info: #0891b2;
+    --lv-info-text: #0e7490;
+
+    --bs-body-color: var(--on-surface);
+    --bs-secondary-color: var(--on-surface-variant);
+    --bs-border-color: var(--outline-variant);
+}
+
+[data-theme="dark"] .lv-scope {
+    --lv-success-text: #4ade80;
+    --lv-warning-text: #fbbf24;
+    --lv-danger-text: #f87171;
+    --lv-info-text: #22d3ee;
+}
+
+.lv-content {
+    width: 100%;
+    max-width: 90rem;
+    margin: 0 auto;
+}
+
+/* ---------- Text helpers ---------- */
+.lv-text-xs {
+    font-size: .72rem;
+    line-height: 1rem;
+}
+
+.lv-text-strong {
+    color: var(--on-surface);
+}
+
+.lv-mono {
+    font-family: var(--bs-font-monospace);
+}
+
+.lv-uppercase {
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+@media (max-width: 575.98px) {
+    .lv-title {
+        font-size: var(--fs-headline-lg-mobile);
+        line-height: var(--lh-headline-lg-mobile);
+    }
+}
+
+/* ---------- Surfaces ---------- */
+.lv-bg {
+    background-color: var(--surface-container-lowest);
+}
+
+.lv-bg-soft {
+    background-color: var(--surface-container-low);
+}
+
+.lv-card {
+    --bs-card-bg: var(--surface-container-lowest);
+    --bs-card-cap-bg: var(--surface-container-lowest);
+    --bs-card-border-color: var(--outline-variant);
+    --bs-card-color: var(--on-surface);
+    --bs-card-border-radius: var(--radius-xl);
+    --bs-card-inner-border-radius: var(--radius-xl);
+}
+
+.lv-card .card-footer {
+    border-top: 1px solid var(--outline-variant);
+}
+
+.lv-panel {
+    background: var(--surface-container-lowest);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-xl);
+    padding: 1rem;
+}
+
+.lv-panel-soft {
+    background: var(--surface-container-low);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-xl);
+    padding: 1rem;
+}
+
+.lv-box {
+    background: var(--surface-container-lowest);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-lg);
+    padding: .5rem;
+}
+
+.lv-divider-top {
+    border-top: 1px solid var(--outline-variant);
+}
+
+.lv-divider-bottom {
+    border-bottom: 1px solid var(--outline-variant);
+}
+
+.lv-soft-bar {
+    background: var(--surface-container-low);
+}
+
+/* ---------- Breadcrumb ---------- */
+.lv-breadcrumb {
+    --bs-breadcrumb-divider-color: var(--on-surface-variant);
+    --bs-breadcrumb-item-active-color: var(--primary);
+}
+
+.lv-breadcrumb a {
+    color: var(--on-surface-variant);
+}
+
+.lv-breadcrumb a:hover {
+    color: var(--primary);
+}
+
+.lv-breadcrumb .active {
+    font-weight: 500;
+}
+
+/* ---------- Buttons ---------- */
+.lv-scope .btn-brand-primary.btn-sm,
+.lv-scope .btn-outline-secondary-custom.btn-sm {
+    padding: .25rem .75rem;
+    font-size: .875rem;
+}
+
+.lv-action-btn {
+    width: 2rem;
+    height: 2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--outline-variant);
+    border-radius: .45rem;
+    background: var(--surface-container-lowest);
+    color: var(--on-surface-variant);
+    cursor: pointer;
+    transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+}
+
+.lv-action-btn:hover {
+    background: var(--surface-container-low);
+    color: var(--primary);
+    border-color: var(--outline);
+}
+
+.lv-action-approve:hover {
+    color: var(--lv-success-text);
+    border-color: var(--lv-success);
+    background: color-mix(in srgb, var(--lv-success) 12%, transparent);
+}
+
+.lv-action-reject:hover {
+    color: var(--lv-danger-text);
+    border-color: var(--lv-danger);
+    background: color-mix(in srgb, var(--lv-danger) 12%, transparent);
+}
+
+.lv-action-cancel {
+    color: var(--lv-danger-text);
+}
+
+/* ---------- Tones (badges, icon boxes, callouts) ---------- */
+.lv-tone-primary {
+    background: color-mix(in srgb, var(--primary) 12%, transparent);
+    color: var(--primary);
+}
+
+.lv-tone-success {
+    background: color-mix(in srgb, var(--lv-success) 14%, transparent);
+    color: var(--lv-success-text);
+}
+
+.lv-tone-warning {
+    background: color-mix(in srgb, var(--lv-warning) 15%, transparent);
+    color: var(--lv-warning-text);
+}
+
+.lv-tone-danger {
+    background: color-mix(in srgb, var(--lv-danger) 13%, transparent);
+    color: var(--lv-danger-text);
+}
+
+.lv-tone-info {
+    background: color-mix(in srgb, var(--lv-info) 14%, transparent);
+    color: var(--lv-info-text);
+}
+
+.lv-tone-neutral {
+    background: var(--surface-container-low);
+    color: var(--on-surface);
+}
+
+.lv-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .25rem;
+    font-weight: 500;
+    font-size: .75rem;
+    border: 1px solid color-mix(in srgb, currentColor 28%, transparent);
+    border-radius: var(--radius-lg);
+    padding: .3rem .55rem;
+    white-space: nowrap;
+}
+
+.lv-badge-pill {
+    border-radius: var(--radius-full);
+}
+
+.lv-status {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    padding: .35em .7em;
+    font-size: .78rem;
+    font-weight: 600;
+    border-radius: 2rem;
+    white-space: nowrap;
+}
+
+.lv-status-pending {
+    background: color-mix(in srgb, var(--lv-warning) 18%, transparent);
+    color: var(--lv-warning-text);
+}
+
+.lv-status-approved {
+    background: color-mix(in srgb, var(--lv-success) 16%, transparent);
+    color: var(--lv-success-text);
+}
+
+.lv-status-rejected {
+    background: color-mix(in srgb, var(--lv-danger) 15%, transparent);
+    color: var(--lv-danger-text);
+}
+
+.lv-status-cancelled {
+    background: var(--surface-container);
+    color: var(--on-surface-variant);
+}
+
+.lv-callout {
+    border: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+    border-radius: var(--radius-xl);
+    padding: .75rem 1rem;
+}
+
+.lv-callout-text {
+    color: var(--on-surface);
+}
+
+/* ---------- KPI ---------- */
+.lv-kpi {
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.lv-kpi:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .06);
+}
+
+.lv-kpi-warning {
+    --bs-card-border-color: color-mix(in srgb, var(--lv-warning) 35%, var(--outline-variant));
+}
+
+.lv-kpi-success {
+    --bs-card-border-color: color-mix(in srgb, var(--lv-success) 35%, var(--outline-variant));
+}
+
+.lv-kpi-danger {
+    --bs-card-border-color: color-mix(in srgb, var(--lv-danger) 35%, var(--outline-variant));
+}
+
+.lv-kpi-icon {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: .6rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+/* ---------- Icon chips / avatars ---------- */
+.lv-icon-chip-sm {
+    width: 1.875rem;
+    height: 1.875rem;
+    border-radius: var(--radius-lg);
+    background: var(--primary);
+    color: var(--on-primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.lv-avatar {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--outline-variant);
+    flex-shrink: 0;
+}
+
+.lv-avatar-lg {
+    width: 3.25rem;
+    height: 3.25rem;
+}
+
+.lv-state-icon {
+    width: 3.75rem;
+    height: 3.75rem;
+    border-radius: 50%;
+    background: var(--surface-container-lowest);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .08);
+}
+
+.lv-spinner-lg {
+    width: 3rem;
+    height: 3rem;
+}
+
+/* ---------- Section titles inside modals / drawer ---------- */
+.lv-section-title {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    margin-bottom: .5rem;
+    font-size: .8125rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+}
+
+.lv-panel-title {
+    font-size: .8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--on-surface);
+    padding-bottom: .25rem;
+    border-bottom: 1px solid var(--outline-variant);
+}
+
+/* ---------- Table ---------- */
+.lv-table {
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--on-surface);
+    --bs-table-hover-bg: var(--surface-container-low);
+    --bs-table-hover-color: var(--on-surface);
+    --bs-table-border-color: var(--outline-variant);
+    margin: 0;
+    min-width: 75rem;
+    vertical-align: middle;
+}
+
+.lv-table thead th {
+    background: var(--surface-container-low);
+    color: var(--on-surface-variant);
+    font-size: .78rem;
+    font-weight: 600;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+    padding: .85rem 1rem;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--outline-variant);
+}
+
+.lv-table tbody td {
+    padding: .95rem 1rem;
+    font-size: .85rem;
+}
+
+/* ---------- Form controls (theme-aware) ---------- */
+.lv-scope .form-control,
+.lv-scope .form-select,
+.lv-scope .input-group-text {
+    background-color: var(--surface-container-lowest);
+    color: var(--on-surface);
+    border-color: var(--outline-variant);
+}
+
+.lv-scope .input-group-text {
+    color: var(--on-surface-variant);
+}
+
+.lv-scope .form-control::placeholder {
+    color: var(--on-surface-variant);
+}
+
+.lv-scope .form-control:focus,
+.lv-scope .form-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 1px var(--primary);
+}
+
+.lv-scope .form-label {
+    color: var(--on-surface-variant);
+}
+
+.lv-scope .form-label.lv-label-strong {
+    color: var(--on-surface);
+    font-weight: 600;
+}
+
+/* ---------- Tabs / dropdown ---------- */
+.lv-tabs {
+    --bs-nav-tabs-border-color: var(--outline-variant);
+    --bs-nav-tabs-link-hover-border-color: var(--outline-variant);
+    --bs-nav-tabs-link-active-bg: var(--surface-container-lowest);
+    --bs-nav-tabs-link-active-color: var(--primary);
+    --bs-nav-tabs-link-active-border-color: var(--outline-variant) var(--outline-variant) var(--surface-container-lowest);
+    --bs-nav-link-color: var(--on-surface-variant);
+    --bs-nav-link-hover-color: var(--primary);
+}
+
+.lv-tab-content {
+    background: var(--surface-container-low);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-lg);
+}
+
+.lv-scope .dropdown-menu {
+    --bs-dropdown-bg: var(--surface-container-lowest);
+    --bs-dropdown-color: var(--on-surface);
+    --bs-dropdown-link-color: var(--on-surface);
+    --bs-dropdown-link-hover-bg: var(--surface-container-low);
+    --bs-dropdown-link-hover-color: var(--on-surface);
+    --bs-dropdown-border-color: var(--outline-variant);
+}
+
+/* ---------- Pagination ---------- */
+.lv-pagination {
+    --bs-pagination-color: var(--on-surface);
+    --bs-pagination-bg: var(--surface-container-lowest);
+    --bs-pagination-border-color: var(--outline-variant);
+    --bs-pagination-hover-color: var(--on-surface);
+    --bs-pagination-hover-bg: var(--surface-container-low);
+    --bs-pagination-hover-border-color: var(--outline-variant);
+    --bs-pagination-focus-color: var(--on-surface);
+    --bs-pagination-focus-bg: var(--surface-container-low);
+    --bs-pagination-focus-box-shadow: none;
+    --bs-pagination-active-color: var(--on-primary);
+    --bs-pagination-active-bg: var(--primary);
+    --bs-pagination-active-border-color: var(--primary);
+    --bs-pagination-disabled-color: var(--on-surface-variant);
+    --bs-pagination-disabled-bg: var(--surface-container-lowest);
+    --bs-pagination-disabled-border-color: var(--outline-variant);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* ---------- Modals ---------- */
+.lv-modal {
+    --bs-modal-bg: var(--surface-container-lowest);
+    --bs-modal-color: var(--on-surface);
+    --bs-modal-border-color: var(--outline-variant);
+    --bs-modal-header-border-color: var(--outline-variant);
+    --bs-modal-footer-border-color: var(--outline-variant);
+}
+
+.lv-modal .modal-header,
+.lv-modal .modal-footer {
+    background: var(--surface-container-low);
+}
+
+.lv-modal-head-success {
+    background: color-mix(in srgb, var(--lv-success) 14%, var(--surface-container-lowest)) !important;
+}
+
+.lv-modal-head-danger {
+    background: color-mix(in srgb, var(--lv-danger) 13%, var(--surface-container-lowest)) !important;
+}
+
+.lv-modal .modal-title {
+    color: var(--on-surface);
+}
+
+/* ---------- Offcanvas drawer ---------- */
+.lv-offcanvas {
+    --bs-offcanvas-width: 30rem;
+    --bs-offcanvas-bg: var(--surface-container-lowest);
+    --bs-offcanvas-color: var(--on-surface);
+    --bs-offcanvas-border-color: var(--outline-variant);
+    max-width: 100vw;
+}
+
+.lv-offcanvas .offcanvas-header,
+.lv-offcanvas-footer {
+    background: var(--surface-container-low);
+}
+
+.lv-offcanvas-footer {
+    border-top: 1px solid var(--outline-variant);
+    padding: 1rem;
+    display: flex;
+    gap: .5rem;
+}
+
+/* ---------- Timeline ---------- */
+.lv-timeline {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.lv-timeline::before {
+    content: '';
+    position: absolute;
+    left: .75rem;
+    top: .4rem;
+    bottom: 0;
+    width: 2px;
+    background: var(--outline-variant);
+}
+
+.lv-timeline-item {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.lv-timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+.lv-timeline-dot {
+    position: absolute;
+    left: -2rem;
+    top: .15rem;
+    width: .875rem;
+    height: .875rem;
+    border-radius: 50%;
+    background: var(--surface-container-lowest);
+    border: 3px solid var(--primary);
+}
+
+.lv-timeline-dot-success {
+    border-color: var(--lv-success);
+}
+
+.lv-timeline-dot-danger {
+    border-color: var(--lv-danger);
+}
+
+.lv-min-w-0 {
+    min-width: 0;
+}

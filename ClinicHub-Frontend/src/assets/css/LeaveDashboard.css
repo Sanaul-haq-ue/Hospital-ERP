@@ -1,0 +1,658 @@
+/* =========================================================
+   Leave Management Dashboard - page styles
+   Requires: Bootstrap 5.3 + your existing root css file.
+   No :root tokens, no header / sidebar styles in here.
+   Extra colours (amber, emerald...) are scoped to .lm-page
+   ========================================================= */
+
+.lm-page {
+    --lm-amber: #f59e0b;
+    --lm-amber-text: #b45309;
+    --lm-emerald: #059669;
+    --lm-emerald-text: #047857;
+    --lm-rose: #e11d48;
+    --lm-rose-text: #9f1239;
+    --lm-purple: #a855f7;
+    --lm-purple-text: #9333ea;
+    --lm-red: #f87171;
+    --lm-blue: #3b82f6;
+    --lm-teal: #14b8a6;
+}
+
+[data-theme="dark"] .lm-page {
+    --lm-amber-text: #fbbf24;
+    --lm-emerald-text: #34d399;
+    --lm-rose-text: #fb7185;
+    --lm-purple-text: #c084fc;
+}
+
+.lm-content {
+    width: 100%;
+    max-width: 90rem;
+    margin: 0 auto;
+}
+
+/* ---------- Typography / icon helpers ---------- */
+.lm-text-xs {
+    font-size: .75rem;
+    line-height: 1rem;
+}
+
+.lm-text-on-surface {
+    color: var(--on-surface);
+}
+
+.lm-uppercase {
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+.lm-icon-xs {
+    font-size: 14px;
+}
+
+.lm-icon-sm {
+    font-size: 16px;
+}
+
+.lm-icon-md {
+    font-size: 18px;
+}
+
+.lm-icon-lg {
+    font-size: 20px;
+}
+
+.lm-mono {
+    font-family: 'Geist', monospace;
+}
+
+@media (max-width: 575.98px) {
+    .lm-title {
+        font-size: var(--fs-headline-lg-mobile);
+        line-height: var(--lh-headline-lg-mobile);
+    }
+}
+
+/* ---------- Breadcrumb ---------- */
+.lm-breadcrumb {
+    --bs-breadcrumb-divider-color: var(--on-surface-variant);
+    --bs-breadcrumb-item-active-color: var(--primary);
+    margin-bottom: .25rem;
+}
+
+.lm-breadcrumb .breadcrumb-item a {
+    color: var(--on-surface-variant);
+}
+
+.lm-breadcrumb .breadcrumb-item a:hover {
+    color: var(--primary);
+}
+
+.lm-breadcrumb .breadcrumb-item.active {
+    font-weight: 600;
+}
+
+/* ---------- Buttons ---------- */
+.lm-btn-light {
+    display: inline-flex;
+    align-items: center;
+    gap: .375rem;
+    background: var(--surface-container-lowest);
+    color: var(--on-surface);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-lg);
+    padding: .5rem .875rem;
+    font-weight: 500;
+    transition: background-color .15s ease;
+}
+
+.lm-btn-light:hover {
+    background: var(--surface-container-low);
+    color: var(--on-surface);
+}
+
+.lm-btn-light .material-symbols-outlined {
+    color: var(--on-surface-variant);
+}
+
+.lm-btn-link {
+    background: transparent;
+    border: 0;
+    color: var(--primary);
+    font-weight: 500;
+    padding: .25rem .625rem;
+    border-radius: var(--radius-lg);
+}
+
+.lm-btn-link:hover {
+    background: var(--surface-container-low);
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+.lm-icon-btn-sm {
+    padding: .25rem;
+    border-radius: var(--radius);
+}
+
+.lm-act-approve {
+    color: var(--lm-emerald-text);
+}
+
+.lm-act-approve:hover {
+    background: color-mix(in srgb, var(--lm-emerald) 15%, transparent);
+}
+
+.lm-act-reject {
+    color: var(--error);
+}
+
+.lm-act-reject:hover {
+    background: color-mix(in srgb, var(--lm-rose) 15%, transparent);
+}
+
+/* ---------- Cards ---------- */
+.lm-card {
+    background: var(--surface-container-lowest);
+    border: 1px solid var(--outline-variant);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
+}
+
+.lm-card-hover {
+    transition: border-color .15s ease;
+}
+
+.lm-card-hover:hover {
+    border-color: color-mix(in srgb, var(--primary) 40%, transparent);
+}
+
+.lm-card-head {
+    border-bottom: 1px solid color-mix(in srgb, var(--outline-variant) 70%, transparent);
+}
+
+.lm-card-foot {
+    border-top: 1px solid color-mix(in srgb, var(--outline-variant) 70%, transparent);
+}
+
+.lm-card-foot-soft {
+    background: var(--surface-container-low);
+    border-top: 1px solid var(--outline-variant);
+}
+
+.lm-section-head {
+    border-bottom: 1px solid var(--outline-variant);
+}
+
+/* ---------- KPI ---------- */
+.lm-kpi-label {
+    color: var(--on-surface-variant);
+    font-size: var(--fs-label-md);
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.lm-kpi-icon {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: var(--radius-lg);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.lm-kpi-icon-primary {
+    background: var(--surface-container);
+    color: var(--primary);
+}
+
+.lm-kpi-icon-secondary {
+    background: color-mix(in srgb, var(--secondary-fixed) 50%, transparent);
+    color: var(--secondary);
+}
+
+.lm-kpi-icon-amber {
+    background: color-mix(in srgb, var(--lm-amber) 18%, transparent);
+    color: var(--lm-amber-text);
+}
+
+.lm-kpi-icon-emerald {
+    background: color-mix(in srgb, var(--lm-emerald) 18%, transparent);
+    color: var(--lm-emerald-text);
+}
+
+.lm-text-amber {
+    color: var(--lm-amber-text);
+}
+
+.lm-text-emerald {
+    color: var(--lm-emerald-text);
+}
+
+.lm-text-purple {
+    color: var(--lm-purple-text);
+}
+
+.lm-icon-chip-error {
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--radius-lg);
+    background: color-mix(in srgb, var(--error-container) 60%, transparent);
+    color: var(--error);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* ---------- Dots / legend ---------- */
+.lm-dot {
+    display: inline-block;
+    width: .5rem;
+    height: .5rem;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.lm-dot-lg {
+    width: .625rem;
+    height: .625rem;
+}
+
+.lm-dot-amber {
+    background: var(--lm-amber);
+}
+
+.lm-dot-emerald {
+    background: var(--lm-emerald);
+}
+
+.lm-dot-error {
+    background: var(--error);
+}
+
+.lm-dot-outline {
+    background: var(--outline);
+}
+
+.lm-dot-secondary {
+    background: var(--secondary);
+}
+
+.lm-dot-red {
+    background: var(--lm-red);
+}
+
+.lm-dot-blue {
+    background: var(--lm-blue);
+}
+
+.lm-dot-teal {
+    background: var(--lm-teal);
+}
+
+.lm-dot-amber-light {
+    background: #fbbf24;
+}
+
+.lm-legend-sq {
+    display: inline-block;
+    width: .625rem;
+    height: .625rem;
+    border-radius: 2px;
+}
+
+/* ---------- Progress bars (widths live here, not inline) ---------- */
+.lm-progress {
+    height: .5rem;
+    background: var(--surface-container);
+    border-radius: var(--radius-full);
+}
+
+.lm-progress-sm {
+    height: .375rem;
+}
+
+.lm-progress .progress-bar {
+    border-radius: var(--radius-full);
+}
+
+.lm-fill-amber {
+    background-color: var(--lm-amber);
+}
+
+.lm-fill-emerald {
+    background-color: var(--lm-emerald);
+}
+
+.lm-fill-error {
+    background-color: var(--error);
+}
+
+.lm-fill-outline {
+    background-color: var(--outline);
+}
+
+.lm-fill-primary {
+    background-color: var(--primary);
+}
+
+.lm-fill-secondary {
+    background-color: var(--secondary);
+}
+
+.lm-fill-tertiary {
+    background-color: var(--tertiary);
+}
+
+.lm-fill-purple {
+    background-color: var(--lm-purple);
+}
+
+.lm-pct-4 {
+    width: 4%;
+}
+
+.lm-pct-8 {
+    width: 8%;
+}
+
+.lm-pct-16 {
+    width: 16%;
+}
+
+.lm-pct-18 {
+    width: 18%;
+}
+
+.lm-pct-28 {
+    width: 28%;
+}
+
+.lm-pct-42 {
+    width: 42%;
+}
+
+.lm-pct-72 {
+    width: 72%;
+}
+
+/* ---------- Bar chart ---------- */
+.lm-chart {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: .5rem;
+    height: 11rem;
+    padding: 1.5rem .5rem 0;
+}
+
+.lm-chart-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: .375rem;
+    height: 100%;
+}
+
+.lm-chart-bars {
+    width: 100%;
+    height: 9rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: .25rem;
+}
+
+.lm-bar {
+    width: .5rem;
+    border-radius: 2px 2px 0 0;
+}
+
+@media (min-width: 576px) {
+    .lm-bar {
+        width: .75rem;
+    }
+}
+
+.lm-bar-approved {
+    background: var(--primary);
+}
+
+.lm-bar-pending {
+    background: #fbbf24;
+}
+
+.lm-bar-rejected {
+    background: var(--error);
+}
+
+.lm-h-5 {
+    height: 5%;
+}
+
+.lm-h-8 {
+    height: 8%;
+}
+
+.lm-h-10 {
+    height: 10%;
+}
+
+.lm-h-12 {
+    height: 12%;
+}
+
+.lm-h-15 {
+    height: 15%;
+}
+
+.lm-h-18 {
+    height: 18%;
+}
+
+.lm-h-20 {
+    height: 20%;
+}
+
+.lm-h-22 {
+    height: 22%;
+}
+
+.lm-h-25 {
+    height: 25%;
+}
+
+.lm-h-55 {
+    height: 55%;
+}
+
+.lm-h-60 {
+    height: 60%;
+}
+
+.lm-h-70 {
+    height: 70%;
+}
+
+.lm-h-75 {
+    height: 75%;
+}
+
+.lm-h-88 {
+    height: 88%;
+}
+
+.lm-h-95 {
+    height: 95%;
+}
+
+.lm-chart-label-active {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+/* ---------- Pills ---------- */
+.lm-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: .25rem;
+    padding: .125rem .625rem;
+    border-radius: var(--radius-full);
+    font-size: .75rem;
+    font-weight: 600;
+    line-height: 1.25rem;
+    white-space: nowrap;
+}
+
+.lm-pill-date {
+    background: var(--surface-container);
+    color: var(--on-surface-variant);
+    font-weight: 500;
+    padding: .25rem .625rem;
+}
+
+.lm-pill-sick {
+    background: color-mix(in srgb, var(--secondary-fixed) 40%, transparent);
+    color: var(--on-secondary-fixed-variant);
+}
+
+.lm-pill-annual {
+    background: var(--primary-fixed);
+    color: var(--on-primary-fixed-variant);
+}
+
+.lm-pill-casual {
+    background: var(--tertiary-fixed);
+    color: var(--on-tertiary-fixed-variant);
+}
+
+.lm-pill-leave {
+    background: var(--error-container);
+    color: var(--error);
+    font-weight: 500;
+    padding: .25rem .625rem;
+}
+
+.lm-pill-leave .lm-dot {
+    width: .375rem;
+    height: .375rem;
+}
+
+.lm-pill-pending {
+    background: color-mix(in srgb, var(--lm-amber) 18%, transparent);
+    color: var(--lm-amber-text);
+}
+
+.lm-pill-approved {
+    background: color-mix(in srgb, var(--lm-emerald) 18%, transparent);
+    color: var(--lm-emerald-text);
+}
+
+.lm-pill-rejected {
+    background: color-mix(in srgb, var(--lm-rose) 15%, transparent);
+    color: var(--lm-rose-text);
+}
+
+/* ---------- Segmented filter ---------- */
+.lm-segment {
+    display: inline-flex;
+    gap: .375rem;
+    padding: .25rem;
+    background: var(--surface-container-low);
+    border: 1px solid color-mix(in srgb, var(--outline-variant) 70%, transparent);
+    border-radius: var(--radius-lg);
+}
+
+.lm-segment button {
+    border: 0;
+    background: transparent;
+    color: var(--on-surface-variant);
+    font-size: .75rem;
+    padding: .25rem .625rem;
+    border-radius: var(--radius);
+}
+
+.lm-segment button:hover {
+    color: var(--on-surface);
+}
+
+.lm-segment button.active {
+    background: var(--surface-container-lowest);
+    color: var(--primary);
+    font-weight: 600;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .06);
+}
+
+/* ---------- Avatars ---------- */
+.lm-avatar {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--outline-variant);
+    flex-shrink: 0;
+}
+
+/* ---------- Tables ---------- */
+.lm-table {
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--on-surface);
+    --bs-table-hover-bg: color-mix(in srgb, var(--surface-container-low) 60%, transparent);
+    --bs-table-hover-color: var(--on-surface);
+    --bs-table-border-color: color-mix(in srgb, var(--outline-variant) 70%, transparent);
+    margin: 0;
+}
+
+.lm-table thead th {
+    background: color-mix(in srgb, var(--surface-container-low) 70%, transparent);
+    color: var(--on-surface-variant);
+    font-size: var(--fs-label-md);
+    font-weight: 600;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    padding: .875rem 1.25rem;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--outline-variant);
+}
+
+.lm-table tbody td {
+    padding: .875rem 1.25rem;
+    vertical-align: middle;
+    font-size: var(--fs-body-md);
+}
+
+.lm-table-compact thead th,
+.lm-table-compact tbody td {
+    padding: .75rem 1rem;
+}
+
+.lm-table-compact tbody td {
+    font-size: var(--fs-body-sm);
+}
+
+.lm-table-wide {
+    min-width: 56rem;
+}
+
+.lm-table-mid {
+    min-width: 40rem;
+}
+
+.lm-table-narrow {
+    min-width: 28rem;
+}
+
+@media (max-width: 575.98px) {
+
+    .lm-table thead th,
+    .lm-table tbody td {
+        padding-left: .75rem;
+        padding-right: .75rem;
+    }
+}
